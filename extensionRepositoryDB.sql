@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 
 -- Dumping structure for table extension_repository.extensions
 CREATE TABLE IF NOT EXISTS `extensions` (
-  `ExtensionID` int(11) NOT NULL,
+  `ExtensionID` int(11) NOT NULL AUTO_INCREMENT,
+  `StatusID` int(11) NOT NULL DEFAULT 1,
   `Name` varchar(50) NOT NULL,
   `Description` varchar(200) NOT NULL,
   `Owner` varchar(50) NOT NULL,
@@ -39,6 +40,8 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Link` varchar(200) NOT NULL,
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_users` (`Owner`),
+  KEY `FK_extensions_status` (`StatusID`),
+  CONSTRAINT `FK_extensions_status` FOREIGN KEY (`StatusID`) REFERENCES `status` (`StatusID`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -50,19 +53,32 @@ CREATE TABLE IF NOT EXISTS `extensions` (
 CREATE TABLE IF NOT EXISTS `extension_tag` (
   `ExtensionID` int(11) DEFAULT NULL,
   `TagID` int(11) DEFAULT NULL,
-  KEY `FK__extensions` (`ExtensionID`),
-  KEY `FK__tags` (`TagID`),
-  CONSTRAINT `FK__extensions` FOREIGN KEY (`ExtensionID`) REFERENCES `extensions` (`ExtensionID`),
-  CONSTRAINT `FK__tags` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`)
+  KEY `FK_extension_tag_extensions` (`ExtensionID`),
+  KEY `FK_extension_tag_tags` (`TagID`),
+  CONSTRAINT `FK_extension_tag_extensions` FOREIGN KEY (`ExtensionID`) REFERENCES `extensions` (`ExtensionID`),
+  CONSTRAINT `FK_extension_tag_tags` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table extension_repository.extension_tag: ~0 rows (approximately)
 /*!40000 ALTER TABLE `extension_tag` DISABLE KEYS */;
 /*!40000 ALTER TABLE `extension_tag` ENABLE KEYS */;
 
+-- Dumping structure for table extension_repository.status
+CREATE TABLE IF NOT EXISTS `status` (
+  `StatusID` int(11) NOT NULL AUTO_INCREMENT,
+  `StatusName` varchar(50) NOT NULL,
+  PRIMARY KEY (`StatusID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table extension_repository.status: ~1 rows (approximately)
+/*!40000 ALTER TABLE `status` DISABLE KEYS */;
+INSERT INTO `status` (`StatusID`, `StatusName`) VALUES
+	(1, 'Pending');
+/*!40000 ALTER TABLE `status` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.tags
 CREATE TABLE IF NOT EXISTS `tags` (
-  `TagID` int(11) NOT NULL,
+  `TagID` int(11) NOT NULL AUTO_INCREMENT,
   `TagName` varchar(50) NOT NULL,
   PRIMARY KEY (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
