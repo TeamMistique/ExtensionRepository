@@ -26,6 +26,11 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 
 -- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
+INSERT INTO `authorities` (`username`, `authority`) VALUES
+	('gosho', 'ROLE_USER'),
+	('misho', 'ROLE_USER'),
+	('pesho', 'ROLE_ADMIN'),
+	('pesho', 'ROLE_USER');
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.extensions
@@ -39,8 +44,8 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `File` blob NOT NULL,
   `Link` varchar(200) NOT NULL,
   PRIMARY KEY (`ExtensionID`),
-  KEY `FK_extensions_users` (`Owner`),
   KEY `FK_extensions_status` (`StatusID`),
+  KEY `FK_extensions_users` (`Owner`),
   CONSTRAINT `FK_extensions_status` FOREIGN KEY (`StatusID`) REFERENCES `status` (`StatusID`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
