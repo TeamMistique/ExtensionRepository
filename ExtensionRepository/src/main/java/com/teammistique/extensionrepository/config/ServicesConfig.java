@@ -1,5 +1,7 @@
 package com.teammistique.extensionrepository.config;
 
+import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.Tag;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,8 @@ public class ServicesConfig {
     static {
         sessionFactory = new org.hibernate.cfg.Configuration()
                 .configure("hibernate.cfg.xml")
-//                .addAnnotatedClass(Transaction.class)
+                .addAnnotatedClass(Tag.class)
+                .addAnnotatedClass(Extension.class)
                 .buildSessionFactory();
     }
 
