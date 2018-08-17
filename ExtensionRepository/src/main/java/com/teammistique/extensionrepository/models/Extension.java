@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -46,6 +47,15 @@ public class Extension {
     )
     @JsonManagedReference
     private List<Tag> tags;
+
+    @Column(name = "Issues")
+    private int issues;
+
+    @Column(name = "PullRequests")
+    private int pullrequests;
+
+    @Column(name = "LastCommit")
+    private Date lastCommit;
 
     public Extension() {
     }
