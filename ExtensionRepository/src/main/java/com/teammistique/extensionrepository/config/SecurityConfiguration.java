@@ -37,12 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedPage("/access-denied");
     }
 
-    private void configureInMemoryAuth(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser(User.withUsername("pesho").password("{noop}pass1").roles("USER", "ADMIN"))
-                .withUser(User.withUsername("gosho").password("{noop}pass2").roles("USER"))
-                .withUser(User.withUsername("misho").password("{noop}pass3").roles("USER"));
-    }
+
 
     private void configureDatabaseAuth(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(securityDataSource);

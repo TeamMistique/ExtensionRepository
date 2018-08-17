@@ -13,10 +13,10 @@ public class Extension {
     @Column(name = "ExtensionID")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "StatusID")
-    @JsonManagedReference
-    private Status status;
+  //  @ManyToOne
+    @Column(name = "StatusID")
+  //  @JsonManagedReference
+    private int status;
 
     @Column(name ="Name")
     private String name;
@@ -24,10 +24,10 @@ public class Extension {
     @Column(name ="Description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "Owner")
-    @JsonManagedReference
-    private User owner;
+//  @ManyToOne
+  @Column(name = "Owner") // @Join
+ //  @JsonManagedReference
+    private String owner;
 
     @Column(name ="Downloads")
     private int downloadsCounter;
@@ -38,19 +38,19 @@ public class Extension {
     @Column(name ="Link")
     private String link;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "extension_tag",
-            joinColumns = {@JoinColumn(name = "ExtensionID")},
-            inverseJoinColumns = {@JoinColumn(name = "TagID")}
-    )
-    @JsonManagedReference
-    private List<Tag> tags;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "extension_tag",
+//            joinColumns = {@JoinColumn(name = "ExtensionID")},
+//            inverseJoinColumns = {@JoinColumn(name = "TagID")}
+//    )
+//    @JsonManagedReference
+//    private List<Tag> tags;
 
     public Extension() {
     }
 
-    public Extension(Status status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags) {
+    public Extension(int status, String name, String description, String owner, int downloadsCounter, String file, String link, List<Tag> tags) {
         this.status = status;
         this.name = name;
         this.description = description;
@@ -58,7 +58,7 @@ public class Extension {
         this.downloadsCounter = downloadsCounter;
         this.file = file;
         this.link = link;
-        this.tags = tags;
+
     }
 
 
@@ -70,11 +70,11 @@ public class Extension {
         this.id = id;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -94,11 +94,11 @@ public class Extension {
         this.description = description;
     }
 
-    public User getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
@@ -126,11 +126,5 @@ public class Extension {
         this.link = link;
     }
 
-    public List<Tag> getTags() {
-        return tags;
-    }
 
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 }

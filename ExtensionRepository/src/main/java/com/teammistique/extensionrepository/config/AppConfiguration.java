@@ -1,6 +1,10 @@
 package com.teammistique.extensionrepository.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.Status;
+import com.teammistique.extensionrepository.models.User;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,5 +50,14 @@ public class AppConfiguration {
         jdbcUserDetailsManager.setDataSource(securityDataSource());
         return jdbcUserDetailsManager;
     }
+
+    @Bean
+    public SessionFactory createSessionFactory() {
+        return new org.hibernate.cfg.Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(Extension.class)
+                .buildSessionFactory();
+    }
+
 
 }
