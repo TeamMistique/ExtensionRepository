@@ -38,4 +38,12 @@ public class Tag {
     public void setTagName(String tagName) {
         this.tagName = tagName;
     }
+
+    public List<Extension> getExtensions() {
+        return extensions;
+    }
+
+    public void setExtensions(List<Extension> extensions) {
+        this.extensions = extensions;
+    }
 }
