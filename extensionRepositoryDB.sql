@@ -24,9 +24,10 @@ CREATE TABLE IF NOT EXISTS `authorities` (
   CONSTRAINT `FK__users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
+-- Dumping data for table extension_repository.authorities: ~5 rows (approximately)
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
 INSERT INTO `authorities` (`username`, `authority`) VALUES
+	('alabala', 'ROLE_USER'),
 	('gosho', 'ROLE_USER'),
 	('misho', 'ROLE_USER'),
 	('pesho', 'ROLE_ADMIN'),
@@ -43,6 +44,9 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Downloads` int(11) NOT NULL DEFAULT 0,
   `File` blob NOT NULL,
   `Link` varchar(200) NOT NULL,
+  `Issues` int(11) NOT NULL DEFAULT 0,
+  `PullRequests` int(11) NOT NULL DEFAULT 0,
+  `LastCommit` date NOT NULL,
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_status` (`StatusID`),
   KEY `FK_extensions_users` (`Owner`),
@@ -100,9 +104,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.users: ~3 rows (approximately)
+-- Dumping data for table extension_repository.users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+	('alabala', '{bcrypt}$2a$10$aqRBJh2VgaKAwDu3ZhtAHeEMNJwWdP43dv/rQWvKkMUSfGhvlNhY6', 1),
 	('gosho', '{noop}pass2', 1),
 	('misho', '{noop}pass3', 1),
 	('pesho', '{noop}pass1', 1);
