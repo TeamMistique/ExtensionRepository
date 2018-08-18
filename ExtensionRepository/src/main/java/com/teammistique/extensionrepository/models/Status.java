@@ -20,6 +20,13 @@ public class Status {
     @JsonBackReference
     private List<Extension> extensions;
 
+    public Status() {
+    }
+
+    public Status(String statusName) {
+        this.statusName = statusName;
+    }
+
     public int getStatusID() {
         return statusID;
     }
