@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -47,10 +48,19 @@ public class Extension {
     @JsonManagedReference
     private List<Tag> tags;
 
+    @Column(name = "Issues")
+    private int issuesCounter;
+
+    @Column(name = "PullRequests")
+    private int pullRequestsCounter;
+
+    @Column(name = "LastCommit")
+    private Date lastCommitDate;
+
     public Extension() {
     }
 
-    public Extension(Status status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags) {
+    public Extension(Status status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags, int issuesCounter, int pullRequestsCounter, Date lastCommitDate) {
         this.status = status;
         this.name = name;
         this.description = description;
@@ -59,8 +69,10 @@ public class Extension {
         this.file = file;
         this.link = link;
         this.tags = tags;
+        this.issuesCounter = issuesCounter;
+        this.pullRequestsCounter = pullRequestsCounter;
+        this.lastCommitDate = lastCommitDate;
     }
-
 
     public int getId() {
         return id;
@@ -132,5 +144,29 @@ public class Extension {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public int getIssuesCounter() {
+        return issuesCounter;
+    }
+
+    public void setIssuesCounter(int issuesCounter) {
+        this.issuesCounter = issuesCounter;
+    }
+
+    public int getPullRequestsCounter() {
+        return pullRequestsCounter;
+    }
+
+    public void setPullRequestsCounter(int pullRequestsCounter) {
+        this.pullRequestsCounter = pullRequestsCounter;
+    }
+
+    public Date getLastCommitDate() {
+        return lastCommitDate;
+    }
+
+    public void setLastCommitDate(Date lastCommitDate) {
+        this.lastCommitDate = lastCommitDate;
     }
 }
