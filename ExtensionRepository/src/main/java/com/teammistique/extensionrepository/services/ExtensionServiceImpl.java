@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +55,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     @Override
     public List<Extension> listPopularExtensions() {
         return extensionRepository.listAll().stream()
+                .sorted(Comparator.comparing(Extension::getDownloadsCounter).reversed())
                 .limit(maxListSize)
                 .collect(Collectors.toList());
     }
