@@ -24,38 +24,28 @@ public class ExtensionServiceImplTest {
 
     @Test
     public void listAll_shouldReturnAListOfExtensions() {
-
-        //Arrange
         when(mockExtensionRepository.listAll()).thenReturn(
                 new ArrayList<>()
         );
 
-        //Act
         List<Extension> result = extensionService.listAllExtensions();
 
-        //Assert
         Assert.assertEquals(new ArrayList<Extension>(), result);
     }
 
     @Test
     public void createExtension_shouldReturnExtension() {
-
-        //Arrange
         Extension extension = new Extension();
         when(mockExtensionRepository.create(extension))
                 .thenReturn(extension);
 
-        //Act
         Extension result = extensionService.createExtension(extension);
 
-        //Assert
         Assert.assertSame(extension, result);
     }
 
     @Test
     public void getExtensionByID_shouldReturnExtension() {
-
-        //Arrange
         int id = 1;
         Extension extension = mock(Extension.class);
         when(extension.getId())
@@ -64,22 +54,19 @@ public class ExtensionServiceImplTest {
         when(mockExtensionRepository.findById(extension.getId()))
                 .thenReturn(extension);
 
-        //Act
         Extension result = extensionService.getExtensionById(id);
 
-        //Assert
         Assert.assertSame(extension, result);
 
     }
 
     @Test
     public void updateExtension_shouldReturnExtension() {
-        //Arrange
         Extension extension = mock(Extension.class);
         when(mockExtensionRepository.update(extension)).thenReturn(extension);
-        //Act
+
         Extension result = extensionService.updateExtension(extension);
-        //Assert
+
         Assert.assertSame(extension, result);
     }
 

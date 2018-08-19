@@ -6,7 +6,6 @@ import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -106,12 +105,12 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public List<Extension> showPendingExtensions() {
+    public List<Extension> listPublishedExtensions() {
         return null;
     }
 
     @Override
-    public List<Extension> showApprovedExtensions() {
+    public List<Extension> listUnpublishedExtensions() {
         return null;
     }
 
@@ -121,7 +120,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void approveExtension(int id) {
+    public void approveExtension(Extension extension) {
 
     }
 

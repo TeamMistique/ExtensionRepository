@@ -36,11 +36,11 @@ public interface ExtensionSerivice {
 
     List<Extension> sortByLastCommit();
 
-    List<Extension> showPendingExtensions();
+    List<Extension> listPublishedExtensions();
 
-    List<Extension> showApprovedExtensions();
+    List<Extension> listUnpublishedExtensions();
 
     List<Extension> getByUser(String username);
 
-    void approveExtension(int id);
+    void approveExtension(Extension extension);
 }
