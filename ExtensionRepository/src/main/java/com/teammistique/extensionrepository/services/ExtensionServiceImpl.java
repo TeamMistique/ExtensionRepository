@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ExtensionServiceImpl implements ExtensionSerivice {
@@ -52,7 +53,9 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listPopularExtensions() {
-        return extensionRepository.listAll();
+        return extensionRepository.listAll().stream()
+                .limit(maxListSize)
+                .collect(Collectors.toList());
     }
 
     @Override

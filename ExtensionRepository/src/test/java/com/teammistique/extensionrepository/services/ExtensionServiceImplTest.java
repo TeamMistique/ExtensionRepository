@@ -84,7 +84,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPopularExtensions_shouldReturnEmptyListWhenThereAreNoExtensions() {
+    public void listPopularExtensions_shouldReturnEmptyList_whenThereAreNoExtensions() {
         when(mockExtensionRepository.listAll())
                 .thenReturn(new ArrayList<>());
 
@@ -94,17 +94,33 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPopularExtension_shouldReturnAllExtensionsWhenLessThanMaxListSize() {
+    public void listPopularExtension_shouldReturnAllExtensions_whenLessThanMaxListSize() {
         int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allExtensions = new ArrayList<>();
+        for (int i = 0; i < maxListSize-1; i++) {
+            allExtensions.add(new Extension());
+        }
+
         when(mockExtensionRepository.listAll())
-                .thenReturn(Arrays.asList(
-                        new Extension(),
-                        new Extension(),
-                        new Extension()
-                ));
+                .thenReturn(allExtensions);
 
         List<Extension> result = extensionService.listPopularExtensions();
 
-        Assert.assertEquals(3, result.size());
+        Assert.assertEquals(maxListSize-1, result.size());
+    }
+
+    @Test
+    public void listPopularExtension_shouldLimitExtensionsResultToMaxListSize_whenAllExtensionsAreMoreThanThat() {
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allExtensions = new ArrayList<>();
+        for (int i = 0; i < maxListSize+5; i++) {
+            allExtensions.add(new Extension());
+        }
+        when(mockExtensionRepository.listAll())
+                .thenReturn(allExtensions);
+
+        List<Extension> result = extensionService.listPopularExtensions();
+
+        Assert.assertEquals(maxListSize, result.size());
     }
 }
