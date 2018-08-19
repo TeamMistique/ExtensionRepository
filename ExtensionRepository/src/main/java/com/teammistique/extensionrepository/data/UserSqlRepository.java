@@ -50,42 +50,4 @@ public class UserSqlRepository extends AbstractGenericRepository<User> implement
         }
         return user;
     }
-
-
-    @Override
-    public void update(int id, User entity) {
-
-    }
-
-    public void update(String id, User entity) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            User user = session.get(User.class, id);
-            user.setUserName(entity.getUserName());
-            user.setPassword(entity.getPassword());
-            user.setEnabled(entity.getEnabled());
-            user.setExtensions(entity.getExtensions());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void delete(int id) {
-
-    }
-
-    public void delete (String id) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            User user = session.get(User.class, id);
-            session.delete(user);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-
 }

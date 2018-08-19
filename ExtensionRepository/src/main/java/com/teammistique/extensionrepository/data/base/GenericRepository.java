@@ -12,7 +12,7 @@ public interface GenericRepository <T> {
 
     T create(T entity);
 
-    void update(int id, T entity);
+    T update(T entity);
 
-    void delete(int id);
+    void delete(T entity);
 }

@@ -31,4 +31,28 @@ public abstract class AbstractGenericRepository<T> implements GenericRepository<
         return entity;
     }
 
+    @Override
+    public T update(T entity){
+        try(Session session = factory.openSession()){
+            session.beginTransaction();
+            session.update(entity);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return entity;
+    }
+
+    @Override
+    public void delete(T entity){
+        try(Session session = factory.openSession()){
+            session.beginTransaction();
+            session.delete(entity);
+            session.getTransaction().commit();
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

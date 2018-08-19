@@ -46,35 +46,4 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         }
         return extension;
     }
-
-    @Override
-    public void update(int id, Extension extension) {
-        try(Session session = factory.openSession()){
-            session.beginTransaction();
-            Extension e = session.get(Extension.class, id);
-            e.setStatus(extension.getStatus());
-            e.setName(extension.getName());
-            e.setDescription(extension.getDescription());
-            e.setOwner(extension.getOwner());
-            e.setDownloadsCounter(extension.getDownloadsCounter());
-            e.setFile(extension.getFile());
-            e.setLink(extension.getLink());
-            e.setTags(extension.getTags());
-            e.setIssuesCounter(extension.getIssuesCounter());
-            e.setPullRequestsCounter(extension.getPullRequestsCounter());
-            e.setLastCommitDate(extension.getLastCommitDate());
-        }
-    }
-
-    @Override
-    public void delete(int id) {
-        try(Session session = factory.openSession()){
-            session.beginTransaction();
-            Extension extension= session.get(Extension.class, id);
-            session.delete(extension);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }

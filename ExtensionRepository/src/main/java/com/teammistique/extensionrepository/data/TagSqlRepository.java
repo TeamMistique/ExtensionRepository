@@ -47,29 +47,4 @@ public class TagSqlRepository extends AbstractGenericRepository<Tag> implements 
         }
         return tag;
     }
-
-    @Override
-    public void update(int id, Tag entity) {
-        try (Session session = factory.openSession()) {
-            session.getTransaction();
-            Tag tag = session.get(Tag.class, id);
-            tag.setTagName(entity.getTagName());
-            tag.setExtensions(entity.getExtensions());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @Override
-    public void delete(int id) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            Tag tag = session.get(Tag.class, id);
-            session.delete(tag);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
 }

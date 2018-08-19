@@ -47,28 +47,4 @@ public class StatusSqlRepository extends AbstractGenericRepository<Status> imple
       }
         return status;
     }
-
-    @Override
-    public void update(int id, Status entity) {
-       try (Session session = factory.openSession()) {
-           session.beginTransaction();
-           Status status = session.get(Status.class, id);
-           status.setStatusName(entity.getStatusName());
-           status.setExtensions(entity.getExtensions());
-       } catch (Exception e) {
-           System.out.println(e.getMessage());
-       }
-    }
-
-    @Override
-    public void delete(int id) {
-        try (Session session = factory.openSession()) {
-            session.beginTransaction();
-            Status status = session.get(Status.class, id);
-            session.delete(status);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
 }
