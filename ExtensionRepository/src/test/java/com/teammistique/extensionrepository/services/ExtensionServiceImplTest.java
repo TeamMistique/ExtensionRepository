@@ -112,7 +112,9 @@ public class ExtensionServiceImplTest {
         int maxListSize = extensionService.getMaxListSize();
         List<Extension> allExtensions = new ArrayList<>();
         for (int i = 0; i < maxListSize-1; i++) {
-            allExtensions.add(new Extension());
+            Extension extension = mock(Extension.class);
+            when(extension.getPublishedDate()).thenReturn(new Date());
+            allExtensions.add(extension);
         }
 
         when(mockExtensionRepository.listAll())
@@ -128,7 +130,9 @@ public class ExtensionServiceImplTest {
         int maxListSize = extensionService.getMaxListSize();
         List<Extension> allExtensions = new ArrayList<>();
         for (int i = 0; i < maxListSize+5; i++) {
-            allExtensions.add(new Extension());
+            Extension extension = mock(Extension.class);
+            when(extension.getPublishedDate()).thenReturn(new Date());
+            allExtensions.add(extension);
         }
         when(mockExtensionRepository.listAll())
                 .thenReturn(allExtensions);
@@ -157,6 +161,29 @@ public class ExtensionServiceImplTest {
 
         for (int i = 0; i < result.size(); i++) {
             Assert.assertSame(orderedExtensions.get(i), result.get(i));
+        }
+    }
+
+    @Test
+    public void listPopularExtensions_shouldReturnOnlyPublishedExtensions() {
+        List<Extension> extensions = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Extension unpublishedExtension = new Extension();
+            extensions.add(unpublishedExtension);
+        }
+        for (int i = 0; i < 4; i++) {
+            Extension publishedExtension = mock(Extension.class);
+            when(publishedExtension.getPublishedDate()).thenReturn(new Date());
+            extensions.add(publishedExtension);
+        }
+
+        when(mockExtensionRepository.listAll()).thenReturn(extensions);
+
+        List<Extension> result = extensionService.listPopularExtensions();
+
+        Assert.assertEquals(4, result.size());
+        for (Extension extension:result) {
+            Assert.assertNotNull(extension.getPublishedDate());
         }
     }
 
@@ -227,6 +254,29 @@ public class ExtensionServiceImplTest {
 
         for (int i = 0; i < result.size(); i++) {
             Assert.assertSame(orderedExtensions.get(i), result.get(i));
+        }
+    }
+
+    @Test
+    public void listNewExtensions_shouldShowOnlyPublishedExtensions() {
+        List<Extension> extensions = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            Extension unpublishedExtension = new Extension();
+            extensions.add(unpublishedExtension);
+        }
+        for (int i = 0; i < 4; i++) {
+            Extension publishedExtension = mock(Extension.class);
+            when(publishedExtension.getPublishedDate()).thenReturn(new Date());
+            extensions.add(publishedExtension);
+        }
+
+        when(mockExtensionRepository.listAll()).thenReturn(extensions);
+
+        List<Extension> result = extensionService.listNewExtensions();
+
+        Assert.assertEquals(4, result.size());
+        for (Extension extension:result) {
+            Assert.assertNotNull(extension.getPublishedDate());
         }
     }
 }

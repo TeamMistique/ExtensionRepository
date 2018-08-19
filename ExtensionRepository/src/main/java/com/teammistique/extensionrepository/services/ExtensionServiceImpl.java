@@ -55,6 +55,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     @Override
     public List<Extension> listPopularExtensions() {
         return extensionRepository.listAll().stream()
+                .filter(extension -> extension.getPublishedDate()!=null)
                 .sorted(Comparator.comparing(Extension::getDownloadsCounter).reversed())
                 .limit(maxListSize)
                 .collect(Collectors.toList());
@@ -63,6 +64,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     @Override
     public List<Extension> listNewExtensions() {
         return extensionRepository.listAll().stream()
+                .filter(extension -> extension.getPublishedDate()!=null)
                 .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
                 .limit(maxListSize)
                 .collect(Collectors.toList());
