@@ -37,8 +37,8 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void updateExtension(Extension extension) {
-
+    public Extension updateExtension(Extension extension) {
+        return extensionRepository.update(extension);
     }
 
     @Override
@@ -64,12 +64,12 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void addFeaturedExtension(int id) {
+    public void addFeaturedExtension(Extension extension) {
 
     }
 
     @Override
-    public void removeFeaturedExtension(int id) {
+    public void removeFeaturedExtension(Extension extension) {
 
     }
 
