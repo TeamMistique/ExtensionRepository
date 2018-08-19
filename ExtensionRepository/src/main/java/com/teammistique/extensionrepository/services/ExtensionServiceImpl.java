@@ -6,12 +6,14 @@ import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ExtensionServiceImpl implements ExtensionSerivice {
+    private int maxListSize = 10;
 
-    GenericRepository<Extension> extensionRepository;
+    private GenericRepository<Extension> extensionRepository;
 
     @Autowired
     public ExtensionServiceImpl(GenericRepository<Extension> extensionRepository) {
@@ -39,8 +41,8 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void deleteExtension(int id) {
-
+    public void deleteExtension(Extension extension) {
+        extensionRepository.delete(extension);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listPopularExtensions() {
-        return null;
+        return extensionRepository.listAll();
     }
 
     @Override
@@ -111,5 +113,13 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     @Override
     public void approveExtension(int id) {
 
+    }
+
+    public int getMaxListSize() {
+        return maxListSize;
+    }
+
+    public void setMaxListSize(int maxListSize) {
+        this.maxListSize = maxListSize;
     }
 }

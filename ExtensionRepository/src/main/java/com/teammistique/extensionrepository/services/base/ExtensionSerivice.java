@@ -14,7 +14,7 @@ public interface ExtensionSerivice {
 
     void updateExtension(Extension extension);
 
-    void deleteExtension(int id);
+    void deleteExtension(Extension extension);
 
     List<Extension> listFeaturedExtensions();
 
