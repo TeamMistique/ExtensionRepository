@@ -26,7 +26,10 @@ CREATE TABLE IF NOT EXISTS `authorities` (
   CONSTRAINT `FK__users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
+/*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.extensions
 DROP TABLE IF EXISTS `extensions`;
 CREATE TABLE IF NOT EXISTS `extensions` (
@@ -42,12 +45,16 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `PullRequests` int(11) NOT NULL DEFAULT 0,
   `LastCommit` date NOT NULL,
   `Featured` tinyint(1) NOT NULL DEFAULT 0,
+  `PublishedDate` date DEFAULT NULL,
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_users` (`Owner`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.extensions: ~0 rows (approximately)
+/*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.extension_tag
 DROP TABLE IF EXISTS `extension_tag`;
 CREATE TABLE IF NOT EXISTS `extension_tag` (
@@ -59,7 +66,10 @@ CREATE TABLE IF NOT EXISTS `extension_tag` (
   CONSTRAINT `FK_extension_tag_tags` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.extension_tag: ~0 rows (approximately)
+/*!40000 ALTER TABLE `extension_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extension_tag` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.tags
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -68,7 +78,10 @@ CREATE TABLE IF NOT EXISTS `tags` (
   PRIMARY KEY (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.tags: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -78,7 +91,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.users: ~0 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
