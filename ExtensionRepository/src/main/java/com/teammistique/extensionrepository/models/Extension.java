@@ -14,10 +14,8 @@ public class Extension {
     @Column(name = "ExtensionID")
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "StatusID")
-    @JsonManagedReference
-    private Status status;
+    @Column(name = "Published")
+    private int status;
 
     @Column(name = "Name")
     private String name;
@@ -57,10 +55,13 @@ public class Extension {
     @Column(name = "LastCommit")
     private Date lastCommitDate;
 
+    @Column(name = "Featured")
+    private int featured;
+
     public Extension() {
     }
 
-    public Extension(Status status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags) {
+    public Extension(int status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags, int issuesCounter, int pullRequestsCounter, Date lastCommitDate, int featured) {
         this.status = status;
         this.name = name;
         this.description = description;
@@ -72,8 +73,8 @@ public class Extension {
         this.issuesCounter = issuesCounter;
         this.pullRequestsCounter = pullRequestsCounter;
         this.lastCommitDate = lastCommitDate;
+        this.featured = featured;
     }
-
 
     public int getId() {
         return id;
@@ -83,11 +84,11 @@ public class Extension {
         this.id = id;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -169,5 +170,13 @@ public class Extension {
 
     public void setLastCommitDate(Date lastCommitDate) {
         this.lastCommitDate = lastCommitDate;
+    }
+
+    public int getFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(int featured) {
+        this.featured = featured;
     }
 }

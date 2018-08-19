@@ -2,7 +2,6 @@ package com.teammistique.extensionrepository.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.teammistique.extensionrepository.models.Extension;
-import com.teammistique.extensionrepository.models.Status;
 import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.models.User;
 import org.hibernate.SessionFactory;
@@ -57,7 +56,6 @@ public class AppConfiguration {
         return new org.hibernate.cfg.Configuration()
                 .configure("hibernate.cfg.xml")
                 .addAnnotatedClass(Extension.class)
-                .addAnnotatedClass(Status.class)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Tag.class)
                 .buildSessionFactory();

@@ -12,9 +12,9 @@ public interface ExtensionSerivice {
 
     Extension getExtensionById(int id);
 
-    void updateExtension(Extension extension);
+    Extension updateExtension(Extension extension);
 
-    void deleteExtension(int id);
+    void deleteExtension(Extension extension);
 
     List<Extension> listFeaturedExtensions();
 
@@ -22,9 +22,9 @@ public interface ExtensionSerivice {
 
     List<Extension> listNewExtensions();
 
-    void addFeaturedExtension(int id);
+    void addFeaturedExtension(Extension extension);
 
-    void removeFeaturedExtension(int id);
+    void removeFeaturedExtension(Extension extension);
 
     List<Extension> filterByName(String name);
 
