@@ -20,7 +20,6 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public void createExtension(Extension extension) {
-
     }
 
     @Override
