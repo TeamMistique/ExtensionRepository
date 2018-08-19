@@ -130,51 +130,6 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPopularExtensions_shouldOrderExtensionsByNumberOfDownloadsFromMaxToMin() {
-        Extension extension1 = mock(Extension.class);
-        Extension extension2 = mock(Extension.class);
-        Extension extension3 = mock(Extension.class);
-
-        when(extension1.getDownloadsCounter()).thenReturn(5);
-        when(extension2.getDownloadsCounter()).thenReturn(17);
-        when(extension3.getDownloadsCounter()).thenReturn(2);
-
-        List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
-        List<Extension> orderedExtensions = Arrays.asList(extension2, extension1, extension3);
-
-        when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listPopularExtensions();
-
-        for (int i = 0; i < result.size(); i++) {
-            Assert.assertSame(orderedExtensions.get(i), result.get(i));
-        }
-    }
-
-    @Test
-    public void listPopularExtensions_shouldReturnOnlyPublishedExtensions() {
-        List<Extension> extensions = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Extension unpublishedExtension = new Extension();
-            extensions.add(unpublishedExtension);
-        }
-        for (int i = 0; i < 4; i++) {
-            Extension publishedExtension = mock(Extension.class);
-            when(publishedExtension.getPublishedDate()).thenReturn(new Date());
-            extensions.add(publishedExtension);
-        }
-
-        when(mockExtensionRepository.listAll()).thenReturn(extensions);
-
-        List<Extension> result = extensionService.listPopularExtensions();
-
-        Assert.assertEquals(4, result.size());
-        for (Extension extension:result) {
-            Assert.assertNotNull(extension.getPublishedDate());
-        }
-    }
-
-    @Test
     public void listNewExtesions_shouldReturnEmptyList_whenNoExtensions() {
         when(mockExtensionRepository.listAll())
                 .thenReturn(new ArrayList<>());
@@ -223,51 +178,6 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listNewExtensions_shouldSortExtensionsByDateCreatedInReverseOrder() {
-        Extension extension1 = mock(Extension.class);
-        Extension extension2 = mock(Extension.class);
-        Extension extension3 = mock(Extension.class);
-
-        when(extension1.getPublishedDate()).thenReturn(new Date(1534692315464L)); //2018
-        when(extension2.getPublishedDate()).thenReturn(new Date(1341123762001L)); //2012
-        when(extension3.getPublishedDate()).thenReturn(new Date(1399129992001L)); //2014
-
-        List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
-        List<Extension> orderedExtensions = Arrays.asList(extension1, extension3, extension2);
-
-        when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listNewExtensions();
-
-        for (int i = 0; i < result.size(); i++) {
-            Assert.assertSame(orderedExtensions.get(i), result.get(i));
-        }
-    }
-
-    @Test
-    public void listNewExtensions_shouldShowOnlyPublishedExtensions() {
-        List<Extension> extensions = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            Extension unpublishedExtension = new Extension();
-            extensions.add(unpublishedExtension);
-        }
-        for (int i = 0; i < 4; i++) {
-            Extension publishedExtension = mock(Extension.class);
-            when(publishedExtension.getPublishedDate()).thenReturn(new Date());
-            extensions.add(publishedExtension);
-        }
-
-        when(mockExtensionRepository.listAll()).thenReturn(extensions);
-
-        List<Extension> result = extensionService.listNewExtensions();
-
-        Assert.assertEquals(4, result.size());
-        for (Extension extension:result) {
-            Assert.assertNotNull(extension.getPublishedDate());
-        }
-    }
-
-    @Test
     public void listPublishedExtensions_shouldReturnEmptyList_whenNoExtensionsHaveBeenPublished() {
         List<Extension> unpublishedExtensions = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -302,7 +212,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPublishedExtensions_shouldSortExtensionsByPublishedDate() {
+    public void sortByPublishedDate_shouldSortByPublishedDateInReverseOrder() {
         Extension extension1 = mock(Extension.class);
         Extension extension2 = mock(Extension.class);
         Extension extension3 = mock(Extension.class);
@@ -314,9 +224,27 @@ public class ExtensionServiceImplTest {
         List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
         List<Extension> orderedExtensions = Arrays.asList(extension1, extension3, extension2);
 
-        when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
+        List<Extension> result = extensionService.sortByPublishedDate(allExtensions);
 
-        List<Extension> result = extensionService.listPublishedExtensions();
+        for (int i = 0; i < result.size(); i++) {
+            Assert.assertSame(orderedExtensions.get(i), result.get(i));
+        }
+    }
+
+    @Test
+    public void sortByDownloads_shouldSortByNumberOfDownloadsInReverseOrder() {
+        Extension extension1 = mock(Extension.class);
+        Extension extension2 = mock(Extension.class);
+        Extension extension3 = mock(Extension.class);
+
+        when(extension1.getDownloadsCounter()).thenReturn(5);
+        when(extension2.getDownloadsCounter()).thenReturn(17);
+        when(extension3.getDownloadsCounter()).thenReturn(2);
+
+        List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
+        List<Extension> orderedExtensions = Arrays.asList(extension2, extension1, extension3);
+
+        List<Extension> result = extensionService.sortByDownloads(allExtensions);
 
         for (int i = 0; i < result.size(); i++) {
             Assert.assertSame(orderedExtensions.get(i), result.get(i));

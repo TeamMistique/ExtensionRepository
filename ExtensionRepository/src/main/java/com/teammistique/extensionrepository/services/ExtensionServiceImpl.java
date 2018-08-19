@@ -54,18 +54,14 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listPopularExtensions() {
-        return extensionRepository.listAll().stream()
-                .filter(extension -> extension.getPublishedDate()!=null)
-                .sorted(Comparator.comparing(Extension::getDownloadsCounter).reversed())
+        return sortByDownloads(listPublishedExtensions()).stream()
                 .limit(maxListSize)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Extension> listNewExtensions() {
-        return extensionRepository.listAll().stream()
-                .filter(extension -> extension.getPublishedDate()!=null)
-                .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
+        return sortByPublishedDate(listPublishedExtensions()).stream()
                 .limit(maxListSize)
                 .collect(Collectors.toList());
     }
@@ -86,22 +82,26 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public List<Extension> sortByDownloads() {
+    public List<Extension> sortByDownloads(List<Extension> extensions) {
+        return extensions.stream()
+                .sorted(Comparator.comparing(Extension::getDownloadsCounter).reversed())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Extension> sortByName(List<Extension> extensions) {
         return null;
     }
 
     @Override
-    public List<Extension> sortByName() {
-        return null;
+    public List<Extension> sortByPublishedDate(List<Extension> extensions) {
+        return extensions.stream()
+                .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Extension> sortByUploadDate() {
-        return null;
-    }
-
-    @Override
-    public List<Extension> sortByLastCommit() {
+    public List<Extension> sortByLastCommit(List<Extension> extensions) {
         return null;
     }
 
@@ -109,7 +109,6 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     public List<Extension> listPublishedExtensions() {
         return extensionRepository.listAll().stream()
                 .filter(extension -> extension.getPublishedDate()!=null)
-                .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
                 .collect(Collectors.toList());
     }
 

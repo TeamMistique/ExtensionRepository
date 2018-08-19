@@ -28,13 +28,13 @@ public interface ExtensionSerivice {
 
     List<Extension> filterByName(String name);
 
-    List<Extension> sortByDownloads();
+    List<Extension> sortByDownloads(List<Extension> extensions);
 
-    List<Extension> sortByName();
+    List<Extension> sortByName(List<Extension> extensions);
 
-    List<Extension> sortByUploadDate();
+    List<Extension> sortByPublishedDate(List<Extension> extensions);
 
-    List<Extension> sortByLastCommit();
+    List<Extension> sortByLastCommit(List<Extension> extensions);
 
     List<Extension> listPublishedExtensions();
 
