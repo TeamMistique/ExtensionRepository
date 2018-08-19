@@ -19,17 +19,18 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void createExtension(Extension extension) {
+    public Extension createExtension(Extension extension) {
+        return extensionRepository.create(extension);
     }
 
     @Override
     public List<Extension> listAllExtensions() {
-        return null;
+        return extensionRepository.listAll();
     }
 
     @Override
     public Extension getExtensionById(int id) {
-        return null;
+        return extensionRepository.findById(id);
     }
 
     @Override
@@ -89,6 +90,21 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> sortByLastCommit() {
+        return null;
+    }
+
+    @Override
+    public List<Extension> showPendingExtensions() {
+        return null;
+    }
+
+    @Override
+    public List<Extension> showApprovedExtensions() {
+        return null;
+    }
+
+    @Override
+    public List<Extension> getByUser(String username) {
         return null;
     }
 

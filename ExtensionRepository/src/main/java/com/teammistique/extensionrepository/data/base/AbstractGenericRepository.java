@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
 import java.util.stream.Stream;
 
 public abstract class AbstractGenericRepository<T> implements GenericRepository<T> {
@@ -18,7 +19,7 @@ public abstract class AbstractGenericRepository<T> implements GenericRepository<
 
 
     @Override
-    public void create(T entity) {
+    public T create(T entity) {
         try(Session session = factory.openSession()){
             session.beginTransaction();
             session.save(entity);
@@ -27,6 +28,7 @@ public abstract class AbstractGenericRepository<T> implements GenericRepository<
         catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        return entity;
     }
 
 }

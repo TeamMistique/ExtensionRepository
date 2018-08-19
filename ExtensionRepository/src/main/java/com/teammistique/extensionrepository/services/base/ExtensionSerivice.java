@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ExtensionSerivice {
 
-    void createExtension(Extension extension);
+    Extension createExtension(Extension extension);
 
     List<Extension> listAllExtensions();
 
@@ -35,6 +35,12 @@ public interface ExtensionSerivice {
     List<Extension> sortByUploadDate();
 
     List<Extension> sortByLastCommit();
+
+    List<Extension> showPendingExtensions();
+
+    List<Extension> showApprovedExtensions();
+
+    List<Extension> getByUser(String username);
 
     void approveExtension(int id);
 }
