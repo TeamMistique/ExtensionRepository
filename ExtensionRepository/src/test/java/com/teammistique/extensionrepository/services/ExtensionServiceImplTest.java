@@ -5,7 +5,6 @@ import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.models.Extension;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
@@ -175,8 +174,11 @@ public class ExtensionServiceImplTest {
     public void listNewExtension_shouldReturnAllExtensions_whenLessThanMaxListSize() {
         int maxListSize = extensionService.getMaxListSize();
         List<Extension> allExtensions = new ArrayList<>();
+
         for (int i = 0; i < maxListSize-1; i++) {
-            allExtensions.add(new Extension());
+            Extension extension = mock(Extension.class);
+            when(extension.getPublishedDate()).thenReturn(new Date());
+            allExtensions.add(extension);
         }
 
         when(mockExtensionRepository.listAll())
@@ -191,9 +193,13 @@ public class ExtensionServiceImplTest {
     public void listNewExtensions_shouldLimitExtensionsToMaxListSize_whenAllExtensionsAreMoreThanThat() {
         int maxListSize = extensionService.getMaxListSize();
         List<Extension> allExtensions = new ArrayList<>();
+
         for (int i = 0; i < maxListSize+5; i++) {
-            allExtensions.add(new Extension());
+            Extension extension = mock(Extension.class);
+            when(extension.getPublishedDate()).thenReturn(new Date());
+            allExtensions.add(extension);
         }
+
         when(mockExtensionRepository.listAll())
                 .thenReturn(allExtensions);
 
