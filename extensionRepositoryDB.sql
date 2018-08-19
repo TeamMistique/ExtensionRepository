@@ -34,9 +34,8 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 DROP TABLE IF EXISTS `extensions`;
 CREATE TABLE IF NOT EXISTS `extensions` (
   `ExtensionID` int(11) NOT NULL AUTO_INCREMENT,
-  `Published` tinyint(1) NOT NULL DEFAULT 0,
   `Name` varchar(50) NOT NULL,
-  `Description` varchar(200) NOT NULL,
+  `Description` text NOT NULL,
   `Owner` varchar(50) NOT NULL,
   `Downloads` int(11) NOT NULL DEFAULT 0,
   `File` blob NOT NULL,
@@ -44,8 +43,9 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Issues` int(11) NOT NULL DEFAULT 0,
   `PullRequests` int(11) NOT NULL DEFAULT 0,
   `LastCommit` date NOT NULL,
-  `Featured` tinyint(1) NOT NULL DEFAULT 0,
+  `FeaturedDate` date DEFAULT NULL,
   `PublishedDate` date DEFAULT NULL,
+  `CreatedDate` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_users` (`Owner`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
