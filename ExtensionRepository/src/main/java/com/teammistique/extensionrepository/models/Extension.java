@@ -1,6 +1,7 @@
 package com.teammistique.extensionrepository.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -37,6 +38,9 @@ public class Extension {
     @Column(name = "Link")
     private String link;
 
+    @Column(name = "PublishedDate")
+    private Date publishedDate;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "extension_tag",
@@ -61,7 +65,7 @@ public class Extension {
     public Extension() {
     }
 
-    public Extension(int status, String name, String description, User owner, int downloadsCounter, String file, String link, List<Tag> tags, int issuesCounter, int pullRequestsCounter, Date lastCommitDate, int featured) {
+    public Extension(int status, String name, String description, User owner, int downloadsCounter, String file, String link, Date publishedDate, List<Tag> tags, int issuesCounter, int pullRequestsCounter, Date lastCommitDate, int featured) {
         this.status = status;
         this.name = name;
         this.description = description;
@@ -69,6 +73,7 @@ public class Extension {
         this.downloadsCounter = downloadsCounter;
         this.file = file;
         this.link = link;
+        this.publishedDate = publishedDate;
         this.tags = tags;
         this.issuesCounter = issuesCounter;
         this.pullRequestsCounter = pullRequestsCounter;
@@ -178,5 +183,13 @@ public class Extension {
 
     public void setFeatured(int featured) {
         this.featured = featured;
+    }
+
+    public Date getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(Date publishedDate) {
+        this.publishedDate = publishedDate;
     }
 }

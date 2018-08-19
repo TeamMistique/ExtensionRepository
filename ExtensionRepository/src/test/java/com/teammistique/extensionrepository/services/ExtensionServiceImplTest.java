@@ -163,4 +163,65 @@ public class ExtensionServiceImplTest {
             Assert.assertSame(orderedExtensions.get(i), result.get(i));
         }
     }
+
+    @Test
+    public void listNewExtesions_shouldReturnEmptyList_whenNoExtensions() {
+        when(mockExtensionRepository.listAll())
+                .thenReturn(new ArrayList<>());
+
+        List<Extension> result = extensionService.listNewExtensions();
+
+        Assert.assertEquals(new ArrayList<Extension>(), result);
+    }
+
+    @Test
+    public void listNewExtension_shouldReturnAllExtensions_whenLessThanMaxListSize() {
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allExtensions = new ArrayList<>();
+        for (int i = 0; i < maxListSize-1; i++) {
+            allExtensions.add(new Extension());
+        }
+
+        when(mockExtensionRepository.listAll())
+                .thenReturn(allExtensions);
+
+        List<Extension> result = extensionService.listNewExtensions();
+
+        Assert.assertEquals(maxListSize-1, result.size());
+    }
+
+    @Test
+    public void listNewExtensions_shouldLimitExtensionsToMaxListSize_whenAllExtensionsAreMoreThanThat() {
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allExtensions = new ArrayList<>();
+        for (int i = 0; i < maxListSize+5; i++) {
+            allExtensions.add(new Extension());
+        }
+        when(mockExtensionRepository.listAll())
+                .thenReturn(allExtensions);
+
+        List<Extension> result = extensionService.listNewExtensions();
+
+        Assert.assertEquals(maxListSize, result.size());
+    }
+
+    @Test
+    public void listNewExtensions_shouldSortExtensionsByDateCreated() {
+        Extension extension1 = mock(Extension.class);
+        Extension extension2 = mock(Extension.class);
+        Extension extension3 = mock(Extension.class);
+
+
+
+        List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
+        List<Extension> orderedExtensions = Arrays.asList(extension2, extension1, extension3);
+
+        when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
+
+        List<Extension> result = extensionService.listPopularExtensions();
+
+        for (int i = 0; i < result.size(); i++) {
+            Assert.assertSame(orderedExtensions.get(i), result.get(i));
+        }
+    }
 }

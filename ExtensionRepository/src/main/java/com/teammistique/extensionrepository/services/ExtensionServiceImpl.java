@@ -62,7 +62,9 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listNewExtensions() {
-        return null;
+        return extensionRepository.listAll().stream()
+                .limit(maxListSize)
+                .collect(Collectors.toList());
     }
 
     @Override
