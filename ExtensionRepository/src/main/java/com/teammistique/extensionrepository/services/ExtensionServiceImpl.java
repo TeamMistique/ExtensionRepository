@@ -6,6 +6,7 @@ import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -106,7 +107,10 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listPublishedExtensions() {
-        return null;
+        return extensionRepository.listAll().stream()
+                .filter(extension -> extension.getPublishedDate()!=null)
+                .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
