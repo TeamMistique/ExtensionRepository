@@ -6,8 +6,6 @@ import java.util.stream.Stream;
 public interface GenericRepository <T> {
     List<T> listAll();
 
-    Stream<T> modelStream();
-
     T findById(int id);
 
     T create(T entity);

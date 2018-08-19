@@ -63,6 +63,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     @Override
     public List<Extension> listNewExtensions() {
         return extensionRepository.listAll().stream()
+                .sorted(Comparator.comparing(Extension::getPublishedDate).reversed())
                 .limit(maxListSize)
                 .collect(Collectors.toList());
     }

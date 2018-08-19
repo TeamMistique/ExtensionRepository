@@ -15,9 +15,6 @@ public class Extension {
     @Column(name = "ExtensionID")
     private int id;
 
-    @Column(name = "Published")
-    private int status;
-
     @Column(name = "Name")
     private String name;
 
@@ -41,6 +38,12 @@ public class Extension {
     @Column(name = "PublishedDate")
     private Date publishedDate;
 
+    @Column(name = "FeaturedDate")
+    private Date featuredDate;
+
+    @Column(name = "CreatedDate")
+    private Date createdDate;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "extension_tag",
@@ -59,26 +62,7 @@ public class Extension {
     @Column(name = "LastCommit")
     private Date lastCommitDate;
 
-    @Column(name = "Featured")
-    private int featured;
-
     public Extension() {
-    }
-
-    public Extension(int status, String name, String description, User owner, int downloadsCounter, String file, String link, Date publishedDate, List<Tag> tags, int issuesCounter, int pullRequestsCounter, Date lastCommitDate, int featured) {
-        this.status = status;
-        this.name = name;
-        this.description = description;
-        this.owner = owner;
-        this.downloadsCounter = downloadsCounter;
-        this.file = file;
-        this.link = link;
-        this.publishedDate = publishedDate;
-        this.tags = tags;
-        this.issuesCounter = issuesCounter;
-        this.pullRequestsCounter = pullRequestsCounter;
-        this.lastCommitDate = lastCommitDate;
-        this.featured = featured;
     }
 
     public int getId() {
@@ -87,14 +71,6 @@ public class Extension {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getName() {
@@ -177,19 +153,27 @@ public class Extension {
         this.lastCommitDate = lastCommitDate;
     }
 
-    public int getFeatured() {
-        return featured;
-    }
-
-    public void setFeatured(int featured) {
-        this.featured = featured;
-    }
-
     public Date getPublishedDate() {
         return publishedDate;
     }
 
     public void setPublishedDate(Date publishedDate) {
         this.publishedDate = publishedDate;
+    }
+
+    public Date getFeaturedDate() {
+        return featuredDate;
+    }
+
+    public void setFeaturedDate(Date featuredDate) {
+        this.featuredDate = featuredDate;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 }

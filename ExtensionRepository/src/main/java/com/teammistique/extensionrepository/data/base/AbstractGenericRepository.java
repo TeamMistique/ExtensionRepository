@@ -13,12 +13,6 @@ public abstract class AbstractGenericRepository<T> implements GenericRepository<
     SessionFactory factory;
 
     @Override
-    public Stream<T> modelStream() {
-        return listAll().stream();
-    }
-
-
-    @Override
     public T create(T entity) {
         try(Session session = factory.openSession()){
             session.beginTransaction();

@@ -8,10 +8,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static org.mockito.Mockito.*;
 
@@ -206,19 +203,21 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listNewExtensions_shouldSortExtensionsByDateCreated() {
+    public void listNewExtensions_shouldSortExtensionsByDateCreatedInReverseOrder() {
         Extension extension1 = mock(Extension.class);
         Extension extension2 = mock(Extension.class);
         Extension extension3 = mock(Extension.class);
 
-
+        when(extension1.getPublishedDate()).thenReturn(new Date(1534692315464L)); //2018
+        when(extension2.getPublishedDate()).thenReturn(new Date(1341123762001L)); //2012
+        when(extension3.getPublishedDate()).thenReturn(new Date(1399129992001L)); //2014
 
         List<Extension> allExtensions = Arrays.asList(extension1, extension2, extension3);
-        List<Extension> orderedExtensions = Arrays.asList(extension2, extension1, extension3);
+        List<Extension> orderedExtensions = Arrays.asList(extension1, extension3, extension2);
 
         when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
 
-        List<Extension> result = extensionService.listPopularExtensions();
+        List<Extension> result = extensionService.listNewExtensions();
 
         for (int i = 0; i < result.size(); i++) {
             Assert.assertSame(orderedExtensions.get(i), result.get(i));
