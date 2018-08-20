@@ -109,14 +109,16 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listPublishedExtensions() {
-        return extensionRepository.listAll().stream()
+        return listAllExtensions().stream()
                 .filter(extension -> extension.getPublishedDate()!=null)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Extension> listUnpublishedExtensions() {
-        return null;
+        return listAllExtensions().stream()
+                .filter(extension -> extension.getPublishedDate()==null)
+                .collect(Collectors.toList());
     }
 
     @Override
