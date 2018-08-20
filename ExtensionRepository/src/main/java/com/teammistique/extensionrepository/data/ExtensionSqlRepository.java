@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ExtensionSqlRepository extends AbstractGenericRepository<Extension> implements ExtensionRepository {
+public class ExtensionSqlRepository extends AbstractGenericRepository<Extension> implements ExtensionRepository<Extension> {
 
     private SessionFactory factory;
 

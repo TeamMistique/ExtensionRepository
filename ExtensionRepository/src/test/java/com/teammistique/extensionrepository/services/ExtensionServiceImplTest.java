@@ -1,6 +1,7 @@
 package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.ExtensionSqlRepository;
+import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.models.Extension;
 import org.apache.logging.log4j.core.tools.picocli.CommandLine;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 
 public class ExtensionServiceImplTest {
 
-    private GenericRepository<Extension> mockExtensionRepository = mock(ExtensionSqlRepository.class);
+    private ExtensionRepository<Extension> mockExtensionRepository = mock(ExtensionSqlRepository.class);
 
     private ExtensionServiceImpl extensionService;
 

@@ -1,5 +1,6 @@
 package com.teammistique.extensionrepository.services;
 
+import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 public class ExtensionServiceImpl implements ExtensionSerivice {
     private int maxListSize = 10;
 
-    private GenericRepository<Extension> extensionRepository;
+    private ExtensionRepository<Extension> extensionRepository;
 
     @Autowired
-    public ExtensionServiceImpl(GenericRepository<Extension> extensionRepository) {
+    public ExtensionServiceImpl(ExtensionRepository<Extension> extensionRepository) {
         this.extensionRepository = extensionRepository;
     }
 
