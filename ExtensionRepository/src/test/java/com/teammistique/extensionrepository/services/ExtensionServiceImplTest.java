@@ -51,8 +51,7 @@ public class ExtensionServiceImplTest {
     public void getExtensionByID_shouldReturnExtension() {
         int id = 1;
         Extension extension = mock(Extension.class);
-        when(extension.getId())
-                .thenReturn(id);
+        when(extension.getId()).thenReturn(id);
 
         when(mockExtensionRepository.findById(extension.getId()))
                 .thenReturn(extension);
@@ -65,7 +64,7 @@ public class ExtensionServiceImplTest {
 
     @Test
     public void updateExtension_shouldReturnExtension() {
-        Extension extension = mock(Extension.class);
+        Extension extension = new Extension();
         when(mockExtensionRepository.update(extension)).thenReturn(extension);
 
         Extension result = extensionService.updateExtension(extension);
@@ -74,8 +73,86 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void addFeaturedExtension_ShouldUpdateExtension() {
+    public void addFeaturedExtension_shouldUpdateExtension() {
+        Extension extension = new Extension();
+        when(mockExtensionRepository.update(extension)).thenReturn(extension);
 
+        extensionService.addFeaturedExtension(extension);
+
+        Assert.assertTrue((new Date().getTime()- extension.getFeaturedDate().getTime()) < 1000);
+    }
+
+    @Test
+    public void removeFeaturedExtension_shouldUpdateExtension() {
+        Extension extension = new Extension();
+        extension.setFeaturedDate(new Date());
+        when(mockExtensionRepository.update(extension)).thenReturn(extension);
+
+        extensionService.removeFeaturedExtension(extension);
+
+        Assert.assertNull(extension.getFeaturedDate());
+    }
+
+    @Test
+    public void listFeaturedExtension_shouldReturnEmptyList_whenThereAreNoFeaturedExtensions() {
+        when(mockExtensionRepository.listAll()).thenReturn(new ArrayList<>());
+
+        List<Extension> result = extensionService.listFeaturedExtensions();
+
+        Assert.assertEquals(new ArrayList<Extension>(), result);
+    }
+
+    @Test
+    public void listFeaturedExtension_shouldReturnAllFeaturedExtensions_whenLessThanMaxListSize() {
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allPublished = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(allPublished, maxListSize - 1);
+
+        for (Extension extension : allPublished) {
+            extension.setFeaturedDate(new Date());
+        }
+
+        when(mockExtensionRepository.listAll())
+                .thenReturn(allPublished);
+
+        List<Extension> result = extensionService.listFeaturedExtensions();
+
+        Assert.assertEquals(maxListSize - 1, result.size());
+    }
+
+    @Test
+    public void listFeatureExtensions_shouldLimitFeatureExtensionsResultToMaxListSize_whenAllFeaturedExtensionsAreMoreThanThat() {
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> allFeaturedExtensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(allFeaturedExtensions, maxListSize + 5);
+
+        for (Extension extension : allFeaturedExtensions) {
+            extension.setFeaturedDate(new Date());
+        }
+
+        when(mockExtensionRepository.listAll())
+                .thenReturn(allFeaturedExtensions);
+
+        List<Extension> result = extensionService.listFeaturedExtensions();
+
+        Assert.assertEquals(maxListSize, result.size());
+    }
+
+    @Test
+    public void listFeaturedExtensions_shouldReturnOnlyFeaturedExtensions() {
+        List<Extension> allPublishedExtensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(allPublishedExtensions, 7);
+        for (int i = 0; i < 3; i++) {
+          allPublishedExtensions.get(i).setFeaturedDate(new Date());
+        }
+        when(mockExtensionRepository.listAll()).thenReturn(allPublishedExtensions);
+
+        List<Extension> result = extensionService.listFeaturedExtensions();
+
+        Assert.assertEquals(3, result.size());
+        for (Extension extension : result) {
+            Assert.assertNotNull(extension.getFeaturedDate());
+        }
     }
 
     @Test
@@ -125,7 +202,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listNewExtesions_shouldReturnEmptyList_whenNoExtensions() {
+    public void listNewExtensions_shouldReturnEmptyList_whenNoExtensions() {
         when(mockExtensionRepository.listAll())
                 .thenReturn(new ArrayList<>());
 
@@ -174,7 +251,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPublishedExtensions_shouldReturnOnlyPublishedExtesnions() {
+    public void listPublishedExtensions_shouldReturnOnlyPublishedExtensions() {
         List<Extension> allExtensions = new ArrayList<>();
         Helpers.fillListWithUnpublishedExtensions(allExtensions, 5);
         Helpers.fillListWithPublishedExtensions(allExtensions, 3);

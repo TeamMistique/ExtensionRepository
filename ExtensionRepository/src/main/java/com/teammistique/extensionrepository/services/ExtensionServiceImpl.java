@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,11 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> listFeaturedExtensions() {
-        return null;
+        return listPublishedExtensions().stream()
+                .filter(extension -> extension.getFeaturedDate()!=null)
+                .sorted(Comparator.comparing(Extension::getFeaturedDate).reversed())
+                .limit(maxListSize)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -68,12 +73,14 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public void addFeaturedExtension(Extension extension) {
-
+        extension.setFeaturedDate(new Date());
+        extensionRepository.update(extension);
     }
 
     @Override
     public void removeFeaturedExtension(Extension extension) {
-
+        extension.setFeaturedDate(null);
+        extensionRepository.update(extension);
     }
 
     @Override
