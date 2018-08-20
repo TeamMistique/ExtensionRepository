@@ -90,7 +90,9 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> sortByName(List<Extension> extensions) {
-        return null;
+        return extensions.stream()
+                .sorted(Comparator.comparing(Extension::getName))
+                .collect(Collectors.toList());
     }
 
     @Override

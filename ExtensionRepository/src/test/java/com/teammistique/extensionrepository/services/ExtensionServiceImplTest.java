@@ -225,8 +225,33 @@ public class ExtensionServiceImplTest {
         }
     }
 
-    static class Helpers {
-        static void fillListWithPublishedExtensions(List<Extension> list, int count) {
+    @Test
+    public void sortByName_shouldSortByNameInAlphabeticalOrder() {
+        List<String> names = Arrays.asList("Gosho", "Pesho", "Misho", "Anna", "Banana");
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 5);
+        for (int i = 0; i < extensions.size(); i++) {
+            when(extensions.get(i).getName()).thenReturn(names.get(i));
+        }
+        Collections.sort(names);
+
+        extensions = extensionService.sortByName(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(names.get(i), extensions.get(i).getName());
+        }
+    }
+
+
+
+
+
+
+
+
+
+    private static class Helpers {
+        private static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 Extension extension = mock(Extension.class);
                 when(extension.getPublishedDate()).thenReturn(new Date());
@@ -234,7 +259,7 @@ public class ExtensionServiceImplTest {
             }
         }
 
-        static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
+        private static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 list.add(new Extension());
             }
