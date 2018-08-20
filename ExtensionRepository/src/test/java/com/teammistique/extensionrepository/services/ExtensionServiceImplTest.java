@@ -91,9 +91,12 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    //TODO
     public void listFeaturedExtension_shouldCallRepositoryMethod() {
+        extensionService.listFeaturedExtensions(true);
+        verify(mockExtensionRepository).listFeaturedExtensions(true);
 
+        extensionService.listFeaturedExtensions(false);
+        verify(mockExtensionRepository).listFeaturedExtensions(false);
     }
 
     @Test
@@ -114,7 +117,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void deleteExtension_shouldCallDeleteMethodFromRepository() {
+    public void deleteExtension_shouldCallRepositoryMethod() {
         Extension extension = new Extension();
 
         extensionService.deleteExtension(extension);
@@ -123,21 +126,26 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    //TODO
     public void listPopularExtensions_shouldCallRepositoryMethod(){
+        extensionService.listPopularExtensions();
 
+        verify(mockExtensionRepository).listPopularExtensions(extensionService.getMaxListSize());
     }
 
     @Test
-    //TODO
     public void listNewExtensions_shouldCallRepositoryMethod() {
+        extensionService.listNewExtensions();
 
+        verify(mockExtensionRepository).listNewExtensions(extensionService.getMaxListSize());
     }
 
     @Test
-    //TODO
     public void listPublishedExtensions_shouldCallRepositoryMethod() {
+        extensionService.listPublishedExtensions(true);
+        verify(mockExtensionRepository).listPublishedExtensions(true);
 
+        extensionService.listPublishedExtensions(false);
+        verify(mockExtensionRepository).listPublishedExtensions(false);
     }
 
     @Test

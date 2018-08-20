@@ -91,8 +91,8 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%:name1%'");
-            query.setParameter("name1", name);
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%:name%'");
+            query.setParameter("name", name);
             extensions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
