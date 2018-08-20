@@ -91,65 +91,9 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listFeaturedExtension_shouldReturnEmptyList_whenThereAreNoFeaturedExtensions() {
-        when(mockExtensionRepository.listAll()).thenReturn(new ArrayList<>());
+    //TODO
+    public void listFeaturedExtension_shouldCallRepositoryMethod() {
 
-        List<Extension> result = extensionService.listFeaturedExtensions();
-
-        Assert.assertEquals(new ArrayList<Extension>(), result);
-    }
-
-    @Test
-    public void listFeaturedExtension_shouldReturnAllFeaturedExtensions_whenLessThanMaxListSize() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allPublished = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allPublished, maxListSize - 1);
-
-        for (Extension extension : allPublished) {
-            extension.setFeaturedDate(new Date());
-        }
-
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allPublished);
-
-        List<Extension> result = extensionService.listFeaturedExtensions();
-
-        Assert.assertEquals(maxListSize - 1, result.size());
-    }
-
-    @Test
-    public void listFeatureExtensions_shouldLimitFeatureExtensionsResultToMaxListSize_whenAllFeaturedExtensionsAreMoreThanThat() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allFeaturedExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allFeaturedExtensions, maxListSize + 5);
-
-        for (Extension extension : allFeaturedExtensions) {
-            extension.setFeaturedDate(new Date());
-        }
-
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allFeaturedExtensions);
-
-        List<Extension> result = extensionService.listFeaturedExtensions();
-
-        Assert.assertEquals(maxListSize, result.size());
-    }
-
-    @Test
-    public void listFeaturedExtensions_shouldReturnOnlyFeaturedExtensions() {
-        List<Extension> allPublishedExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allPublishedExtensions, 7);
-        for (int i = 0; i < 3; i++) {
-          allPublishedExtensions.get(i).setFeaturedDate(new Date());
-        }
-        when(mockExtensionRepository.listAll()).thenReturn(allPublishedExtensions);
-
-        List<Extension> result = extensionService.listFeaturedExtensions();
-
-        Assert.assertEquals(3, result.size());
-        for (Extension extension : result) {
-            Assert.assertNotNull(extension.getFeaturedDate());
-        }
     }
 
     @Test
@@ -162,104 +106,21 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPopularExtensions_shouldReturnEmptyList_whenThereAreNoExtensions() {
-        when(mockExtensionRepository.listAll())
-                .thenReturn(new ArrayList<>());
+    //TODO
+    public void listPopularExtensions_shouldCallRepositoryMethod(){
 
-        List<Extension> result = extensionService.listPopularExtensions();
-
-        Assert.assertEquals(new ArrayList<Extension>(), result);
     }
 
     @Test
-    public void listPopularExtensions_shouldReturnAllExtensions_whenLessThanMaxListSize() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allExtensions, maxListSize - 1);
+    //TODO
+    public void listNewExtensions_shouldCallRepositoryMethod() {
 
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listPopularExtensions();
-
-        Assert.assertEquals(maxListSize - 1, result.size());
     }
 
     @Test
-    public void listPopularExtensions_shouldLimitExtensionsResultToMaxListSize_whenAllExtensionsAreMoreThanThat() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allExtensions, maxListSize + 5);
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allExtensions);
+    //TODO
+    public void listPublishedExtensions_shouldCallRepositoryMethod() {
 
-        List<Extension> result = extensionService.listPopularExtensions();
-
-        Assert.assertEquals(maxListSize, result.size());
-    }
-
-    @Test
-    public void listNewExtensions_shouldReturnEmptyList_whenNoExtensions() {
-        when(mockExtensionRepository.listAll())
-                .thenReturn(new ArrayList<>());
-
-        List<Extension> result = extensionService.listNewExtensions();
-
-        Assert.assertEquals(new ArrayList<Extension>(), result);
-    }
-
-    @Test
-    public void listNewExtension_shouldReturnAllExtensions_whenLessThanMaxListSize() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allExtensions, maxListSize - 1);
-
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listNewExtensions();
-
-        Assert.assertEquals(maxListSize - 1, result.size());
-    }
-
-    @Test
-    public void listNewExtensions_shouldLimitExtensionsToMaxListSize_whenAllExtensionsAreMoreThanThat() {
-        int maxListSize = extensionService.getMaxListSize();
-        List<Extension> allExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(allExtensions, maxListSize+5);
-
-        when(mockExtensionRepository.listAll())
-                .thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listNewExtensions();
-
-        Assert.assertEquals(maxListSize, result.size());
-    }
-
-    @Test
-    public void listPublishedExtensions_shouldReturnEmptyList_whenNoExtensionsHaveBeenPublished() {
-        List<Extension> unpublishedExtensions = new ArrayList<>();
-        Helpers.fillListWithUnpublishedExtensions(unpublishedExtensions, 5);
-        when(mockExtensionRepository.listAll()).thenReturn(unpublishedExtensions);
-
-        List<Extension> result = extensionService.listPublishedExtensions();
-
-        Assert.assertEquals(0, result.size());
-    }
-
-    @Test
-    public void listPublishedExtensions_shouldReturnOnlyPublishedExtensions() {
-        List<Extension> allExtensions = new ArrayList<>();
-        Helpers.fillListWithUnpublishedExtensions(allExtensions, 5);
-        Helpers.fillListWithPublishedExtensions(allExtensions, 3);
-        when(mockExtensionRepository.listAll()).thenReturn(allExtensions);
-
-        List<Extension> result = extensionService.listPublishedExtensions();
-
-        Assert.assertEquals(3, result.size());
-        for (Extension extension : result) {
-            Assert.assertNotNull(extension.getPublishedDate());
-        }
     }
 
     @Test
@@ -310,43 +171,6 @@ public class ExtensionServiceImplTest {
 
         for (int i = 0; i < extensions.size(); i++) {
             Assert.assertEquals(names.get(i), extensions.get(i).getName());
-        }
-    }
-
-    @Test
-    public void listUnpublishedExtensions_shouldReturnEmptyList_whenThereAreNoExtensions() {
-        when(mockExtensionRepository.listAll()).thenReturn(new ArrayList<>());
-
-        List<Extension> result = extensionService.listUnpublishedExtensions();
-
-        Assert.assertEquals(new ArrayList<Extension>(), result);
-    }
-
-    @Test
-    public void listUnpublishedExtensions_shouldReturnEmptyList_whenAllExtensionsHaveBeenPublished() {
-        List<Extension> publishedExtensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(publishedExtensions, 8);
-        when(mockExtensionRepository.listAll()).thenReturn(publishedExtensions);
-
-        List<Extension> result = extensionService.listUnpublishedExtensions();
-
-        Assert.assertEquals(new ArrayList<Extension>(), result);
-    }
-
-    @Test
-    public void listUnpublishedExtensions_shouldReturnOnlyUnpublishedExtensions() {
-        List<Extension> extensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(extensions, 4);
-        Helpers.fillListWithUnpublishedExtensions(extensions, 6);
-        Helpers.fillListWithPublishedExtensions(extensions, 3);
-        Helpers.fillListWithUnpublishedExtensions(extensions, 2);
-        when(mockExtensionRepository.listAll()).thenReturn(extensions);
-
-        List<Extension> result = extensionService.listUnpublishedExtensions();
-
-        Assert.assertEquals(8, result.size());
-        for(Extension extension:result){
-            Assert.assertNull(extension.getPublishedDate());
         }
     }
 
