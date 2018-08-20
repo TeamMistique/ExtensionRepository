@@ -1,10 +1,11 @@
 package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
+import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.models.Extension;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ExtensionSqlRepository extends AbstractGenericRepository<Extension> implements GenericRepository<Extension> {
+public class ExtensionSqlRepository extends AbstractGenericRepository<Extension> implements ExtensionRepository {
 
     private SessionFactory factory;
 
@@ -45,5 +46,90 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
             System.out.println(e.getMessage());
         }
         return extension;
+    }
+
+    @Override
+    public List<Extension> listPublishedExtensions(boolean published) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = null;
+            if(published){
+                query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL");
+            } else {
+                query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NULL");
+            }
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
+    }
+
+    @Override
+    public List<Extension> listFeaturedExtensions(boolean featured) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = null;
+            if(featured){
+                query = session.createQuery("FROM Extension extension WHERE extension.FeaturedDate IS NOT NULL");
+            } else {
+                query = session.createQuery("FROM Extension extension WHERE extension.FeaturedDate IS NULL");
+            }
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
+    }
+
+    @Override
+    public List<Extension> filterByName(String name) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.Name) LIKE '%:name%'");
+            query.setParameter("name", name);
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
+    }
+
+    @Override
+    public List<Extension> listPopularExtensions(int count) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL " +
+                    "ORDER BY extension.Downloads DESC");
+            query.setMaxResults(count);
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
+    }
+
+    @Override
+    public List<Extension> listNewExtensions(int count) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL " +
+                    "ORDER BY extension.PublishedDate DESC");
+            query.setMaxResults(count);
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
     }
 }
