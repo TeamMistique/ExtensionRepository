@@ -2,15 +2,11 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.ExtensionSqlRepository;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.models.Extension;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.mockito.Mockito.*;

@@ -16,7 +16,7 @@ public interface ExtensionSerivice {
 
     void deleteExtension(Extension extension);
 
-    List<Extension> listFeaturedExtensions();
+    List<Extension> listFeaturedExtensions(boolean featured);
 
     List<Extension> listPopularExtensions();
 
@@ -36,9 +36,7 @@ public interface ExtensionSerivice {
 
     List<Extension> sortByLastCommit(List<Extension> extensions);
 
-    List<Extension> listPublishedExtensions();
-
-    List<Extension> listUnpublishedExtensions();
+    List<Extension> listPublishedExtensions(boolean published);
 
     List<Extension> getByUser(String username);
 

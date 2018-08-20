@@ -49,26 +49,18 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public List<Extension> listFeaturedExtensions() {
-        return listPublishedExtensions().stream()
-                .filter(extension -> extension.getFeaturedDate()!=null)
-                .sorted(Comparator.comparing(Extension::getFeaturedDate).reversed())
-                .limit(maxListSize)
-                .collect(Collectors.toList());
+    public List<Extension> listFeaturedExtensions(boolean featured) {
+        return extensionRepository.listFeaturedExtensions(featured);
     }
 
     @Override
     public List<Extension> listPopularExtensions() {
-        return sortByDownloads(listPublishedExtensions()).stream()
-                .limit(maxListSize)
-                .collect(Collectors.toList());
+        return extensionRepository.listPopularExtensions(maxListSize);
     }
 
     @Override
     public List<Extension> listNewExtensions() {
-        return sortByPublishedDate(listPublishedExtensions()).stream()
-                .limit(maxListSize)
-                .collect(Collectors.toList());
+        return extensionRepository.listNewExtensions(maxListSize);
     }
 
     @Override
@@ -85,7 +77,7 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> filterByName(String name) {
-        return null;
+        return extensionRepository.filterByName(name);
     }
 
     @Override
@@ -111,23 +103,14 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> sortByLastCommit(List<Extension> extensions) {
-        return listPublishedExtensions().stream()
+        return extensions.stream()
                 .sorted(Comparator.comparing(Extension::getLastCommitDate).reversed())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Extension> listPublishedExtensions() {
-        return listAllExtensions().stream()
-                .filter(extension -> extension.getPublishedDate()!=null)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<Extension> listUnpublishedExtensions() {
-        return listAllExtensions().stream()
-                .filter(extension -> extension.getPublishedDate()==null)
-                .collect(Collectors.toList());
+    public List<Extension> listPublishedExtensions(boolean published) {
+        return extensionRepository.listPublishedExtensions(published);
     }
 
     @Override
