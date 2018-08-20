@@ -1,7 +1,5 @@
 package com.teammistique.extensionrepository.data.base;
 
-import com.teammistique.extensionrepository.models.Extension;
-
 import java.util.List;
 
 public interface ExtensionRepository<Extension> extends GenericRepository<Extension>{

@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
+import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,10 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void addFeaturedExtension(Extension extension) {
+    public void addFeaturedExtension(Extension extension) throws FullFeaturedListException {
+        if (listFeaturedExtensions(true).size() >= maxListSize) {
+            throw new FullFeaturedListException("Featured list is already full!");
+        }
         extension.setFeaturedDate(new Date());
         extensionRepository.update(extension);
     }

@@ -1,5 +1,6 @@
 package com.teammistique.extensionrepository.services.base;
 
+import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.Extension;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ExtensionSerivice {
 
     List<Extension> listNewExtensions();
 
-    void addFeaturedExtension(Extension extension);
+    void addFeaturedExtension(Extension extension) throws FullFeaturedListException;
 
     void removeFeaturedExtension(Extension extension);
 
