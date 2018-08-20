@@ -55,9 +55,9 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
             session.beginTransaction();
             Query query = null;
             if(published){
-                query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL");
             } else {
-                query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NULL");
             }
             extensions = query.list();
             session.getTransaction().commit();
@@ -74,9 +74,9 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
             session.beginTransaction();
             Query query = null;
             if(featured){
-                query = session.createQuery("FROM Extension extension WHERE extension.FeaturedDate IS NOT NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NOT NULL");
             } else {
-                query = session.createQuery("FROM Extension extension WHERE extension.FeaturedDate IS NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NULL");
             }
             extensions = query.list();
             session.getTransaction().commit();
@@ -91,8 +91,8 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.Name) LIKE '%:name%'");
-            query.setParameter("name", name);
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%:name1%'");
+            query.setParameter("name1", name);
             extensions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -106,8 +106,8 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL " +
-                    "ORDER BY extension.Downloads DESC");
+            Query query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL " +
+                    "ORDER BY extension.downloadsCounter DESC");
             query.setMaxResults(count);
             extensions = query.list();
             session.getTransaction().commit();
@@ -122,8 +122,8 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE extension.PublishedDate IS NOT NULL " +
-                    "ORDER BY extension.PublishedDate DESC");
+            Query query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL " +
+                    "ORDER BY extension.publishedDate DESC");
             query.setMaxResults(count);
             extensions = query.list();
             session.getTransaction().commit();

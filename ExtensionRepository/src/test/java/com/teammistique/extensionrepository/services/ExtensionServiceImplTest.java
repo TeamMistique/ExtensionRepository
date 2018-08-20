@@ -97,6 +97,23 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
+    public void listFeaturedExtensions_shouldReturnFeaturedExtensionsSortedByFeaturedDateInReverseOrder() {
+        List<Date> dates = Arrays.asList(new Date(1534692315464L),new Date(1341123762001L),new Date(1399129992001L));
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 3);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setPublishedDate(dates.get(i));
+        }
+        dates.sort(Comparator.reverseOrder());
+
+        extensions = extensionService.sortByPublishedDate(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(dates.get(i), extensions.get(i).getPublishedDate());
+        }
+    }
+
+    @Test
     public void deleteExtension_shouldCallDeleteMethodFromRepository() {
         Extension extension = new Extension();
 
