@@ -104,7 +104,9 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
 
     @Override
     public List<Extension> sortByLastCommit(List<Extension> extensions) {
-        return null;
+        return listPublishedExtensions().stream()
+                .sorted(Comparator.comparing(Extension::getLastCommitDate).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override

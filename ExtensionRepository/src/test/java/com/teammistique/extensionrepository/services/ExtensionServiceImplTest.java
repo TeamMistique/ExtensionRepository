@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
@@ -272,6 +273,25 @@ public class ExtensionServiceImplTest {
         Assert.assertEquals(8, result.size());
         for(Extension extension:result){
             Assert.assertNull(extension.getPublishedDate());
+        }
+    }
+
+    @Test
+    public void sortByLastCommit_shouldSortByLastCommitDateInReverseOrder() {
+        List<Date> commitDates = Arrays.asList(new Date(544765595L), new Date(1447655953L), new Date(1544765595L),
+                new Date(1437655953L), new Date(1448655953L), new Date(1534754595L), new Date(1484655953L), new Date(1684655953L));
+
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 8);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setLastCommitDate(commitDates.get(i));
+        }
+        commitDates.sort(Comparator.reverseOrder());
+
+        extensions = extensionService.sortByLastCommit(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(commitDates.get(i), extensions.get(i).getLastCommitDate());
         }
     }
 
