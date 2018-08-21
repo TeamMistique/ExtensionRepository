@@ -114,11 +114,6 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public List<Extension> getByUser(String username) {
-        return null;
-    }
-
-    @Override
     public void publishExtension(Extension extension) {
         extension.setPublishedDate(new Date());
         updateExtension(extension);

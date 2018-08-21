@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Description` text NOT NULL,
   `Owner` varchar(50) NOT NULL,
   `Downloads` int(11) NOT NULL DEFAULT 0,
-  `File` blob NOT NULL,
+  `File` varchar(50) NOT NULL,
   `Link` varchar(200) NOT NULL,
   `Issues` int(11) NOT NULL DEFAULT 0,
   `PullRequests` int(11) NOT NULL DEFAULT 0,

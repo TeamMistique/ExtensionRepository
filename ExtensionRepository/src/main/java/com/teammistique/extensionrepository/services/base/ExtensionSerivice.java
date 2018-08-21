@@ -38,7 +38,5 @@ public interface ExtensionSerivice {
 
     List<Extension> listPublishedExtensions(boolean published);
 
-    List<Extension> getByUser(String username);
-
     void publishExtension(Extension extension);
 }
