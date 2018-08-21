@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.Image;
 import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.models.User;
 import org.hibernate.SessionFactory;
@@ -58,6 +59,7 @@ public class AppConfiguration {
                 .addAnnotatedClass(Extension.class)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Tag.class)
+                .addAnnotatedClass(Image.class)
                 .buildSessionFactory();
     }
 }
