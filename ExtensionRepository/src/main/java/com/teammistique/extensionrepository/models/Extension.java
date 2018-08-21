@@ -62,6 +62,12 @@ public class Extension {
     @Column(name = "LastCommit")
     private Date lastCommitDate;
 
+    @OneToOne
+    @JoinColumn(name = "ImageID")
+    @JsonManagedReference
+    private Image image;
+
+
     public Extension() {
     }
 
@@ -175,5 +181,13 @@ public class Extension {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }

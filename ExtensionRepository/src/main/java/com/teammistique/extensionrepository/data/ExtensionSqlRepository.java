@@ -106,8 +106,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL " +
-                    "ORDER BY extension.downloadsCounter DESC");
+            Query query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL " + "ORDER BY extension.downloadsCounter DESC");
             query.setMaxResults(count);
             extensions = query.list();
             session.getTransaction().commit();
