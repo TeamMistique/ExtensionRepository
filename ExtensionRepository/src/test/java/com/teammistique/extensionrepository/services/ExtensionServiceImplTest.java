@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.ExtensionSqlRepository;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
+import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.Extension;
 import org.junit.Assert;
 import org.junit.Before;
@@ -70,7 +71,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void addFeaturedExtension_shouldUpdateExtension() {
+    public void addFeaturedExtension_shouldUpdateExtension() throws FullFeaturedListException {
         Extension extension = new Extension();
         when(mockExtensionRepository.update(extension)).thenReturn(extension);
 
@@ -78,6 +79,16 @@ public class ExtensionServiceImplTest {
 
         Assert.assertTrue((new Date().getTime()- extension.getFeaturedDate().getTime()) < 1000);
     }
+
+    @Test(expected = FullFeaturedListException.class)
+    public void addFeaturedExtension_shouldThrowExceptionWhenMaxListSize() throws FullFeaturedListException {
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, extensionService.getMaxListSize());
+        when(mockExtensionRepository.listFeaturedExtensions(true)).thenReturn(extensions);
+        Extension extension = new Extension();
+        extensionService.addFeaturedExtension(extension);
+    }
+
 
     @Test
     public void removeFeaturedExtension_shouldUpdateExtension() {
@@ -99,22 +110,6 @@ public class ExtensionServiceImplTest {
         verify(mockExtensionRepository).listFeaturedExtensions(false);
     }
 
-    @Test
-    public void listFeaturedExtensions_shouldReturnFeaturedExtensionsSortedByFeaturedDateInReverseOrder() {
-        List<Date> dates = Arrays.asList(new Date(1534692315464L),new Date(1341123762001L),new Date(1399129992001L));
-        List<Extension> extensions = new ArrayList<>();
-        Helpers.fillListWithPublishedExtensions(extensions, 3);
-        for (int i = 0; i < extensions.size(); i++) {
-            extensions.get(i).setPublishedDate(dates.get(i));
-        }
-        dates.sort(Comparator.reverseOrder());
-
-        extensions = extensionService.sortByPublishedDate(extensions);
-
-        for (int i = 0; i < extensions.size(); i++) {
-            Assert.assertEquals(dates.get(i), extensions.get(i).getPublishedDate());
-        }
-    }
 
     @Test
     public void deleteExtension_shouldCallRepositoryMethod() {
