@@ -90,10 +90,6 @@ public class ExtensionServiceImplTest {
     }
 
 
-
-
-
-
     @Test
     public void removeFeaturedExtension_shouldUpdateExtension() {
         Extension extension = new Extension();

@@ -5,7 +5,7 @@ import com.teammistique.extensionrepository.models.Extension;
 
 import java.util.List;
 
-public interface ExtensionSerivice {
+public interface ExtensionService {
 
     Extension createExtension(Extension extension);
 

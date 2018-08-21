@@ -1,10 +1,9 @@
 package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.Extension;
-import com.teammistique.extensionrepository.services.base.ExtensionSerivice;
+import com.teammistique.extensionrepository.services.base.ExtensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ExtensionServiceImpl implements ExtensionSerivice {
+public class ExtensionServiceImpl implements ExtensionService {
     private int maxListSize = 10;
 
     private ExtensionRepository<Extension> extensionRepository;
