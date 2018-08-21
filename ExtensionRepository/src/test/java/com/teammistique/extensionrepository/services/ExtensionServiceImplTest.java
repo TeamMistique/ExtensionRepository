@@ -240,8 +240,8 @@ public class ExtensionServiceImplTest {
         verify(mockExtensionRepository).update(extension);
     }
 
-    private static class Helpers {
-        private static void fillListWithPublishedExtensions(List<Extension> list, int count) {
+    public static class Helpers {
+        public static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 Extension extension = new Extension();
                 extension.setPublishedDate(new Date());
@@ -249,7 +249,7 @@ public class ExtensionServiceImplTest {
             }
         }
 
-        private static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
+        public static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 list.add(new Extension());
             }

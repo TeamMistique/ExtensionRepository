@@ -1,4 +1,4 @@
-package com.teammistique.extensionrepository.controllers;
+package com.teammistique.extensionrepository.controllers.thymeleaf;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

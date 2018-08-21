@@ -1,4 +1,4 @@
-package com.teammistique.extensionrepository.controllers;
+package com.teammistique.extensionrepository.controllers.thymeleaf;
 
 import com.teammistique.extensionrepository.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
