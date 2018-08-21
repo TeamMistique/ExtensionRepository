@@ -55,9 +55,9 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
             session.beginTransaction();
             Query query = null;
             if(published){
-                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL ORDER BY extension.publishedDate DESC");
             } else {
-                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NULL ORDER BY extension.publishedDate DESC");
             }
             extensions = query.list();
             session.getTransaction().commit();
@@ -74,9 +74,9 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
             session.beginTransaction();
             Query query = null;
             if(featured){
-                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NOT NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NOT NULL ORDER BY extension.featuredDate DESC");
             } else {
-                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NULL");
+                query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NULL ORDER BY extension.publishedDate DESC");
             }
             extensions = query.list();
             session.getTransaction().commit();

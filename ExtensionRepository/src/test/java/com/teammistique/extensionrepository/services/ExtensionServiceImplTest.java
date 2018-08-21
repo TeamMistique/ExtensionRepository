@@ -218,6 +218,33 @@ public class ExtensionServiceImplTest {
         }
     }
 
+    @Test
+    public void filterByName_shouldCallRepositoryMethod() {
+        String name = "test";
+        extensionService.filterByName(name);
+
+        verify(mockExtensionRepository).filterByName(name);
+    }
+
+    @Test
+    public void publishExtension_shouldSetExtensionPublishedDateToNow() {
+        Extension extension = new Extension();
+
+        extensionService.publishExtension(extension);
+
+        Assert.assertNotNull(extension.getPublishedDate());
+        Assert.assertTrue(new Date().getTime() - extension.getPublishedDate().getTime() < 1000);
+    }
+
+    @Test
+    public void publishExtension_shouldCallUpdateExtensionRepositoryMethod() {
+        Extension extension = new Extension();
+
+        extensionService.publishExtension(extension);
+
+        verify(mockExtensionRepository).update(extension);
+    }
+
     private static class Helpers {
         private static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {

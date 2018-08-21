@@ -119,8 +119,9 @@ public class ExtensionServiceImpl implements ExtensionSerivice {
     }
 
     @Override
-    public void approveExtension(Extension extension) {
-
+    public void publishExtension(Extension extension) {
+        extension.setPublishedDate(new Date());
+        updateExtension(extension);
     }
 
     public int getMaxListSize() {

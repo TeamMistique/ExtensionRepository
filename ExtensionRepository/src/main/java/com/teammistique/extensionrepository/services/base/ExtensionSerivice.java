@@ -40,5 +40,5 @@ public interface ExtensionSerivice {
 
     List<Extension> getByUser(String username);
 
-    void approveExtension(Extension extension);
+    void publishExtension(Extension extension);
 }
