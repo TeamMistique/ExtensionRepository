@@ -1,49 +1,47 @@
 package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
-import com.teammistique.extensionrepository.models.Image;
-import com.teammistique.extensionrepository.models.Tag;
+import com.teammistique.extensionrepository.models.File;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageSqlRepository extends AbstractGenericRepository<Image> {
-
+@Repository
+public class FileSqlRepository extends AbstractGenericRepository<File> {
     private SessionFactory factory;
 
     @Autowired
-    public ImageSqlRepository(SessionFactory factory){
+    public FileSqlRepository(SessionFactory factory) {
         this.factory = factory;
     }
 
     @Override
-    public List<Image> listAll() {
-        List<Image> images = new ArrayList<>();
+    public List<File> listAll() {
+        List<File> files = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            images = session.createQuery("from Image").list();
+            files = session.createQuery("from File").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return images;
+        return files;
     }
 
     @Override
-    public Image findById(int id) {
-        Image image = null;
+    public File findById(int id) {
+        File file = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            image = session.get(Image.class, id);
+            file = session.get(File.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return image;
+        return file;
     }
-
 }
