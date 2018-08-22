@@ -29,8 +29,10 @@ public class Extension {
     @Column(name = "Downloads")
     private int downloadsCounter;
 
-    @Column(name = "File")
-    private String file;
+    @OneToOne
+    @JoinColumn(name = "FileID")
+    @JsonManagedReference
+    private File file;
 
     @Column(name = "Link")
     private String link;
@@ -111,11 +113,11 @@ public class Extension {
         this.downloadsCounter = downloadsCounter;
     }
 
-    public String getFile() {
+    public File getFile() {
         return file;
     }
 
-    public void setFile(String file) {
+    public void setFile(File file) {
         this.file = file;
     }
 

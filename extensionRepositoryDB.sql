@@ -26,7 +26,10 @@ CREATE TABLE IF NOT EXISTS `authorities` (
   CONSTRAINT `FK__users` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
+/*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.extensions
 DROP TABLE IF EXISTS `extensions`;
 CREATE TABLE IF NOT EXISTS `extensions` (
@@ -35,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Description` text NOT NULL,
   `Owner` varchar(50) NOT NULL,
   `Downloads` int(11) NOT NULL DEFAULT 0,
-  `File` varchar(50) NOT NULL,
   `Link` varchar(200) NOT NULL,
   `Issues` int(11) NOT NULL DEFAULT 0,
   `PullRequests` int(11) NOT NULL DEFAULT 0,
@@ -44,14 +46,20 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `PublishedDate` date DEFAULT NULL,
   `CreatedDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `ImageID` int(11) NOT NULL,
+  `FileID` int(11) NOT NULL,
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_users` (`Owner`),
   KEY `FK_extensions_images` (`ImageID`),
+  KEY `FK_extensions_files` (`FileID`),
+  CONSTRAINT `FK_extensions_files` FOREIGN KEY (`FileID`) REFERENCES `files` (`FileID`),
   CONSTRAINT `FK_extensions_images` FOREIGN KEY (`ImageID`) REFERENCES `images` (`ImageID`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.extensions: ~0 rows (approximately)
+/*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.extension_tag
 DROP TABLE IF EXISTS `extension_tag`;
 CREATE TABLE IF NOT EXISTS `extension_tag` (
@@ -63,7 +71,25 @@ CREATE TABLE IF NOT EXISTS `extension_tag` (
   CONSTRAINT `FK_extension_tag_tags` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.extension_tag: ~0 rows (approximately)
+/*!40000 ALTER TABLE `extension_tag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extension_tag` ENABLE KEYS */;
+
+-- Dumping structure for table extension_repository.files
+DROP TABLE IF EXISTS `files`;
+CREATE TABLE IF NOT EXISTS `files` (
+  `FileID` int(11) NOT NULL AUTO_INCREMENT,
+  `FileName` varchar(50) NOT NULL,
+  `DownloadUri` varchar(50) NOT NULL,
+  `FileType` varchar(50) NOT NULL,
+  `Size` int(11) NOT NULL,
+  PRIMARY KEY (`FileID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table extension_repository.files: ~0 rows (approximately)
+/*!40000 ALTER TABLE `files` DISABLE KEYS */;
+/*!40000 ALTER TABLE `files` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.images
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
@@ -72,7 +98,10 @@ CREATE TABLE IF NOT EXISTS `images` (
   PRIMARY KEY (`ImageID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.images: ~0 rows (approximately)
+/*!40000 ALTER TABLE `images` DISABLE KEYS */;
+/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.tags
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
@@ -81,7 +110,10 @@ CREATE TABLE IF NOT EXISTS `tags` (
   PRIMARY KEY (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.tags: ~0 rows (approximately)
+/*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tags` ENABLE KEYS */;
+
 -- Dumping structure for table extension_repository.users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
@@ -91,7 +123,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Data exporting was unselected.
+-- Dumping data for table extension_repository.users: ~0 rows (approximately)
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
