@@ -30,7 +30,20 @@ public class ImageServiceImplTest {
         Assert.assertSame(image, result);
     }
 
+    @Test
+    public void findImageByID_shouldReturnImage() {
+        int id = 1;
+        Image image = mock(Image.class);
+        when(image.getId()).thenReturn(id);
 
+        when(mockImageRepository.findById(image.getId()))
+                .thenReturn(image);
+
+        Image result = imageService.getImageById(id);
+
+        Assert.assertSame(image, result);
+
+    }
 
 
 
