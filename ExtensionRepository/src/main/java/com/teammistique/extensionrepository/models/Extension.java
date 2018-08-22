@@ -1,7 +1,6 @@
 package com.teammistique.extensionrepository.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.util.Date;

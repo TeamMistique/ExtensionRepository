@@ -7,11 +7,13 @@ import com.teammistique.extensionrepository.models.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageSqlRepository extends AbstractGenericRepository<Image> {
+@Repository
+public class ImageSqlRepository extends AbstractGenericRepository<Image> implements GenericRepository<Image> {
 
     private SessionFactory factory;
 
