@@ -1,4 +1,4 @@
-package com.teammistique.extensionrepository.controllers.rest;
+package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;

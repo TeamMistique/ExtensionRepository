@@ -1,5 +1,7 @@
 package com.teammistique.extensionrepository.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -23,6 +25,7 @@ public class File {
     private int size;
 
     @OneToOne(mappedBy = "file")
+    @JsonBackReference
     private  Extension extension;
 
     public File() {
