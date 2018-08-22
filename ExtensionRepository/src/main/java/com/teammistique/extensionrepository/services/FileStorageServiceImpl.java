@@ -1,8 +1,10 @@
 package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.config.FileStorageProperties;
+import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.exceptions.FileStorageException;
 import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
+import com.teammistique.extensionrepository.models.File;
 import com.teammistique.extensionrepository.services.base.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -21,9 +23,11 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
     private final Path fileStorageLocation;
+    private GenericRepository<File> repository;
 
     @Autowired
-    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties, GenericRepository<File> repository) {
+        this.repository = repository;
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
 
         try {
@@ -64,5 +68,10 @@ public class FileStorageServiceImpl implements FileStorageService {
         } catch (MalformedURLException ex) {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
+    }
+
+    @Override
+    public File saveToDatabase(File file) {
+        return repository.create(file);
     }
 }

@@ -37,11 +37,12 @@ public class FileController {
                 .path("/downloadFile")
                 .path(fileName)
                 .toUriString();
-
-        return new File(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        File fileToSave = new File(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+        fileStorageService.saveToDatabase(fileToSave);
+        return fileToSave;
     }
 
-    @GetMapping("/downloadFile/{filename:.+}")
+    @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request){
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 

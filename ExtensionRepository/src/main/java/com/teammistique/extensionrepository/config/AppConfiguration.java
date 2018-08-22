@@ -1,6 +1,5 @@
 package com.teammistique.extensionrepository.config;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.teammistique.extensionrepository.models.*;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
