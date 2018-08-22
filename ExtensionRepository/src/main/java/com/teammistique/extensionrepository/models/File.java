@@ -22,13 +22,20 @@ public class File {
     private String fileType;
 
     @Column(name = "Size")
-    private int size;
+    private long size;
 
     @OneToOne(mappedBy = "file")
     @JsonBackReference
     private  Extension extension;
 
     public File() {
+    }
+
+    public File(String fileName, String downloadURI, String fileType, long size) {
+        this.fileName = fileName;
+        this.downloadURI = downloadURI;
+        this.fileType = fileType;
+        this.size = size;
     }
 
     public int getFileID() {
@@ -63,11 +70,11 @@ public class File {
         this.fileType = fileType;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(long size) {
         this.size = size;
     }
 }

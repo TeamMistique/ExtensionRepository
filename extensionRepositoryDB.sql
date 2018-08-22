@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 
 -- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
+INSERT INTO `authorities` (`username`, `authority`) VALUES
+	('bibby', 'ROLE_USER');
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.extensions
@@ -125,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table extension_repository.users: ~0 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
+	('bibby', '{bcrypt}$2a$10$ZxK1jvLZ70v491EIbGPu3eTGt1gAk1dpDBHxw8hOxF5h1VA8VHuQa', 1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
