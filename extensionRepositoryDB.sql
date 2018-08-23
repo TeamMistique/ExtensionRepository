@@ -28,8 +28,6 @@ CREATE TABLE IF NOT EXISTS `authorities` (
 
 -- Dumping data for table extension_repository.authorities: ~0 rows (approximately)
 /*!40000 ALTER TABLE `authorities` DISABLE KEYS */;
-INSERT INTO `authorities` (`username`, `authority`) VALUES
-	('bibby', 'ROLE_USER');
 /*!40000 ALTER TABLE `authorities` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.extensions
@@ -56,10 +54,14 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   CONSTRAINT `FK_extensions_files` FOREIGN KEY (`FileID`) REFERENCES `files` (`FileID`),
   CONSTRAINT `FK_extensions_images` FOREIGN KEY (`ImageID`) REFERENCES `images` (`ImageID`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.extensions: ~0 rows (approximately)
+-- Dumping data for table extension_repository.extensions: ~3 rows (approximately)
 /*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
+REPLACE INTO `extensions` (`ExtensionID`, `Name`, `Description`, `Owner`, `Downloads`, `Link`, `Issues`, `PullRequests`, `LastCommit`, `FeaturedDate`, `PublishedDate`, `CreatedDate`, `ImageID`, `FileID`) VALUES
+	(1, 'Python', 'Python', 'user', 0, 'link', 1, 1, '2018-08-22', '2019-08-22', '2018-08-22', '2018-08-22 15:22:43', 1, 1),
+	(2, 'Extension1', 'new one', 'Bibby', 0, 'link1', 1, 0, '2018-08-22', '2018-08-22', NULL, '2018-08-22 15:26:27', 2, 2),
+	(3, 'Extension 2', 'Extension2', 'Radik', 0, 'link2', 0, 0, '2018-08-22', '2018-08-22', '2018-08-22', '2018-08-22 15:28:14', 3, 3);
 /*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.extension_tag
@@ -73,8 +75,10 @@ CREATE TABLE IF NOT EXISTS `extension_tag` (
   CONSTRAINT `FK_extension_tag_tags` FOREIGN KEY (`TagID`) REFERENCES `tags` (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.extension_tag: ~0 rows (approximately)
+-- Dumping data for table extension_repository.extension_tag: ~1 rows (approximately)
 /*!40000 ALTER TABLE `extension_tag` DISABLE KEYS */;
+REPLACE INTO `extension_tag` (`ExtensionID`, `TagID`) VALUES
+	(1, 2);
 /*!40000 ALTER TABLE `extension_tag` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.files
@@ -86,10 +90,14 @@ CREATE TABLE IF NOT EXISTS `files` (
   `FileType` varchar(50) NOT NULL,
   `Size` int(11) NOT NULL,
   PRIMARY KEY (`FileID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.files: ~0 rows (approximately)
+-- Dumping data for table extension_repository.files: ~3 rows (approximately)
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
+REPLACE INTO `files` (`FileID`, `FileName`, `DownloadUri`, `FileType`, `Size`) VALUES
+	(1, 'file', 'url', 'doc', 12),
+	(2, 'file1', 'url1', 'doc1', 12),
+	(3, 'file2', 'url2', 'doc2', 12);
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.images
@@ -98,10 +106,14 @@ CREATE TABLE IF NOT EXISTS `images` (
   `ImageID` int(11) NOT NULL AUTO_INCREMENT,
   `ImagePath` varchar(50) NOT NULL,
   PRIMARY KEY (`ImageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.images: ~0 rows (approximately)
+-- Dumping data for table extension_repository.images: ~3 rows (approximately)
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
+REPLACE INTO `images` (`ImageID`, `ImagePath`) VALUES
+	(1, 'image'),
+	(2, 'image2'),
+	(3, 'image3');
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.tags
@@ -110,10 +122,13 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `TagID` int(11) NOT NULL AUTO_INCREMENT,
   `TagName` varchar(50) NOT NULL,
   PRIMARY KEY (`TagID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.tags: ~0 rows (approximately)
+-- Dumping data for table extension_repository.tags: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
+REPLACE INTO `tags` (`TagID`, `TagName`) VALUES
+	(1, 'python'),
+	(2, 'debugger');
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.users
@@ -125,10 +140,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table extension_repository.users: ~0 rows (approximately)
+-- Dumping data for table extension_repository.users: ~3 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`username`, `password`, `enabled`) VALUES
-	('bibby', '{bcrypt}$2a$10$ZxK1jvLZ70v491EIbGPu3eTGt1gAk1dpDBHxw8hOxF5h1VA8VHuQa', 1);
+REPLACE INTO `users` (`username`, `password`, `enabled`) VALUES
+	('Bibby', '123', 1),
+	('Radik', '123', 1),
+	('user', '123', 1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
