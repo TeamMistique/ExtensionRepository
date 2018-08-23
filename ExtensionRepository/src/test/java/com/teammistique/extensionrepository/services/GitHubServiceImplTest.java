@@ -35,4 +35,10 @@ public class GitHubServiceImplTest {
         Integer openIssues = gitHubService.getNumberOfIssues("https://github.com/ValveSoftware/Proton");
         Assert.assertNotNull(openIssues);
     }
+
+    @Test
+    public void getNumberOfPullRequests_shouldNotReturnNull() {
+        Integer openIssues = gitHubService.getNumberOfPullRequests("https://github.com/ValveSoftware/Proton");
+        Assert.assertNotNull(openIssues);
+    }
 }

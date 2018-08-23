@@ -27,9 +27,8 @@ public class GitHubServiceImpl implements GitHubService {
         String url = "https://api.github.com/users/"+owner+"/repos";
         String data = GitHubHelpers.getDataFromUrl(url);
 
-        JSONArray jsonArray = null;
         try {
-            jsonArray = new JSONArray(data);
+            JSONArray jsonArray = new JSONArray(data);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -52,7 +51,19 @@ public class GitHubServiceImpl implements GitHubService {
 
     @Override
     public Integer getNumberOfPullRequests(String repo) {
-        return 0;
+        Integer pulls = null;
+        String url = "https://api.github.com/repos/"+GitHubHelpers.getOwnerAndRepo(repo)+"/pulls?state=all";
+        String data = GitHubHelpers.getDataFromUrl(url);
+
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            pulls = jsonArray.length();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(pulls);
+        return pulls;
     }
 
     static class GitHubHelpers{
@@ -98,7 +109,6 @@ public class GitHubServiceImpl implements GitHubService {
                 while ((line = rd.readLine()) != null) {
                     result.append(line);
                 }
-                System.out.println(result);
             } catch (IOException e) {
                 e.printStackTrace();
             }
