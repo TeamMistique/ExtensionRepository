@@ -39,7 +39,7 @@ var fillMainPageList = function (location, data) {
 
     if (data !== '') {
         $.each(data, function(k, v){
-            location.append('<div value="'+v.id+'">'+v.name+'<div>')
+            location.append('<div class="extension" value="'+v.id+'">'+v.name+'<div>')
         });
     }
 };
