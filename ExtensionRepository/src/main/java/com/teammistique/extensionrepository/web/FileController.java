@@ -1,7 +1,7 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.models.File;
-import com.teammistique.extensionrepository.services.base.FileStorageService;
+import com.teammistique.extensionrepository.services.base.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +22,10 @@ import java.io.IOException;
 public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
-    private FileStorageService fileStorageService;
+    private StorageService<File> fileStorageService;
 
     @Autowired
-    public FileController(FileStorageService fileStorageService) {
+    public FileController(StorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
     }
 

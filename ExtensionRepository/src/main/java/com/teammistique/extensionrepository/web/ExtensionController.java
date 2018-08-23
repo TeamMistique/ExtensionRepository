@@ -4,6 +4,7 @@ import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +34,10 @@ public class ExtensionController {
     @GetMapping("/featured")
     public List<Extension> listFeaturedExtensions(){
         return extensionService.listFeaturedExtensions(true);
+    }
+
+    @GetMapping("/{id}")
+    public Extension getExtensionByID(@PathVariable int id){
+        return extensionService.getExtensionById(id);
     }
 }
