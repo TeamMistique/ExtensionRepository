@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+
 public class GitHubServiceImplTest {
     private GitHubServiceImpl gitHubService;
 
@@ -40,5 +42,11 @@ public class GitHubServiceImplTest {
     public void getNumberOfPullRequests_shouldNotReturnNull() {
         Integer openIssues = gitHubService.getNumberOfPullRequests("https://github.com/ValveSoftware/Proton");
         Assert.assertNotNull(openIssues);
+    }
+
+    @Test
+    public void getLastCommitDate_shouldNotReturnNull() {
+        Date lastCommitDate = gitHubService.getLastCommitDate("https://github.com/ValveSoftware/Proton");
+        Assert.assertNotNull(lastCommitDate);
     }
 }

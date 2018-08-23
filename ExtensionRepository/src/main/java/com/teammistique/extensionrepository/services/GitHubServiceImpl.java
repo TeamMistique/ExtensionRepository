@@ -13,10 +13,13 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
 public class GitHubServiceImpl implements GitHubService {
+
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     @Override
     public Integer getNumberOfIssues(String repo) {
@@ -46,7 +49,20 @@ public class GitHubServiceImpl implements GitHubService {
 
     @Override
     public Date getLastCommitDate(String repo) {
-        return null;
+        Date lastCommitDate = null;
+        String url = "https://api.github.com/repos/"+GitHubHelpers.getOwnerAndRepo(repo)+"/commits";
+        String data = GitHubHelpers.getDataFromUrl(url);
+
+        try {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject lastCommit = jsonArray.getJSONObject(0);
+            String lastCommitDateString = String.valueOf(lastCommit.getJSONObject("commit").getJSONObject("author").get("date"));
+            lastCommitDate = format.parse(lastCommitDateString);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return lastCommitDate;
     }
 
     @Override
