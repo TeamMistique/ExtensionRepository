@@ -4,8 +4,8 @@ import com.teammistique.extensionrepository.models.File;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
 
-public interface FileStorageService {
+public interface StorageService<T> {
     String storeFile(MultipartFile file);
     Resource loadFileAsResource(String fileName);
-    File saveToDatabase(File file);
+    T saveToDatabase(T file);
 }
