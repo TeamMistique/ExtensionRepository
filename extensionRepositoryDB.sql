@@ -59,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `extensions` (
 -- Dumping data for table extension_repository.extensions: ~3 rows (approximately)
 /*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
 REPLACE INTO `extensions` (`ExtensionID`, `Name`, `Description`, `Owner`, `Downloads`, `Link`, `Issues`, `PullRequests`, `LastCommit`, `FeaturedDate`, `PublishedDate`, `CreatedDate`, `ImageID`, `FileID`) VALUES
-	(1, 'Python', 'Python', 'user', 0, 'link', 1, 1, '2018-08-22', '2019-08-22', '2018-08-22', '2018-08-22 15:22:43', 1, 1),
-	(2, 'Extension1', 'new one', 'Bibby', 0, 'link1', 1, 0, '2018-08-22', '2018-08-22', NULL, '2018-08-22 15:26:27', 2, 2),
-	(3, 'Extension 2', 'Extension2', 'Radik', 0, 'link2', 0, 0, '2018-08-22', '2018-08-22', '2018-08-22', '2018-08-22 15:28:14', 3, 3);
+	(1, 'Python', 'Python', 'user', 1000, 'link', 1, 1, '2018-08-22', '2017-08-22', '2018-08-22', '2016-08-22 15:22:43', 1, 1),
+	(2, 'Extension1', 'new one', 'Bibby', 3, 'link1', 1, 0, '2018-08-22', '2018-08-22', '2018-08-24', '2018-08-22 15:26:27', 2, 2),
+	(3, 'Extension 2', 'Extension2', 'Radik', 10, 'link2', 0, 0, '2018-08-22', '2018-08-22', '2018-08-21', '2018-08-22 15:28:14', 3, 3);
 /*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.extension_tag
@@ -104,16 +104,16 @@ REPLACE INTO `files` (`FileID`, `FileName`, `DownloadUri`, `FileType`, `Size`) V
 DROP TABLE IF EXISTS `images`;
 CREATE TABLE IF NOT EXISTS `images` (
   `ImageID` int(11) NOT NULL AUTO_INCREMENT,
-  `ImagePath` varchar(50) NOT NULL,
+  `ImagePath` varchar(200) NOT NULL,
   PRIMARY KEY (`ImageID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table extension_repository.images: ~3 rows (approximately)
 /*!40000 ALTER TABLE `images` DISABLE KEYS */;
 REPLACE INTO `images` (`ImageID`, `ImagePath`) VALUES
-	(1, 'image'),
-	(2, 'image2'),
-	(3, 'image3');
+	(1, 'https://s.hswstatic.com/gif/whiskers-sam.jpg'),
+	(2, 'https://i.gyazo.com/d9902d05c4e956a242a0268d9fe499c7.png'),
+	(3, 'https://i.gyazo.com/fb37f080a8871718a4b628c5ae2e1d05.png');
 /*!40000 ALTER TABLE `images` ENABLE KEYS */;
 
 -- Dumping structure for table extension_repository.tags
