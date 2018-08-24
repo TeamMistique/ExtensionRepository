@@ -1,0 +1,96 @@
+html, body{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+body *{
+    display: flex;
+}
+
+.vertical{
+    flex-direction: column;
+}
+
+.page{
+    height: 90%;
+    width: 80%;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: antiquewhite;
+    overflow: hidden;
+}
+
+.title{
+    font-size: 3em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+#image-container{
+    max-width: 200px;
+    max-height: 200px;
+    overflow: hidden;
+    align-content: center;
+    justify-content: center;
+}
+
+img{
+    max-width: 100%;
+}
+
+#github div{
+    justify-content: space-between;
+}
+
+.basic-info{
+    flex-grow: 1;
+    padding-left: 20px;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.top{
+    justify-content: space-between;
+}
+
+.bottom{
+    flex-grow: 1;
+    margin-top: 30px;
+}
+
+#description{
+    margin-right: 50px;
+    flex: 1;
+}
+
+#details{
+    flex: .2;
+}
+
+.text{
+    line-height: 1.5;
+}
+
+#overview *, #download-button{
+    font-size: 1.3em;
+}
+
+.divider{
+    margin: 0 30px;
+}
+
+.caption{
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.info-box{
+    margin-bottom: 30px;
+}
