@@ -15,8 +15,6 @@ public class AppConfiguration {
                 .addAnnotatedClass(Extension.class)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Tag.class)
-                .addAnnotatedClass(Image.class)
-                .addAnnotatedClass(File.class)
                 .buildSessionFactory();
     }
 }

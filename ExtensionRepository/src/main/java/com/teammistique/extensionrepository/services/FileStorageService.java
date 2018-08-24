@@ -21,13 +21,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileStorageService implements StorageService<File> {
+public class FileStorageService implements StorageService {
     private final Path fileStorageLocation;
-    private GenericRepository<File> repository;
 
     @Autowired
-    public FileStorageService(FileStorageProperties fileStorageProperties, GenericRepository<File> repository) {
-        this.repository = repository;
+    public FileStorageService(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
 
         try {
@@ -68,10 +66,5 @@ public class FileStorageService implements StorageService<File> {
         } catch (MalformedURLException ex) {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
-    }
-
-    @Override
-    public File saveToDatabase(File file) {
-        return repository.create(file);
     }
 }

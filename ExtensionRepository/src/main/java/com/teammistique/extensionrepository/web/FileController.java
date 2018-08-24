@@ -1,5 +1,6 @@
 package com.teammistique.extensionrepository.web;
 
+import com.teammistique.extensionrepository.exceptions.NotImageException;
 import com.teammistique.extensionrepository.models.File;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import org.slf4j.Logger;
@@ -16,13 +17,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/files")
 public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
-    private StorageService<File> fileStorageService;
+    private StorageService fileStorageService;
 
     @Autowired
     public FileController(StorageService fileStorageService) {
@@ -34,12 +36,22 @@ public class FileController {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile")
+                .path("/api/files/downloadFile/")
                 .path(fileName)
                 .toUriString();
-        File fileToSave = new File(fileName, fileDownloadUri, file.getContentType(), file.getSize());
-        fileStorageService.saveToDatabase(fileToSave);
-        return fileToSave;
+        return new File(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadImage")
+    public File uploadImage(@RequestParam("image") MultipartFile image) throws NotImageException {
+        if(!Objects.requireNonNull(image.getContentType()).contains("image")) throw new NotImageException("The file that you're trying to upload is not an image.");
+        String fileName = fileStorageService.storeFile(image);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/files/downloadFile/")
+                .path(fileName)
+                .toUriString();
+        return new File(fileName, fileDownloadUri, image.getContentType(), image.getSize());
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")

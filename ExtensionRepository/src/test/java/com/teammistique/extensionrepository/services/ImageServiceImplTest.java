@@ -1,8 +1,6 @@
 package com.teammistique.extensionrepository.services;
 
-import com.teammistique.extensionrepository.data.ImageSqlRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
-import com.teammistique.extensionrepository.models.Image;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

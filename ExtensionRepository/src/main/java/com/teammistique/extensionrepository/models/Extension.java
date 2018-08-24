@@ -28,10 +28,8 @@ public class Extension {
     @Column(name = "Downloads")
     private int downloadsCounter;
 
-    @OneToOne
-    @JoinColumn(name = "FileID")
-    @JsonManagedReference
-    private File file;
+    @Column(name = "file")
+    private String file;
 
     @Column(name = "Link")
     private String link;
@@ -63,10 +61,8 @@ public class Extension {
     @Column(name = "LastCommit")
     private Date lastCommitDate;
 
-    @OneToOne
-    @JoinColumn(name = "ImageID")
-    @JsonManagedReference
-    private Image image;
+    @Column
+    private String image;
 
 
     public Extension() {
@@ -110,14 +106,6 @@ public class Extension {
 
     public void setDownloadsCounter(int downloadsCounter) {
         this.downloadsCounter = downloadsCounter;
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
     }
 
     public String getLink() {
@@ -184,11 +172,19 @@ public class Extension {
         this.createdDate = createdDate;
     }
 
-    public Image getImage() {
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
+    }
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
