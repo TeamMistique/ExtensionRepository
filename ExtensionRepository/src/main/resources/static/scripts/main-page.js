@@ -39,7 +39,26 @@ var fillMainPageList = function (location, data) {
 
     if (data !== '') {
         $.each(data, function(k, v){
-            location.append('<div class="extension" value="'+v.id+'">'+v.name+'<div>')
+            ('<div class="extension" value="'+v.id+'">'+v.name+'<div>')
+            
+            var html = "";
+            html += '<div class="extension" value="' + v.id + '">';
+            html += '<div class="extension-image-container">';    
+            html += '<img class="extension-image" src="' + v.image.imagePath + '"></div>';
+            html += '<div class="extension-title">' + v.name + '</div>';
+            html += '<div class="bottom"><div>' + v.owner.userName + '</div>';
+            html += '<div><i class="fas fa-download"></i>'+ '  '+ v.downloadsCounter + '</div></div></div>';
+
+            location.append(html)
+
+
+
+
+
+
+
+
+
         });
     }
 };
