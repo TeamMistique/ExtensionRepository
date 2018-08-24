@@ -4,6 +4,7 @@ import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
+import com.teammistique.extensionrepository.services.base.GitHubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +17,21 @@ import java.util.stream.Collectors;
 public class ExtensionServiceImpl implements ExtensionService {
     private int maxListSize = 10;
 
+    private GitHubService gitHubService;
     private ExtensionRepository<Extension> extensionRepository;
 
     @Autowired
-    public ExtensionServiceImpl(ExtensionRepository<Extension> extensionRepository) {
+    public ExtensionServiceImpl(ExtensionRepository<Extension> extensionRepository, GitHubService gitHubService) {
         this.extensionRepository = extensionRepository;
+        this.gitHubService = gitHubService;
     }
 
     @Override
     public Extension createExtension(Extension extension) {
+        extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
+        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
+        extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
+        extension.setCreatedDate(new Date());
         return extensionRepository.create(extension);
     }
 

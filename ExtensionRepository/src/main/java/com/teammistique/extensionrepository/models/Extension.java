@@ -28,7 +28,7 @@ public class Extension {
     @Column(name = "Downloads")
     private int downloadsCounter;
 
-    @Column(name = "file")
+    @Column(name = "File")
     private String file;
 
     @Column(name = "Link")

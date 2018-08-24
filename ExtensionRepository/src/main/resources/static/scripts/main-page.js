@@ -44,7 +44,7 @@ var fillMainPageList = function (location, data) {
             var html = "";
             html += '<div class="extension" value="' + v.id + '">';
             html += '<div class="extension-image-container">';    
-            html += '<img class="extension-image" src="' + v.image.imagePath + '"></div>';
+            html += '<img class="extension-image" src="' + v.image + '"></div>';
             html += '<div class="extension-title">' + v.name + '</div>';
             html += '<div class="bottom"><div>' + v.owner.userName + '</div>';
             html += '<div><i class="fas fa-download"></i>'+ '  '+ v.downloadsCounter + '</div></div></div>';

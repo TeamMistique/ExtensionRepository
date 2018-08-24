@@ -2,12 +2,11 @@ package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
+import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -15,10 +14,12 @@ import java.util.List;
 public class ExtensionController {
 
     private ExtensionService extensionService;
+    private UserService userService;
 
     @Autowired
-    public ExtensionController(ExtensionService extensionService) {
+    public ExtensionController(ExtensionService extensionService, UserService userService) {
         this.extensionService = extensionService;
+        this.userService = userService;
     }
 
     @GetMapping("/popular")
@@ -39,5 +40,11 @@ public class ExtensionController {
     @GetMapping("/{id}")
     public Extension getExtensionByID(@PathVariable int id){
         return extensionService.getExtensionById(id);
+    }
+
+    @PostMapping("/new")
+    public Extension createNewExtension(@ModelAttribute Extension extension){
+        System.out.println(extension);
+        return extensionService.createExtension(extension);
     }
 }

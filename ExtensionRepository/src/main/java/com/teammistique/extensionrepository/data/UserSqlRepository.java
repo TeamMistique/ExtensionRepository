@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
+import com.teammistique.extensionrepository.data.base.UserRepository;
 import com.teammistique.extensionrepository.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserSqlRepository extends AbstractGenericRepository<User> implements GenericRepository<User> {
+public class UserSqlRepository extends AbstractGenericRepository<User> implements UserRepository {
 
     private SessionFactory factory;
 
@@ -39,7 +40,8 @@ public class UserSqlRepository extends AbstractGenericRepository<User> implement
         return null;
     }
 
-    public User findById(String id) {
+    @Override
+    public User getUserByUsername(String username) {
         User user = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
