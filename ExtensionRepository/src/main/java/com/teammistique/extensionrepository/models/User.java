@@ -1,6 +1,8 @@
 package com.teammistique.extensionrepository.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.teammistique.extensionrepository.models.security.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,18 +13,28 @@ import java.util.List;
 @Table(name = "users")
 public class User {
     @Id
-    @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
-    @Column(name = "username")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserID")
+    private int id;
+
+    @Column(name = "Username")
     private String userName;
 
-    @NotNull(message = "is required")
-    @Size(min = 1, message = "is required")
-    @Column(name = "password")
+
+    @Column(name = "Password")
     private String password;
 
-    @Column(name = "enabled")
+    @Column(name = "Enabled")
     private int enabled;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "UserID")},
+            inverseJoinColumns = {@JoinColumn(name = "RoleID")}
+    )
+    @JsonManagedReference
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "owner")
     @JsonBackReference
@@ -34,13 +46,22 @@ public class User {
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+        this.enabled = 1;
     }
 
-    public String getUsername() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
