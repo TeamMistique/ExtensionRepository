@@ -1,4 +1,4 @@
-package com.teammistique.extensionrepository.models;
+package com.teammistique.extensionrepository.models.security;
 
 public class LoginUser {
     private String username;

@@ -1,8 +1,8 @@
 package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
-import com.teammistique.extensionrepository.data.base.UserRepository;
-import com.teammistique.extensionrepository.models.User;
+import com.teammistique.extensionrepository.data.base.RoleRepository;
+import com.teammistique.extensionrepository.models.security.Role;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,51 +12,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserSqlRepository extends AbstractGenericRepository<User> implements UserRepository {
-
+public class RoleSqlRepository extends AbstractGenericRepository<Role> implements RoleRepository {
     private SessionFactory factory;
 
     @Autowired
-    public UserSqlRepository(SessionFactory factory) {
+    public RoleSqlRepository(SessionFactory factory) {
         this.factory = factory;
     }
 
     @Override
-    public List<User> listAll() {
-        List<User> users = new ArrayList<>();
+    public Role getByName(String role) {
+        List roles = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            users = session.createQuery("from User").list();
+            roles = session.createQuery("FROM Role r WHERE r.role = "+role).list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return users;
+        return (Role) roles.get(0);
     }
 
     @Override
-    public User findById(int id) {
-        User user = null;
+    public List<Role> listAll() {
+        List roles = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            user = session.get(User.class, id);
+            roles = session.createQuery("FROM Role").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return user;
+        return roles;
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        List users = new ArrayList<>();
+    public Role findById(int id) {
+        Role role = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            users = session.createQuery("FROM User u WHERE u.username = "+username).list();
+            role = session.get(Role.class, id);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return (User) users.get(0);
+        return role;
     }
 }

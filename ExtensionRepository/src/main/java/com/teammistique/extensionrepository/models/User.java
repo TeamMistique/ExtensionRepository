@@ -88,4 +88,12 @@ public class User {
     public void setExtensions(List<Extension> extensions) {
         this.extensions = extensions;
     }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }

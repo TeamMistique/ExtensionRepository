@@ -18,10 +18,10 @@ public class ExtensionServiceImpl implements ExtensionService {
     private int maxListSize = 10;
 
     private GitHubService gitHubService;
-    private ExtensionRepository<Extension> extensionRepository;
+    private ExtensionRepository extensionRepository;
 
     @Autowired
-    public ExtensionServiceImpl(ExtensionRepository<Extension> extensionRepository, GitHubService gitHubService) {
+    public ExtensionServiceImpl(ExtensionRepository extensionRepository, GitHubService gitHubService) {
         this.extensionRepository = extensionRepository;
         this.gitHubService = gitHubService;
     }
