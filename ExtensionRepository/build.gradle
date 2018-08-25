@@ -51,4 +51,5 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.9.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.0.7.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '5.0.7.RELEASE'
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 }
