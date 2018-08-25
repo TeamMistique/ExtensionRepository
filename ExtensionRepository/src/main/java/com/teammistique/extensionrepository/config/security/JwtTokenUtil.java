@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.config.security;
 
 import com.teammistique.extensionrepository.models.User;
 
+import com.teammistique.extensionrepository.models.security.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static com.teammistique.extensionrepository.models.security.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
 import static com.teammistique.extensionrepository.models.security.Constants.SIGNING_KEY;
@@ -39,13 +41,13 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(User user){
-        return doGenerateToken(user.getUsername());
+        return doGenerateToken(user.getUsername(), user.getRoles());
     }
 
     //TODO generate tokens with other authorities
-    private String doGenerateToken(String subject){
+    private String doGenerateToken(String subject, List<Role> roles){
         Claims claims = Jwts.claims().setSubject(subject);
-        claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+        claims.put("scopes", roles);
 
         return Jwts.builder()
                 .setClaims(claims)

@@ -1,7 +1,5 @@
 package com.teammistique.extensionrepository.config.security;
 
-import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
-import com.teammistique.extensionrepository.exceptions.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.SignatureException;
 import java.util.Arrays;
 
 import static com.teammistique.extensionrepository.models.security.Constants.HEADER_STRING;
@@ -58,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if(jwtTokenUtil.validateToken(authToken, userDetails)){
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 logger.info("Authenticated user "+username+", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
