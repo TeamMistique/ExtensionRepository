@@ -1,6 +1,5 @@
 package com.teammistique.extensionrepository.web;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.models.security.AuthToken;
 import com.teammistique.extensionrepository.models.security.LoginUser;
@@ -61,7 +60,7 @@ public class AuthenticationController {
 
     @PostMapping("/adminsignup")
     @PreAuthorize("hasRole('ADMIN')")
-    public User saveAdmin(@ModelAttribute User user){
+    public User saveAdmin(@ModelAttribute User user) {
         List<Role> roles = Arrays.asList(roleService.getRoleByName("ROLE_ADMIN"), roleService.getRoleByName("ROLE_USER"));
         return userService.save(user, roles);
     }
