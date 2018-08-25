@@ -1,4 +1,4 @@
-package com.teammistique.extensionrepository.config;
+package com.teammistique.extensionrepository.config.security;
 
 import com.teammistique.extensionrepository.models.User;
 

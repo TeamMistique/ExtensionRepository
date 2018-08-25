@@ -1,5 +1,6 @@
-package com.teammistique.extensionrepository.config;
+package com.teammistique.extensionrepository.config.security;
 
+import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.exceptions.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
