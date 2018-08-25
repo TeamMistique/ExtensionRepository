@@ -1,6 +1,11 @@
 package com.teammistique.extensionrepository.models.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 public class LoginUser {
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private String username;
     private String password;
 

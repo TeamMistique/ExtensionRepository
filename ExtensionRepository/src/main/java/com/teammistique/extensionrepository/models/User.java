@@ -3,12 +3,12 @@ package com.teammistique.extensionrepository.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.teammistique.extensionrepository.models.security.Role;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class User implements UserDetails {
     private int id;
 
     @Column(name = "Username")
-    private String userName;
+    private String username;
 
 
     @Column(name = "Password")
@@ -30,13 +30,14 @@ public class User implements UserDetails {
     @Column(name = "Enabled")
     private int enabled;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "UserID")},
             inverseJoinColumns = {@JoinColumn(name = "RoleID")}
     )
     @JsonManagedReference
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles;
 
     @OneToMany(mappedBy = "owner")
@@ -46,8 +47,8 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String userName, String password) {
-        this.userName = userName;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
         this.enabled = 1;
     }
@@ -60,8 +61,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.userName;
+        return this.username;
     }
 
     @Override

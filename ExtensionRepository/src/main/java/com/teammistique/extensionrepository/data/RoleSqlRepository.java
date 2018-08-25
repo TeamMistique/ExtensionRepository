@@ -25,7 +25,7 @@ public class RoleSqlRepository extends AbstractGenericRepository<Role> implement
         List roles = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            roles = session.createQuery("FROM Role r WHERE r.role = "+role).list();
+            roles = session.createQuery("FROM Role WHERE role = '"+role+"'").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

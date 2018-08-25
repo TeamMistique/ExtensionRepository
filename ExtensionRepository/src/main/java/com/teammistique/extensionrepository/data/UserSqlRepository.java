@@ -52,7 +52,7 @@ public class UserSqlRepository extends AbstractGenericRepository<User> implement
         List users = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            users = session.createQuery("FROM User u WHERE u.username = "+username).list();
+            users = session.createQuery("FROM User WHERE username = '"+username+"'").list();
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
