@@ -55,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.warn("Couldn't find bearer string, will ignore the header.");
         }
 
-        if(username!=null && SecurityContextHolder.getContext().getAuthentication()!=null){
+        if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if(jwtTokenUtil.validateToken(authToken, userDetails)){
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
