@@ -2,13 +2,14 @@ package com.teammistique.extensionrepository.models.security;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.teammistique.extensionrepository.models.User;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleID")
@@ -55,5 +56,10 @@ public class Role {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String getAuthority() {
+        return role;
     }
 }

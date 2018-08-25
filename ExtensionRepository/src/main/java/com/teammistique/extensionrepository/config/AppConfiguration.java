@@ -1,6 +1,7 @@
 package com.teammistique.extensionrepository.config;
 
 import com.teammistique.extensionrepository.models.*;
+import com.teammistique.extensionrepository.models.security.Role;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ public class AppConfiguration {
                 .addAnnotatedClass(Extension.class)
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Tag.class)
+                .addAnnotatedClass(Role.class)
                 .buildSessionFactory();
     }
 }

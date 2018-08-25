@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.function.Function;
 
 import static com.teammistique.extensionrepository.models.security.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
 import static com.teammistique.extensionrepository.models.security.Constants.SIGNING_KEY;
@@ -20,16 +19,11 @@ import static com.teammistique.extensionrepository.models.security.Constants.SIG
 @Component
 public class JwtTokenUtil implements Serializable {
     public String getUsernameFromToken(String token) {
-        return getClaimsFromToken(token, Claims::getSubject);
+        return getAllClaimsFromToken(token).getSubject();
     }
 
     public Date getExpirationDateFromToken(String token){
-        return getClaimsFromToken(token, Claims::getExpiration);
-    }
-
-    public Object getClaimsFromToken(String token, Function claimsResolver){
-        final Claims claims = getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
+        return getAllClaimsFromToken(token).getExpiration();
     }
 
     private Claims getAllClaimsFromToken(String token){

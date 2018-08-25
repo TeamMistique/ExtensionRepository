@@ -5,13 +5,16 @@ import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.models.security.Role;
 import com.teammistique.extensionrepository.services.base.RoleService;
 import com.teammistique.extensionrepository.services.base.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("UserServiceImpl")
+public class UserServiceImpl implements UserService, UserDetailsService {
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -44,4 +47,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.create(user);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findOne(username);
+    }
 }

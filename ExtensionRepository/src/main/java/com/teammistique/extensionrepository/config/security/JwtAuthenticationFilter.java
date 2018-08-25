@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,13 +25,12 @@ import static com.teammistique.extensionrepository.models.security.Constants.TOK
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    @Resource(name = "UserServiceImpl")
     private UserDetailsService userDetailsService;
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    @Autowired
-    public JwtAuthenticationFilter(UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
-        this.userDetailsService = userDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
+    public JwtAuthenticationFilter() {
     }
 
     @Override
@@ -46,10 +46,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {
                 logger.error("An error occurred while getting username from token.", e);
-            } catch (ExpiredJwtException e) {
-                logger.warn("The token is expired and not valid anymore", e);
-            } catch (SignatureException e) {
-                logger.error("Authentication failed. Username or password not valid.");
+//            } catch (ExpiredJwtException e) {
+//                logger.warn("The token is expired and not valid anymore", e);
+//            } catch (SignatureException e) {
+//                logger.error("Authentication failed. Username or password not valid.");
             }
         } else {
             logger.warn("Couldn't find bearer string, will ignore the header.");
