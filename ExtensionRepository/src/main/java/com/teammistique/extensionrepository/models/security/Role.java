@@ -5,11 +5,12 @@ import com.teammistique.extensionrepository.models.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "roles")
-public class Role implements GrantedAuthority {
+public class Role implements GrantedAuthority, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RoleID")

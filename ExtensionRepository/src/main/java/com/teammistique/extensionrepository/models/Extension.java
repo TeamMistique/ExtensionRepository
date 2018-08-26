@@ -3,12 +3,13 @@ package com.teammistique.extensionrepository.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "extensions")
-public class Extension {
+public class Extension implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ExtensionID")
@@ -20,7 +21,7 @@ public class Extension {
     @Column(name = "Description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Owner")
     @JsonManagedReference
     private User owner;

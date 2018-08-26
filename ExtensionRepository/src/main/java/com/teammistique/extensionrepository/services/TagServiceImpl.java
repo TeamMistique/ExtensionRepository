@@ -20,4 +20,9 @@ public class TagServiceImpl implements TagService {
     public Tag createTag(Tag tag) {
         return tagRepository.create(tag);
     }
+
+    @Override
+    public Tag getByID(int id) {
+        return tagRepository.findById(id);
+    }
 }

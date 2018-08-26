@@ -3,9 +3,12 @@ package com.teammistique.extensionrepository.models.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class LoginUser {
+import java.io.Serializable;
+
+public class LoginUser implements Serializable {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private String username;
     private String password;
 

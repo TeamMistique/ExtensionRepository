@@ -6,10 +6,12 @@ import com.teammistique.extensionrepository.models.security.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -39,11 +41,11 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(User user){
-        return doGenerateToken(user.getUsername(), user.getRoles());
+        return doGenerateToken(user.getUsername(), user.getAuthorities());
     }
 
     //TODO generate tokens with other authorities
-    private String doGenerateToken(String subject, List<Role> roles){
+    private String doGenerateToken(String subject, Collection<? extends GrantedAuthority> roles){
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("scopes", roles);
 

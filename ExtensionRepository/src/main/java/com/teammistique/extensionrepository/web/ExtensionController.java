@@ -1,12 +1,12 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
+import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
 import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,14 +50,26 @@ public class ExtensionController {
         return extensionService.getExtensionById(id);
     }
 
-    @PostMapping("/new")
-    public Extension createNewExtension(@ModelAttribute Extension extension, HttpServletRequest request){
+    @PostMapping("/add")
+    public Extension createNewExtension(@RequestBody ExtensionDTO extensionDTO, HttpServletRequest request){
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
         User user = userService.findOne(username);
+
+        Extension extension = new Extension();
         extension.setOwner(user);
-        System.out.println(extension);
+        extension.setName(extensionDTO.getName());
+        extension.setDescription(extensionDTO.getDescription());
+        extension.setLink(extensionDTO.getLink());
+        extension.setFile(extensionDTO.getFile());
+        extension.setImage(extensionDTO.getImage());
+
         return extensionService.createExtension(extension);
+    }
+
+    @PutMapping("/edit")
+    public Extension editExtension(@ModelAttribute Extension extension){
+        return extensionService.updateExtension(extension);
     }
 }

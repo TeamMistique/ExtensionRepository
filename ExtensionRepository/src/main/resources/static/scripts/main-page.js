@@ -50,15 +50,6 @@ var fillMainPageList = function (location, data) {
             html += '<div><i class="fas fa-download"></i>'+ '  '+ v.downloadsCounter + '</div></div></div>';
 
             location.append(html)
-
-
-
-
-
-
-
-
-
         });
     }
 };

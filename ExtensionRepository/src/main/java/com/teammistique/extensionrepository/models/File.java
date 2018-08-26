@@ -1,6 +1,8 @@
 package com.teammistique.extensionrepository.models;
 
-public class File {
+import java.io.Serializable;
+
+public class File implements Serializable {
     private String fileName;
     private String downloadURI;
     private String fileType;

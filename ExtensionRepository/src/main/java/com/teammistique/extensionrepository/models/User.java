@@ -9,12 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")
@@ -103,10 +104,6 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public int getEnabled() {
-        return enabled;
-    }
-
     public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
@@ -117,10 +114,6 @@ public class User implements UserDetails {
 
     public void setExtensions(List<Extension> extensions) {
         this.extensions = extensions;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
     }
 
     public void setRoles(List<Role> roles) {
