@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.models.DTO;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class ExtensionDTO implements Serializable {
     private int  id;
@@ -14,6 +15,7 @@ public class ExtensionDTO implements Serializable {
     private Date publishedDate;
     private Date createdDate;
     private Date featuredDate;
+    private List<String> tagNames;
 
     public ExtensionDTO() {
     }
@@ -96,5 +98,13 @@ public class ExtensionDTO implements Serializable {
 
     public void setFeaturedDate(Date featuredDate) {
         this.featuredDate = featuredDate;
+    }
+
+    public List<String> getTagNames() {
+        return tagNames;
+    }
+
+    public void setTagNames(List<String> tagNames) {
+        this.tagNames = tagNames;
     }
 }

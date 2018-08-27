@@ -51,7 +51,7 @@ public class Extension implements Serializable {
     @JoinTable(
             name = "extension_tag",
             joinColumns = {@JoinColumn(name = "ExtensionID")},
-            inverseJoinColumns = {@JoinColumn(name = "TagID")}
+            inverseJoinColumns = {@JoinColumn(name = "TagName")}
     )
     @JsonManagedReference
     private List<Tag> tags;

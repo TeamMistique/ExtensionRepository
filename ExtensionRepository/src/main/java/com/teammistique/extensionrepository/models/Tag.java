@@ -10,10 +10,6 @@ import java.util.List;
 @Table(name = "tags")
 public class Tag implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TagID")
-    private int tagID;
-
     @Column(name = "TagName")
     private String tagName;
 
@@ -26,14 +22,6 @@ public class Tag implements Serializable {
 
     public Tag(String tagName) {
         this.tagName = tagName;
-    }
-
-    public int getTagID() {
-        return tagID;
-    }
-
-    public void setTagID(int tagID) {
-        this.tagID = tagID;
     }
 
     public String getTagName() {
