@@ -1,14 +1,18 @@
 package com.teammistique.extensionrepository.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "extensions")
-public class Extension {
+public class Extension implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ExtensionID")
@@ -20,9 +24,9 @@ public class Extension {
     @Column(name = "Description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "Owner")
-    @JsonManagedReference
+    @JsonIgnore
     private User owner;
 
     @Column(name = "Downloads")
@@ -47,7 +51,7 @@ public class Extension {
     @JoinTable(
             name = "extension_tag",
             joinColumns = {@JoinColumn(name = "ExtensionID")},
-            inverseJoinColumns = {@JoinColumn(name = "TagID")}
+            inverseJoinColumns = {@JoinColumn(name = "TagName")}
     )
     @JsonManagedReference
     private List<Tag> tags;
@@ -96,6 +100,13 @@ public class Extension {
         return owner;
     }
 
+    @JsonProperty("owner")
+    public String getOwnerUsername(){
+        if(owner!=null) return owner.getUsername();
+        else return null;
+    }
+
+    @JsonIdentityReference
     public void setOwner(User owner) {
         this.owner = owner;
     }

@@ -2,12 +2,18 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.Tag;
+import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
 import com.teammistique.extensionrepository.services.base.GitHubService;
+import com.teammistique.extensionrepository.services.base.TagService;
+import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -18,20 +24,40 @@ public class ExtensionServiceImpl implements ExtensionService {
     private int maxListSize = 10;
 
     private GitHubService gitHubService;
-    private ExtensionRepository<Extension> extensionRepository;
+    private ExtensionRepository extensionRepository;
+    private TagService tagService;
+    private UserService userService;
 
     @Autowired
-    public ExtensionServiceImpl(ExtensionRepository<Extension> extensionRepository, GitHubService gitHubService) {
-        this.extensionRepository = extensionRepository;
+    public ExtensionServiceImpl(GitHubService gitHubService, ExtensionRepository extensionRepository, TagService tagService, UserService userService) {
         this.gitHubService = gitHubService;
+        this.extensionRepository = extensionRepository;
+        this.tagService = tagService;
+        this.userService = userService;
     }
 
     @Override
-    public Extension createExtension(Extension extension) {
+    public Extension createExtension(ExtensionDTO dto) {
+        List<Tag> tags = new ArrayList<>();
+        for(String tagName:dto.getTagNames()){
+            Tag tag = new Tag(tagName);
+            tags.add(tagService.createTag(tag));
+        }
+
+        Extension extension = new Extension();
+        extension.setOwner(userService.findOne(dto.getUsername()));
+        extension.setName(dto.getName());
+        extension.setDescription(dto.getDescription());
+        extension.setLink(dto.getLink());
+        extension.setFile(dto.getFile());
+        extension.setImage(dto.getImage());
+        extension.setTags(tags);
+
         extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
         extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
         extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
         extension.setCreatedDate(new Date());
+
         return extensionRepository.create(extension);
     }
 
@@ -46,7 +72,25 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public Extension updateExtension(Extension extension) {
+    public Extension updateExtension(ExtensionDTO dto) {
+        Extension extension = extensionRepository.findById(dto.getId());
+
+        //make sure a user can only edit his own extensions
+        if(!extension.getOwnerUsername().equals(dto.getUsername())) return null;
+
+        List<Tag> tags = new ArrayList<>();
+        for(String tagName:dto.getTagNames()){
+            Tag tag = new Tag(tagName);
+            tags.add(tagService.createTag(tag));
+        }
+
+        extension.setName(dto.getName());
+        extension.setDescription(dto.getDescription());
+        extension.setLink(dto.getLink());
+        extension.setFile(dto.getFile());
+        extension.setImage(dto.getImage());
+        extension.setTags(tags);
+
         return extensionRepository.update(extension);
     }
 
@@ -125,8 +169,9 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public void publishExtension(Extension extension) {
-        extension.setPublishedDate(new Date());
-        updateExtension(extension);
+        Extension published = extensionRepository.findById(extension.getId());
+        published.setPublishedDate(new Date());
+        extensionRepository.update(published);
     }
 
     public int getMaxListSize() {

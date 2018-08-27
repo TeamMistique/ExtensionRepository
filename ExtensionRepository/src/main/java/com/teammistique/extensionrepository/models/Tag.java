@@ -3,16 +3,13 @@ package com.teammistique.extensionrepository.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TagID")
-    private int tagID;
-
     @Column(name = "TagName")
     private String tagName;
 
@@ -25,14 +22,6 @@ public class Tag {
 
     public Tag(String tagName) {
         this.tagName = tagName;
-    }
-
-    public int getTagID() {
-        return tagID;
-    }
-
-    public void setTagID(int tagID) {
-        this.tagID = tagID;
     }
 
     public String getTagName() {
