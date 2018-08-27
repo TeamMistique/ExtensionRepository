@@ -51,7 +51,7 @@ public class ExtensionController {
     }
 
     @PostMapping("/add")
-    public Extension createNewExtension(@RequestBody ExtensionDTO extensionDTO, HttpServletRequest request){
+    public Extension addExtension(@RequestBody ExtensionDTO extensionDTO, HttpServletRequest request){
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
@@ -68,8 +68,15 @@ public class ExtensionController {
         return extensionService.createExtension(extension);
     }
 
-    @PutMapping("/edit")
-    public Extension editExtension(@ModelAttribute Extension extension){
+    @PostMapping("/edit")
+    public Extension editExtension(@RequestBody ExtensionDTO dto){
+        Extension extension = new Extension();
+        extension.setName(dto.getName());
+        extension.setDescription(dto.getDescription());
+        extension.setLink(dto.getLink());
+        extension.setFile(dto.getFile());
+        extension.setImage(dto.getImage());
+
         return extensionService.updateExtension(extension);
     }
 }
