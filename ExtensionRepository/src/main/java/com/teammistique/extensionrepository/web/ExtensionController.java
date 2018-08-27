@@ -85,4 +85,14 @@ public class ExtensionController {
 
         return userService.findOne(username).getExtensions();
     }
+
+    @PostMapping("/delete")
+    public void deleteExtension(@RequestParam int id, HttpServletRequest request){
+        String header = request.getHeader(HEADER_STRING);
+        String authToken = header.replace(TOKEN_PREFIX, "");
+        String username = jwtTokenUtil.getUsernameFromToken(authToken);
+
+        Extension extension = extensionService.getExtensionById(id);
+        if(extension.getOwnerUsername().equals(username)) extensionService.deleteExtension(extension);
+    }
 }
