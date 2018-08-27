@@ -47,6 +47,9 @@ public class Extension implements Serializable {
     @Column(name = "CreatedDate")
     private Date createdDate;
 
+    @Column(name = "Version")
+    private double version;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "extension_tag",
@@ -197,5 +200,13 @@ public class Extension implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public double getVersion() {
+        return version;
+    }
+
+    public void setVersion(double version) {
+        this.version = version;
     }
 }

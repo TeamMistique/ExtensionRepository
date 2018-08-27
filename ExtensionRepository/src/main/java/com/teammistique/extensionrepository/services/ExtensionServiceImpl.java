@@ -84,6 +84,8 @@ public class ExtensionServiceImpl implements ExtensionService {
             tags.add(tagService.createTag(tag));
         }
 
+        if(!extension.getFile().equals(dto.getFile())) extension.setVersion(extension.getVersion()+0.1);
+
         extension.setName(dto.getName());
         extension.setDescription(dto.getDescription());
         extension.setLink(dto.getLink());

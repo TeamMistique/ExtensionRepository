@@ -17,6 +17,8 @@ public class ExtensionDTO implements Serializable {
     private Date featuredDate;
     private List<String> tagNames;
     private String username;
+    private double version;
+
 
     public ExtensionDTO() {
     }
@@ -115,5 +117,13 @@ public class ExtensionDTO implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getVersion() {
+        return version;
+    }
+
+    public void setVersion(double version) {
+        this.version = version;
     }
 }
