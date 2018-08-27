@@ -10,12 +10,6 @@ $('#home-button').on('click', function (e) {
     $('#one-extension-page').addClass('hide');  
 });
 
-$('.extension').on('click', function (e) {
-    e.preventDefault();
-    $('#main-page').addClass('hide');  
-    $('#one-extension-page').removeClass('hide');  
-});
-
 var fillPopularList = function () {
     $.ajax({
         type: "GET",
@@ -56,7 +50,7 @@ var fillMainPageList = function (location, data) {
             html += '<div class="extension-image-container">';
             html += '<img class="extension-image" src="' + v.image + '"></div>';
             html += '<div class="extension-title">' + v.name + '</div>';
-            html += '<div class="bottom"><div>' + v.owner.userName + '</div>';
+            html += '<div class="bottom"><div>' + v.owner + '</div>';
             html += '<div><i class="fas fa-download"></i>' + '  ' + v.downloadsCounter + '</div></div></div>';
 
             location.append(html)
@@ -66,14 +60,21 @@ var fillMainPageList = function (location, data) {
     }
 };
 
+$('#featured-category, #popular-category, #new-category').on('click', '.extension', function(){
+    console.log("Extension has been clicked - 1.")
+    console.log($(this)+'..................................'+$(this).attr('value'));
+    var id = $(this).attr('value');
+    getExtensionData(id);
+    $('#main-page').addClass('hide');  
+    $('#one-extension-page').removeClass('hide');
+});
 
-
-var getExtensionData = function () {
+var getExtensionData = function (id) {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/id",
-        success: function (extension) {
-            fillExtensionPage($('#one-extension-page'), extension)
+        url: "/api/extensions/"+id,
+        success: function (data) {
+            fillExtensionPage($('#one-extension-page'), data)
         }
     });
 };
@@ -81,19 +82,19 @@ var getExtensionData = function () {
 var fillExtensionPage = function (location, extension) {
     location.html('');
 
-    if (data !== '') {
+    if (extension !== '') {
         var html = "";
         html +='<div class="extension-page" value="'>+ extension.id + '">';
         html += '<div class="top"><div class="inner-top"><div id="image-container">';
         html += '<img src="' + extension.image + '"></div>';
         html += '<div class="basic-info vertical">';
         html += '<div id="name" class="title">' + extension.name + '</div>';
-        html += '<div id="owner" class="overview">' + extension.owner.userName + '</div>';
+        html += '<div id="owner" class="overview">' + extension.owner + '</div>';
         html += '<div id="downloads-number" class="overview"><i class="fas fa-download"></i>' + '  ' + extension.downloadsCounter + '</div>';
         html += '<div id="download-link"><button id="download-button">Download</button></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
         html += '<div id="github" class="vertical"><div><a href="' + extension.link + '" class="caption">GitHub</a></div>';
-        html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extenion.issuesCounter + '</div></div></div>';
-        html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extenion.pullRequestsCounter + '</div></div></div>';
+        html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extension.issuesCounter + '</div></div></div>';
+        html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extension.pullRequestsCounter + '</div></div></div>';
         html += '<div class="text"><div>Last commit<div class="small-padding caption">' + extension.lastCommitDate + '</div></div></div></div></div></div></div>';
         html += '<div class="bottom-extension-page"><div class="text">' + extension.description + '</div>';
         html += '<div id="tag-section" class="tag-section"><div class="caption">Tags</div><div id="tag-list">';
