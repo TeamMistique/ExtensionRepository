@@ -56,39 +56,17 @@ public class ExtensionController {
     }
 
     @PostMapping("/add")
-    public Extension addExtension(@RequestBody ExtensionDTO extensionDTO, HttpServletRequest request){
+    public Extension addExtension(@RequestBody ExtensionDTO dto, HttpServletRequest request){
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
-        User user = userService.findOne(username);
+        dto.setUsername(username);
 
-        List<Tag> tags = new ArrayList<>();
-        for(String tagName:extensionDTO.getTagNames()){
-            Tag tag = new Tag(tagName);
-            tags.add(tagService.createTag(tag));
-        }
-
-        Extension extension = new Extension();
-        extension.setOwner(user);
-        extension.setName(extensionDTO.getName());
-        extension.setDescription(extensionDTO.getDescription());
-        extension.setLink(extensionDTO.getLink());
-        extension.setFile(extensionDTO.getFile());
-        extension.setImage(extensionDTO.getImage());
-        extension.setTags(tags);
-
-        return extensionService.createExtension(extension);
+        return extensionService.createExtension(dto);
     }
 
     @PostMapping("/edit")
     public Extension editExtension(@RequestBody ExtensionDTO dto){
-        Extension extension = new Extension();
-        extension.setName(dto.getName());
-        extension.setDescription(dto.getDescription());
-        extension.setLink(dto.getLink());
-        extension.setFile(dto.getFile());
-        extension.setImage(dto.getImage());
-
-        return extensionService.updateExtension(extension);
+        return extensionService.updateExtension(dto);
     }
 }

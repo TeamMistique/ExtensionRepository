@@ -1,19 +1,20 @@
 package com.teammistique.extensionrepository.services.base;
 
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 
 import java.util.List;
 
 public interface ExtensionService {
 
-    Extension createExtension(Extension extension);
+    Extension createExtension(ExtensionDTO dto);
 
     List<Extension> listAllExtensions();
 
     Extension getExtensionById(int id);
 
-    Extension updateExtension(Extension extension);
+    Extension updateExtension(ExtensionDTO dto);
 
     void deleteExtension(Extension extension);
 
