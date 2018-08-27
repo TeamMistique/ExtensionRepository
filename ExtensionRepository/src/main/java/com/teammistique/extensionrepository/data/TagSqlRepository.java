@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
+import com.teammistique.extensionrepository.data.base.TagRepository;
 import com.teammistique.extensionrepository.models.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class TagSqlRepository extends AbstractGenericRepository<Tag> implements GenericRepository<Tag> {
+public class TagSqlRepository extends AbstractGenericRepository<Tag> implements TagRepository {
 
     private SessionFactory factory;
 
@@ -41,6 +42,18 @@ public class TagSqlRepository extends AbstractGenericRepository<Tag> implements 
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             tag = session.get(Tag.class, id);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return tag;
+    }
+
+    @Override
+    public Tag saveOrUpdate(Tag tag) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            session.saveOrUpdate(tag);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -1,13 +1,14 @@
 package com.teammistique.extensionrepository.web;
 
-import com.teammistique.extensionrepository.models.DTO.TagDTO;
 import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.services.base.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,10 +21,13 @@ public class TagController {
         this.tagService = tagService;
     }
 
-    public Tag addNewTags(@RequestBody List<TagDTO> tags){
-        for(TagDTO dto:tags){
-            Tag tag = new Tag(dto.getTagName());
-            tagService.createTag(tag);
+    @PostMapping("/add")
+    public List<Tag> addNewTags(@RequestBody List<String> tagNames){
+        List<Tag> tags = new ArrayList<>();
+        for(String tagName:tagNames){
+            Tag tag = new Tag(tagName);
+            tags.add(tagService.createTag(tag));
         }
+        return tags;
     }
 }
