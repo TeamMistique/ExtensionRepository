@@ -73,13 +73,17 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     @Override
     public Extension updateExtension(ExtensionDTO dto) {
+        Extension extension = extensionRepository.findById(dto.getId());
+
+        //make sure a user can only edit his own extensions
+        if(!extension.getOwnerUsername().equals(dto.getUsername())) return null;
+
         List<Tag> tags = new ArrayList<>();
         for(String tagName:dto.getTagNames()){
             Tag tag = new Tag(tagName);
             tags.add(tagService.createTag(tag));
         }
 
-        Extension extension = extensionRepository.findById(dto.getId());
         extension.setName(dto.getName());
         extension.setDescription(dto.getDescription());
         extension.setLink(dto.getLink());

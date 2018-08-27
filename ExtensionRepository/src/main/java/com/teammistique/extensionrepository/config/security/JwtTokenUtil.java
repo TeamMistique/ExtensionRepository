@@ -2,7 +2,6 @@ package com.teammistique.extensionrepository.config.security;
 
 import com.teammistique.extensionrepository.models.User;
 
-import com.teammistique.extensionrepository.models.security.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import static com.teammistique.extensionrepository.models.security.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
 import static com.teammistique.extensionrepository.models.security.Constants.SIGNING_KEY;

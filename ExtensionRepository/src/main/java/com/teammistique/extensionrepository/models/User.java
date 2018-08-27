@@ -40,7 +40,7 @@ public class User implements UserDetails, Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     @JsonBackReference
     private List<Extension> extensions;
 
