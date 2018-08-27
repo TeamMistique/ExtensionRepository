@@ -4,12 +4,24 @@ $(document).ready(function () {
     fillNewList();
 });
 
+$('#home-button').on('click', function (e) {
+    e.preventDefault();
+    $('#main-page').removeClass('hide');  
+    $('#one-extension-page').addClass('hide');  
+});
+
+$('.extension').on('click', function (e) {
+    e.preventDefault();
+    $('#main-page').addClass('hide');  
+    $('#one-extension-page').removeClass('hide');  
+});
+
 var fillPopularList = function () {
     $.ajax({
         type: "GET",
         url: "/api/extensions/popular",
         success: function (data) {
-            fillMainPageList($('#popular-list'), data)
+            fillMainPageList($('#inspo-extensions-popular'), data)
         }
     });
 };
@@ -19,7 +31,7 @@ var fillFeaturedList = function () {
         type: "GET",
         url: "/api/extensions/featured",
         success: function (data) {
-            fillMainPageList($('#featured-list'), data)
+            fillMainPageList($('#inspo-extensions-featured'), data)
         }
     });
 };
@@ -29,7 +41,7 @@ var fillNewList = function () {
         type: "GET",
         url: "/api/extensions/new",
         success: function (data) {
-            fillMainPageList($('#new-list'), data)
+            fillMainPageList($('#inspo-extensions-new'), data)
         }
     });
 };
@@ -38,27 +50,60 @@ var fillMainPageList = function (location, data) {
     location.html('');
 
     if (data !== '') {
-        $.each(data, function(k, v){
-            ('<div class="extension" value="'+v.id+'">'+v.name+'<div>')
-            
+        $.each(data, function (k, v) {
             var html = "";
             html += '<div class="extension" value="' + v.id + '">';
-            html += '<div class="extension-image-container">';    
+            html += '<div class="extension-image-container">';
             html += '<img class="extension-image" src="' + v.image + '"></div>';
             html += '<div class="extension-title">' + v.name + '</div>';
             html += '<div class="bottom"><div>' + v.owner.userName + '</div>';
-            html += '<div><i class="fas fa-download"></i>'+ '  '+ v.downloadsCounter + '</div></div></div>';
+            html += '<div><i class="fas fa-download"></i>' + '  ' + v.downloadsCounter + '</div></div></div>';
 
             location.append(html)
-
-
-
-
-
-
-
-
-
         });
+    } else {
+        console.log('error');
     }
 };
+
+
+
+var getExtensionData = function () {
+    $.ajax({
+        type: "GET",
+        url: "/api/extensions/id",
+        success: function (extension) {
+            fillExtensionPage($('#one-extension-page'), extension)
+        }
+    });
+};
+
+var fillExtensionPage = function (location, extension) {
+    location.html('');
+
+    if (data !== '') {
+        var html = "";
+        html +='<div class="extension-page" value="'>+ extension.id + '">';
+        html += '<div class="top"><div class="inner-top"><div id="image-container">';
+        html += '<img src="' + extension.image + '"></div>';
+        html += '<div class="basic-info vertical">';
+        html += '<div id="name" class="title">' + extension.name + '</div>';
+        html += '<div id="owner" class="overview">' + extension.owner.userName + '</div>';
+        html += '<div id="downloads-number" class="overview"><i class="fas fa-download"></i>' + '  ' + extension.downloadsCounter + '</div>';
+        html += '<div id="download-link"><button id="download-button">Download</button></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
+        html += '<div id="github" class="vertical"><div><a href="' + extension.link + '" class="caption">GitHub</a></div>';
+        html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extenion.issuesCounter + '</div></div></div>';
+        html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extenion.pullRequestsCounter + '</div></div></div>';
+        html += '<div class="text"><div>Last commit<div class="small-padding caption">' + extension.lastCommitDate + '</div></div></div></div></div></div></div>';
+        html += '<div class="bottom-extension-page"><div class="text">' + extension.description + '</div>';
+        html += '<div id="tag-section" class="tag-section"><div class="caption">Tags</div><div id="tag-list">';
+        // how to fill tags
+
+
+        html += '</div></div></div></div></div>';
+
+        location.append(html)
+
+    }
+};
+

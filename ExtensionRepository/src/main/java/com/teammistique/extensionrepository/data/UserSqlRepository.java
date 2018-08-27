@@ -45,7 +45,7 @@ public class UserSqlRepository extends AbstractGenericRepository<User> implement
         User user = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            user = session.get(User.class, id);
+            user = session.get(User.class, username);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
