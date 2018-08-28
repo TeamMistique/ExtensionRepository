@@ -3,7 +3,6 @@ package com.teammistique.extensionrepository.web;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
-import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
 import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +93,29 @@ public class ExtensionController {
 
         Extension extension = extensionService.getExtensionById(id);
         if(extension.getOwnerUsername().equals(username)) extensionService.deleteExtension(extension);
+    }
+
+    @GetMapping("/filter")
+    public List<Extension> filterExtensionsByName(@RequestParam(required = false) String name){
+        if(name==null) name = "";
+        return extensionService.filterPublishedByName(name);
+    }
+
+    @GetMapping("/sortByUpload")
+    public List<Extension> sortExtensionsByPublishedDate(@RequestParam(required = false) String name){
+        if(name==null) name = "";
+        return extensionService.sortByPublishedDate(extensionService.filterPublishedByName(name));
+    }
+
+    @GetMapping("/sortByLastCommit")
+    public List<Extension> sortExtensionsByLastCommitDate(@RequestParam(required = false) String name){
+        if(name==null) name = "";
+        return extensionService.sortByLastCommit(extensionService.filterPublishedByName(name));
+    }
+
+    @GetMapping("/sortByNumberOfDownloads")
+    public List<Extension> sortExtensionsByDownloads(@RequestParam(required = false) String name){
+        if(name==null) name = "";
+        return extensionService.sortByDownloads(extensionService.filterPublishedByName(name));
     }
 }

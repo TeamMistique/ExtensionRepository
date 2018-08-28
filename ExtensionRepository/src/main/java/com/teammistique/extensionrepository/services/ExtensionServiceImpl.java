@@ -5,7 +5,6 @@ import com.teammistique.extensionrepository.exceptions.FullFeaturedListException
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
-import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
 import com.teammistique.extensionrepository.services.base.GitHubService;
 import com.teammistique.extensionrepository.services.base.TagService;
@@ -132,8 +131,8 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public List<Extension> filterByName(String name) {
-        return extensionRepository.filterByName(name);
+    public List<Extension> filterPublishedByName(String name) {
+        return extensionRepository.filterPublishedByName(name);
     }
 
     @Override

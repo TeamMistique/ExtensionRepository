@@ -28,7 +28,7 @@ public interface ExtensionService {
 
     void removeFeaturedExtension(Extension extension);
 
-    List<Extension> filterByName(String name);
+    List<Extension> filterPublishedByName(String name);
 
     List<Extension> sortByDownloads(List<Extension> extensions);
 

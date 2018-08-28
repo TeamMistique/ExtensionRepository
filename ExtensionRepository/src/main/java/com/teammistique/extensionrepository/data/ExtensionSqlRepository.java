@@ -87,12 +87,11 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
     }
 
     @Override
-    public List<Extension> filterByName(String name) {
+    public List<Extension> filterPublishedByName(String name) {
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%:name%'");
-            query.setParameter("name", name);
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%"+name+"%' AND extension.publishedDate IS NOT NULL");
             extensions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {

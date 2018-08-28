@@ -216,9 +216,9 @@ public class ExtensionServiceImplTest {
     @Test
     public void filterByName_shouldCallRepositoryMethod() {
         String name = "test";
-        extensionService.filterByName(name);
+        extensionService.filterPublishedByName(name);
 
-        verify(mockExtensionRepository).filterByName(name);
+        verify(mockExtensionRepository).filterPublishedByName(name);
     }
 
     @Test
