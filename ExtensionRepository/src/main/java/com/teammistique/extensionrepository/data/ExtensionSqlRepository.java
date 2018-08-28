@@ -101,6 +101,20 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
     }
 
     @Override
+    public List<Extension> filterAllByName(String name) {
+        List extensions = new ArrayList<>();
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%"+name+"%'");
+            extensions = query.list();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return extensions;
+    }
+
+    @Override
     public List<Extension> listPopularExtensions(int count) {
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {

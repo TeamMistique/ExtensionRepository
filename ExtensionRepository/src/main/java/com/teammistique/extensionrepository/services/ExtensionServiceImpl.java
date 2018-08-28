@@ -136,6 +136,11 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
+    public List<Extension> filterAllByName(String name) {
+        return extensionRepository.filterAllByName(name);
+    }
+
+    @Override
     public List<Extension> sortByDownloads(List<Extension> extensions) {
         return extensions.stream()
                 .sorted(Comparator.comparing(Extension::getDownloadsCounter).reversed())

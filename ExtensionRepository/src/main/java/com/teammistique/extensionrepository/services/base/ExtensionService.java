@@ -30,6 +30,8 @@ public interface ExtensionService {
 
     List<Extension> filterPublishedByName(String name);
 
+    List<Extension> filterAllByName(String name);
+
     List<Extension> sortByDownloads(List<Extension> extensions);
 
     List<Extension> sortByName(List<Extension> extensions);
