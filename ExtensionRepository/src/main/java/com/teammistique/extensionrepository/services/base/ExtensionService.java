@@ -36,4 +36,6 @@ public interface ExtensionService {
     void updateDownloadsCounter(Extension extension);
 
     Extension getExtensionByFile(String fileName);
+
+    void updateGitHub();
 }

@@ -9,6 +9,7 @@ import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.services.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     public Extension changeFeatureStatus(int id) throws FullFeaturedListException, UnpublishedExtensionException {
         Extension extension = extensionRepository.findById(id);
         boolean add = extension.getFeaturedDate() == null;
-        
+
         if(add && extension.getPublishedDate()==null){
             throw new UnpublishedExtensionException("Only published extensions can be featured.");
         }
@@ -194,6 +195,18 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     @Override
     public Extension getExtensionByFile(String fileName) {
         return extensionRepository.getExtensionByFile(fileName);
+    }
+
+    @Override
+    @Scheduled(fixedRate = 300000)
+    public void updateGitHub() {
+        List<Extension> extensions = listAllExtensions();
+        for(Extension extension:extensions){
+            String repo = extension.getLink();
+            extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
+            extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
+            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+        }
     }
 
     @Override
