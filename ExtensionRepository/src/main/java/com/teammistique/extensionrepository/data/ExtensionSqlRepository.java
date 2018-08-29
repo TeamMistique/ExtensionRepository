@@ -144,4 +144,17 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         }
         return extensions;
     }
+
+    @Override
+    public Extension getExtensionByFile(String fileName) {
+        Object extension = null;
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            extension = session.createQuery("FROM Extension extension WHERE extension.file LIKE '%"+ fileName +"%'").stream().findFirst();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return (Extension) extension;
+    }
 }

@@ -1,7 +1,9 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.exceptions.NotImageException;
+import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.File;
+import com.teammistique.extensionrepository.services.base.ExtensionService;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,10 +27,12 @@ public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 
     private StorageService fileStorageService;
+    private ExtensionService extensionService;
 
     @Autowired
-    public FileController(StorageService fileStorageService) {
+    public FileController(StorageService fileStorageService, ExtensionService extensionService) {
         this.fileStorageService = fileStorageService;
+        this.extensionService = extensionService;
     }
 
     @PostMapping("/uploadFile")
@@ -57,6 +61,9 @@ public class FileController {
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request){
         Resource resource = fileStorageService.loadFileAsResource(fileName);
+
+        Extension extension = extensionService.getExtensionByFile(fileName);
+        extensionService.updateDownloadsCounter(extension);
 
         String contentType = null;
         try{

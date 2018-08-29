@@ -32,4 +32,8 @@ public interface ExtensionService {
     List<Extension> sortByLastCommit(List<Extension> extensions);
 
     List<Extension> listPublishedExtensions(boolean published);
+
+    void updateDownloadsCounter(Extension extension);
+
+    Extension getExtensionByFile(String fileName);
 }

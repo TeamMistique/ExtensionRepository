@@ -176,6 +176,17 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
+    public void updateDownloadsCounter(Extension extension) {
+        extension.setDownloadsCounter(extension.getDownloadsCounter()+1);
+        extensionRepository.update(extension);
+    }
+
+    @Override
+    public Extension getExtensionByFile(String fileName) {
+        return extensionRepository.getExtensionByFile(fileName);
+    }
+
+    @Override
     public Extension publishExtension(int id) {
         Extension published = extensionRepository.findById(id);
         published.setPublishedDate(new Date());

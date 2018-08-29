@@ -11,4 +11,5 @@ public interface ExtensionRepository extends GenericRepository<Extension>{
     List<Extension> filterAllByName(String name);
     List<Extension> listPopularExtensions(int count);
     List<Extension> listNewExtensions(int count);
+    Extension getExtensionByFile(String fileName);
 }
