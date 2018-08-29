@@ -1,6 +1,7 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.AdminExtensionService;
 import com.teammistique.extensionrepository.services.base.UserService;
@@ -43,7 +44,7 @@ public class AdminController {
         Extension extension = null;
         try {
             extension = extensionService.changeFeatureStatus(id);
-        } catch (FullFeaturedListException e) {
+        } catch (FullFeaturedListException | UnpublishedExtensionException e) {
             e.printStackTrace();
         }
         return extension;
@@ -55,7 +56,7 @@ public class AdminController {
     }
 
     @PostMapping("/disableUser")
-    public void disableUser(@RequestParam String username){
-        userService.disable(userService.findOne(username));
+    public void changeUsersEnabledStatus(@RequestParam String username){
+        userService.changeEnabled(userService.findOne(username));
     }
 }

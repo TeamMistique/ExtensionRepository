@@ -63,7 +63,7 @@ public class FileController {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 
         Extension extension = extensionService.getExtensionByFile(fileName);
-        extensionService.updateDownloadsCounter(extension);
+        if(extension!=null) extensionService.updateDownloadsCounter(extension);
 
         String contentType = null;
         try{

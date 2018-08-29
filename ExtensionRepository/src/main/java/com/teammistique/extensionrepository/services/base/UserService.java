@@ -10,5 +10,5 @@ public interface UserService {
     List<User> findAll();
     User findById(Integer id);
     User save(User user, List<Role> roles);
-    void disable(User user);
+    User changeEnabled(User user);
 }

@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.services;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
@@ -123,9 +124,13 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension changeFeatureStatus(int id) throws FullFeaturedListException {
+    public Extension changeFeatureStatus(int id) throws FullFeaturedListException, UnpublishedExtensionException {
         Extension extension = extensionRepository.findById(id);
         boolean add = extension.getFeaturedDate() == null;
+        
+        if(add && extension.getPublishedDate()==null){
+            throw new UnpublishedExtensionException("Only published extensions can be featured.");
+        }
 
         if (add && listFeaturedExtensions(true).size() >= maxListSize) {
             throw new FullFeaturedListException("Featured list is already full!");

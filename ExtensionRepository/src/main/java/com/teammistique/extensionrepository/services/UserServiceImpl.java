@@ -48,8 +48,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void disable(User user) {
-        user.setEnabled(0);
+    public User changeEnabled(User user) {
+        user.setEnabled((user.isEnabled()) ? 0 : 1);
+        return userRepository.update(user);
     }
 
     @Override
