@@ -1,5 +1,6 @@
 package com.teammistique.extensionrepository.services.base;
 
+import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 
@@ -7,11 +8,11 @@ import java.util.List;
 
 public interface ExtensionService {
 
-    Extension createExtension(ExtensionDTO dto);
+    Extension createExtension(ExtensionDTO dto) throws InvalidLinkException;
 
     Extension getExtensionById(int id, String authToken);
 
-    Extension updateExtension(ExtensionDTO dto, String authToken);
+    Extension updateExtension(ExtensionDTO dto, String authToken) throws InvalidLinkException;
 
     void deleteExtension(int id, String authToken);
 

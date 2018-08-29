@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.services;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
@@ -38,7 +39,9 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension createExtension(ExtensionDTO dto) {
+    public Extension createExtension(ExtensionDTO dto) throws InvalidLinkException {
+        if(dto.getLink().contains("github.com")) throw new InvalidLinkException("This link doesn't link to github");
+
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
             Tag tag = new Tag(tagName);
@@ -76,7 +79,8 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension updateExtension(ExtensionDTO dto, String authToken) {
+    public Extension updateExtension(ExtensionDTO dto, String authToken) throws InvalidLinkException {
+        if(dto.getLink().contains("github.com")) throw new InvalidLinkException("This link doesn't link to github");
         Extension extension = extensionRepository.findById(dto.getId());
 
         //make sure a user can only edit his own extensions

@@ -1,6 +1,7 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
+import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;
@@ -65,7 +66,12 @@ public class ExtensionController {
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
         dto.setUsername(username);
 
-        return extensionService.createExtension(dto);
+        try {
+            return extensionService.createExtension(dto);
+        } catch (InvalidLinkException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @PostMapping("/edit")
@@ -73,7 +79,12 @@ public class ExtensionController {
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
 
-        return extensionService.updateExtension(dto, authToken);
+        try {
+            return extensionService.updateExtension(dto, authToken);
+        } catch (InvalidLinkException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @GetMapping("/mine")
