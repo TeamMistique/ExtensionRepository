@@ -206,6 +206,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
             extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
             extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+            extensionRepository.update(extension);
         }
     }
 
