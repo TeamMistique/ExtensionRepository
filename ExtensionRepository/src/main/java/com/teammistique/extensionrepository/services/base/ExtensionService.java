@@ -24,9 +24,7 @@ public interface ExtensionService {
 
     List<Extension> listNewExtensions();
 
-    void addFeaturedExtension(Extension extension) throws FullFeaturedListException;
-
-    void removeFeaturedExtension(Extension extension);
+    Extension changeFeatureStatus(int id) throws FullFeaturedListException;
 
     List<Extension> filterPublishedByName(String name);
 
@@ -42,5 +40,7 @@ public interface ExtensionService {
 
     List<Extension> listPublishedExtensions(boolean published);
 
-    void publishExtension(Extension extension);
+    Extension publishExtension(int id);
+
+    void setMaxListSize(int maxListSize);
 }

@@ -38,7 +38,7 @@ public class ExtensionServiceImpl implements ExtensionService {
     @Override
     public Extension createExtension(ExtensionDTO dto) {
         List<Tag> tags = new ArrayList<>();
-        for(String tagName:dto.getTagNames()){
+        for (String tagName : dto.getTagNames()) {
             Tag tag = new Tag(tagName);
             tags.add(tagService.createTag(tag));
         }
@@ -75,15 +75,15 @@ public class ExtensionServiceImpl implements ExtensionService {
         Extension extension = extensionRepository.findById(dto.getId());
 
         //make sure a user can only edit his own extensions
-        if(!extension.getOwnerUsername().equals(dto.getUsername())) return null;
+        if (!extension.getOwnerUsername().equals(dto.getUsername())) return null;
 
         List<Tag> tags = new ArrayList<>();
-        for(String tagName:dto.getTagNames()){
+        for (String tagName : dto.getTagNames()) {
             Tag tag = new Tag(tagName);
             tags.add(tagService.createTag(tag));
         }
 
-        if(!extension.getFile().equals(dto.getFile())) extension.setVersion(extension.getVersion()+0.1);
+        if (!extension.getFile().equals(dto.getFile())) extension.setVersion(extension.getVersion() + 0.1);
 
         extension.setName(dto.getName());
         extension.setDescription(dto.getDescription());
@@ -116,18 +116,18 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public void addFeaturedExtension(Extension extension) throws FullFeaturedListException {
-        if (listFeaturedExtensions(true).size() >= maxListSize) {
+    public Extension changeFeatureStatus(int id) throws FullFeaturedListException {
+        Extension extension = getExtensionById(id);
+        boolean add = extension.getFeaturedDate() == null;
+
+        if (add && listFeaturedExtensions(true).size() >= maxListSize) {
             throw new FullFeaturedListException("Featured list is already full!");
         }
-        extension.setFeaturedDate(new Date());
-        extensionRepository.update(extension);
-    }
 
-    @Override
-    public void removeFeaturedExtension(Extension extension) {
-        extension.setFeaturedDate(null);
-        extensionRepository.update(extension);
+        Date dateToSet = (add) ? new Date() : null;
+
+        extension.setFeaturedDate(dateToSet);
+        return extensionRepository.update(extension);
     }
 
     @Override
@@ -174,10 +174,10 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public void publishExtension(Extension extension) {
-        Extension published = extensionRepository.findById(extension.getId());
+    public Extension publishExtension(int id) {
+        Extension published = extensionRepository.findById(id);
         published.setPublishedDate(new Date());
-        extensionRepository.update(published);
+        return extensionRepository.update(published);
     }
 
     public int getMaxListSize() {

@@ -75,7 +75,7 @@ public class ExtensionServiceImplTest {
         Extension extension = new Extension();
         when(mockExtensionRepository.update(extension)).thenReturn(extension);
 
-        extensionService.addFeaturedExtension(extension);
+        extensionService.changeFeatureStatus(extension);
 
         Assert.assertTrue((new Date().getTime()- extension.getFeaturedDate().getTime()) < 1000);
     }
@@ -86,7 +86,7 @@ public class ExtensionServiceImplTest {
         Helpers.fillListWithPublishedExtensions(extensions, extensionService.getMaxListSize());
         when(mockExtensionRepository.listFeaturedExtensions(true)).thenReturn(extensions);
         Extension extension = new Extension();
-        extensionService.addFeaturedExtension(extension);
+        extensionService.changeFeatureStatus(extension);
     }
 
 
