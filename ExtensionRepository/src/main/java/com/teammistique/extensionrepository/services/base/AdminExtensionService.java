@@ -1,7 +1,6 @@
 package com.teammistique.extensionrepository.services.base;
 
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
-import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 
 import java.util.List;

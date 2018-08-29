@@ -1,9 +1,9 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
-import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.AdminExtensionService;
+import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +15,12 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     private AdminExtensionService extensionService;
+    private UserService userService;
 
     @Autowired
-    public AdminController(AdminExtensionService extensionService) {
+    public AdminController(AdminExtensionService extensionService, UserService userService) {
         this.extensionService = extensionService;
+        this.userService = userService;
     }
 
     @GetMapping("/all")
@@ -52,10 +54,8 @@ public class AdminController {
         extensionService.setMaxListSize(size);
     }
 
-    @PostMapping("/edit")
-    public Extension editExtension(@RequestBody ExtensionDTO dto) {
-        return extensionService.updateExtension(dto);
+    @PostMapping("/disableUser")
+    public void disableUser(@RequestParam String username){
+        userService.disable(userService.findOne(username));
     }
-
-
 }

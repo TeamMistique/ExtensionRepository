@@ -48,6 +48,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void disable(User user) {
+        user.setEnabled(0);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return findOne(username);
     }
