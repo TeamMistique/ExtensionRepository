@@ -69,10 +69,8 @@ public class ExtensionController {
     public Extension editExtension(@RequestBody ExtensionDTO dto, HttpServletRequest request) {
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
-        String username = jwtTokenUtil.getUsernameFromToken(authToken);
-        dto.setUsername(username);
 
-        return extensionService.updateExtension(dto);
+        return extensionService.updateExtension(dto, authToken);
     }
 
     @GetMapping("/mine")
@@ -89,10 +87,8 @@ public class ExtensionController {
     public void deleteExtension(@RequestParam int id, HttpServletRequest request){
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
-        String username = jwtTokenUtil.getUsernameFromToken(authToken);
 
-        Extension extension = extensionService.getExtensionById(id);
-        if(extension.getOwnerUsername().equals(username)) extensionService.deleteExtension(extension);
+        extensionService.deleteExtension(id, authToken);
     }
 
     @GetMapping("/filter")

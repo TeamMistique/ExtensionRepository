@@ -1,8 +1,9 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
-import com.teammistique.extensionrepository.services.base.ExtensionService;
+import com.teammistique.extensionrepository.services.base.AdminExtensionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +14,19 @@ import java.util.List;
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
-    private ExtensionService extensionService;
+    private AdminExtensionService extensionService;
 
     @Autowired
-    public AdminController(ExtensionService extensionService) {
+    public AdminController(AdminExtensionService extensionService) {
         this.extensionService = extensionService;
     }
 
-    @GetMapping("/extensions/all")
+    @GetMapping("/all")
     public List<Extension> listAllExtensions(){
         return extensionService.listAllExtensions();
     }
 
-    @GetMapping("/extensions/unpublished")
+    @GetMapping("/unpublished")
     public List<Extension> listUnpublishedExtensions(){
         return extensionService.listPublishedExtensions(false);
     }
@@ -50,4 +51,11 @@ public class AdminController {
     public void changeFeaturedListSize(@RequestParam int size){
         extensionService.setMaxListSize(size);
     }
+
+    @PostMapping("/edit")
+    public Extension editExtension(@RequestBody ExtensionDTO dto) {
+        return extensionService.updateExtension(dto);
+    }
+
+
 }

@@ -1,14 +1,12 @@
 package com.teammistique.extensionrepository.services;
 
+import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
-import com.teammistique.extensionrepository.services.base.ExtensionService;
-import com.teammistique.extensionrepository.services.base.GitHubService;
-import com.teammistique.extensionrepository.services.base.TagService;
-import com.teammistique.extensionrepository.services.base.UserService;
+import com.teammistique.extensionrepository.services.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +17,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ExtensionServiceImpl implements ExtensionService {
+public class ExtensionServiceImpl implements ExtensionService, AdminExtensionService {
     private int maxListSize = 10;
 
     private GitHubService gitHubService;
     private ExtensionRepository extensionRepository;
     private TagService tagService;
     private UserService userService;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public ExtensionServiceImpl(GitHubService gitHubService, ExtensionRepository extensionRepository, TagService tagService, UserService userService) {
+    public ExtensionServiceImpl(GitHubService gitHubService, ExtensionRepository extensionRepository, TagService tagService, UserService userService, JwtTokenUtil jwtTokenUtil) {
         this.gitHubService = gitHubService;
         this.extensionRepository = extensionRepository;
         this.tagService = tagService;
         this.userService = userService;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
@@ -71,11 +71,11 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public Extension updateExtension(ExtensionDTO dto) {
+    public Extension updateExtension(ExtensionDTO dto, String authToken) {
         Extension extension = extensionRepository.findById(dto.getId());
 
         //make sure a user can only edit his own extensions
-        if (!extension.getOwnerUsername().equals(dto.getUsername())) return null;
+        if(!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername())) return null;
 
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
@@ -96,7 +96,9 @@ public class ExtensionServiceImpl implements ExtensionService {
     }
 
     @Override
-    public void deleteExtension(Extension extension) {
+    public void deleteExtension(int id, String authToken) {
+        Extension extension = getExtensionById(id);
+        if(!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername())) return;
         extensionRepository.delete(extension);
     }
 
@@ -186,5 +188,10 @@ public class ExtensionServiceImpl implements ExtensionService {
 
     public void setMaxListSize(int maxListSize) {
         this.maxListSize = maxListSize;
+    }
+
+    @Override
+    public void disableUser(int id) {
+
     }
 }

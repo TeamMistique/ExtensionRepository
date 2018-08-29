@@ -1,17 +1,19 @@
 package com.teammistique.extensionrepository.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teammistique.extensionrepository.models.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 import static com.teammistique.extensionrepository.models.security.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
 import static com.teammistique.extensionrepository.models.security.Constants.SIGNING_KEY;
@@ -24,6 +26,22 @@ public class JwtTokenUtil implements Serializable {
 
     public Date getExpirationDateFromToken(String token){
         return getAllClaimsFromToken(token).getExpiration();
+    }
+
+    public boolean isAdmin(String token){
+        boolean admin = false;
+
+        List scopes = getAllClaimsFromToken(token).get("scopes", ArrayList.class);
+        System.out.println(scopes);
+
+        for(Object role:scopes){
+            if(role.toString().contains("ROLE_ADMIN")){
+                admin = true;
+                break;
+            }
+        }
+
+        return admin;
     }
 
     private Claims getAllClaimsFromToken(String token){

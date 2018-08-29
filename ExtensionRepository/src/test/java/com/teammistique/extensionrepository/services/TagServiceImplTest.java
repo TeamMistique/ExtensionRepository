@@ -2,6 +2,7 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.TagSqlRepository;
 import com.teammistique.extensionrepository.data.base.GenericRepository;
+import com.teammistique.extensionrepository.data.base.TagRepository;
 import com.teammistique.extensionrepository.models.Tag;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 public class TagServiceImplTest {
 
-    private GenericRepository<Tag> mockTagRepository = mock(TagSqlRepository.class);
+    private TagRepository mockTagRepository = mock(TagSqlRepository.class);
 
     private TagServiceImpl tagService;
 

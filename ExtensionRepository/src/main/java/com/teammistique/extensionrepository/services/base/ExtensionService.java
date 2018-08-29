@@ -1,6 +1,5 @@
 package com.teammistique.extensionrepository.services.base;
 
-import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 
@@ -10,13 +9,11 @@ public interface ExtensionService {
 
     Extension createExtension(ExtensionDTO dto);
 
-    List<Extension> listAllExtensions();
-
     Extension getExtensionById(int id);
 
-    Extension updateExtension(ExtensionDTO dto);
+    Extension updateExtension(ExtensionDTO dto, String authToken);
 
-    void deleteExtension(Extension extension);
+    void deleteExtension(int id, String authToken);
 
     List<Extension> listFeaturedExtensions(boolean featured);
 
@@ -24,11 +21,7 @@ public interface ExtensionService {
 
     List<Extension> listNewExtensions();
 
-    Extension changeFeatureStatus(int id) throws FullFeaturedListException;
-
     List<Extension> filterPublishedByName(String name);
-
-    List<Extension> filterAllByName(String name);
 
     List<Extension> sortByDownloads(List<Extension> extensions);
 
@@ -39,8 +32,4 @@ public interface ExtensionService {
     List<Extension> sortByLastCommit(List<Extension> extensions);
 
     List<Extension> listPublishedExtensions(boolean published);
-
-    Extension publishExtension(int id);
-
-    void setMaxListSize(int maxListSize);
 }
