@@ -51,8 +51,11 @@ public class ExtensionController {
     }
 
     @GetMapping("/{id}")
-    public Extension getExtensionByID(@PathVariable int id) {
-        return extensionService.getExtensionById(id);
+    public Extension getExtensionByID(@PathVariable int id, HttpServletRequest request) {
+        String header = request.getHeader(HEADER_STRING);
+        String authToken = header.replace(TOKEN_PREFIX, "");
+
+        return extensionService.getExtensionById(id, authToken);
     }
 
     @PostMapping("/add")

@@ -9,7 +9,7 @@ public interface ExtensionService {
 
     Extension createExtension(ExtensionDTO dto);
 
-    Extension getExtensionById(int id);
+    Extension getExtensionById(int id, String authToken);
 
     Extension updateExtension(ExtensionDTO dto, String authToken);
 

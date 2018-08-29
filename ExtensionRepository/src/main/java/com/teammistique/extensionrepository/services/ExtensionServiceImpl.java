@@ -66,8 +66,11 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension getExtensionById(int id) {
-        return extensionRepository.findById(id);
+    public Extension getExtensionById(int id, String authToken) {
+        Extension extension = extensionRepository.findById(id);
+        return (extension.getPublishedDate() != null ||
+                jwtTokenUtil.isAdmin(authToken) ||
+                extension.getOwnerUsername().equals(jwtTokenUtil.getUsernameFromToken(authToken))) ? extension : null;
     }
 
     @Override
@@ -75,7 +78,8 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         Extension extension = extensionRepository.findById(dto.getId());
 
         //make sure a user can only edit his own extensions
-        if(!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername())) return null;
+        if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
+            return null;
 
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
@@ -97,8 +101,9 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     @Override
     public void deleteExtension(int id, String authToken) {
-        Extension extension = getExtensionById(id);
-        if(!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername())) return;
+        Extension extension = extensionRepository.findById(id);
+        if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
+            return;
         extensionRepository.delete(extension);
     }
 
@@ -119,7 +124,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     @Override
     public Extension changeFeatureStatus(int id) throws FullFeaturedListException {
-        Extension extension = getExtensionById(id);
+        Extension extension = extensionRepository.findById(id);
         boolean add = extension.getFeaturedDate() == null;
 
         if (add && listFeaturedExtensions(true).size() >= maxListSize) {
@@ -177,7 +182,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     @Override
     public void updateDownloadsCounter(Extension extension) {
-        extension.setDownloadsCounter(extension.getDownloadsCounter()+1);
+        extension.setDownloadsCounter(extension.getDownloadsCounter() + 1);
         extensionRepository.update(extension);
     }
 
