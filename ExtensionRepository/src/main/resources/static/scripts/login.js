@@ -29,7 +29,8 @@ $(function() {
             data: data,
             success: function (data) {
                 token = data.token;
-                console.log(token);
+                setJwtToken(token);
+                console.log(getJwtToken());
             }
         });
     });
