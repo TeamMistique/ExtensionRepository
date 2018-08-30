@@ -613,14 +613,14 @@
                             </div>
                             <div class="form-group">
                                 <label for="tags">Tags</label>
-                                <input type="text" class="form-control" id="tags" placeholder="separate, your, tags, with, commas">
+                                <input type="text" class="form-control" id="extension-tags" placeholder="separate, your, tags, with, commas">
                             </div>
                             <div class="form-group">
                                 <label>Upload Image</label>
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-default btn-file">
-                                            Browse… <input type="file" id="imgInp">
+                                            Browse… <input type="file" id="extension-image">
                                         </span>
                                     </span>
                                     <input type="text" class="form-control" readonly>
@@ -632,7 +632,7 @@
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-default btn-file">
-                                            Browse… <input type="file" id="fileInp">
+                                            Browse… <input type="file" id="extension-file">
                                         </span>
                                     </span>
                                     <input type="text" class="form-control" readonly>
@@ -642,7 +642,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Publish</button>
+                        <button id="add-extension-button" type="button" class="btn btn-primary">Publish</button>
                     </div>
                 </div>
             </div>
