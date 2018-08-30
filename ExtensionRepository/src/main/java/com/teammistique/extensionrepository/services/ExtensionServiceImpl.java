@@ -202,7 +202,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    @Scheduled(fixedRate = 300000)
+//    @Scheduled(fixedRate = 3000000)
     public void updateGitHub() {
         List<Extension> extensions = listAllExtensions();
         for(Extension extension:extensions){

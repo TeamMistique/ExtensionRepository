@@ -6,13 +6,50 @@ $(function() {
 		$('#register-form-link').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
-	});
+    });
+    
 	$('#register-form-link').click(function(e) {
 		$("#register-form").delay(100).fadeIn(100);
  		$("#login-form").fadeOut(100);
 		$('#login-form-link').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
-	});
+    });
+    
+    $('#login-form').submit(function(e){
+        e.preventDefault();
+
+        var data = $(this).serialize();
+        var url = '/api/login';
+        var token;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function (data) {
+                token = data.token;
+                console.log(token);
+            }
+        });
+    });
+
+    $('#register-form').submit(function(e){
+        e.preventDefault();
+
+        var data = $(this).serialize();
+        var url = '/api/signup';
+        var token;
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: data,
+            success: function (data) {
+                token = data.token;
+                console.log(token);
+            }
+        });
+    });
 
 });
