@@ -13,9 +13,9 @@ $('#home-button').on('click', function (e) {
 var fillPopularList = function () {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/popular",
+        url: "/api/extensions/featured",
         success: function (data) {
-            fillMainPageList($('#inspo-extensions-popular'), data)
+            fillMainPageList($('#featured-container'), data)
         }
     });
 };
@@ -23,9 +23,9 @@ var fillPopularList = function () {
 var fillFeaturedList = function () {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/featured",
+        url: "/api/extensions/popular",
         success: function (data) {
-            fillMainPageList($('#inspo-extensions-featured'), data)
+            fillMainPageList($('#popular-container'), data)
         }
     });
 };
@@ -35,7 +35,7 @@ var fillNewList = function () {
         type: "GET",
         url: "/api/extensions/new",
         success: function (data) {
-            fillMainPageList($('#inspo-extensions-new'), data)
+            fillMainPageList($('#new-container'), data)
         }
     });
 };
@@ -46,13 +46,12 @@ var fillMainPageList = function (location, data) {
     if (data !== '') {
         $.each(data, function (k, v) {
             var html = "";
-            html += '<div class="extension" value="' + v.id + '">';
-            html += '<div class="extension-image-container">';
-            html += '<img class="extension-image" src="' + v.image + '"></div>';
-            html += '<div class="extension-title">' + v.name + '</div>';
-            html += '<div class="bottom"><div>' + v.owner + '</div>';
-            html += '<div><i class="fas fa-download"></i>' + '  ' + v.downloadsCounter + '</div></div></div>';
-
+            html += '<div class="col-md-2" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading">' + v.name + '</div>';
+            html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+            html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+        
             location.append(html)
         });
     } else {

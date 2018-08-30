@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ExtensionServiceImpl implements ExtensionService, AdminExtensionService {
-    private int maxListSize = 10;
+    private int maxListSize = 5;
 
     private GitHubService gitHubService;
     private ExtensionRepository extensionRepository;

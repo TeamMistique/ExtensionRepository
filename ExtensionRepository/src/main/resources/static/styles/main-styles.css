@@ -26,6 +26,54 @@ footer div {
     padding: 15px 15px;
     font-size: 1.5vw;
     line-height: 20px;
+    color: white;
+}
+
+.site-title:hover {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+#main-page {
+    margin-top: 4%;
+}
+
+.container {
+       width: 96%;
+}
+
+.col-md-2 {
+    cursor: pointer;
+   
+}
+
+.panel.panel-primary{
+    box-shadow: 2px 2px 5px #000000ee;
+}
+
+.panel.panel-primary:hover {
+    box-shadow: 4px 4px 5px #000000ee;
+}
+
+.btn.btn-primary.leftLst{
+    box-shadow: 2px 2px 5px #000000ee;
+}
+
+
+.img-responsive{
+    width: 100%; 
+    padding-top: calc(100%*8/15); 
+    background-position: center; 
+    background-size: 120% 
+}
+
+.extension-bottom {
+    height: 20px;
+    font-size: 0.9vw;
+}
+
+.bottom-info {
+    display: inline;
 }
 
 
@@ -38,17 +86,9 @@ footer div {
     margin-left: 20px;
 } */
 
-/* .site-title {
-    padding-left: 3%;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 2vw;
-} */
 
-/* .site-title:hover {
-    color: cornflowerblue;
-}
 
+/*
 .horizontal-flexbox {
     display: flex;
     flex-direction: row;
@@ -83,9 +123,7 @@ footer div {
     margin-right: 2%;
 }
 
-.extension:hover {
-    box-shadow: 4px 4px 5px #000000ee;
-} */
+
 
 
 /* 
@@ -233,27 +271,6 @@ img {
 /* new styles */
 
 
-.col-sm-4 {
-    width: 15%;
-}
-
-#main-page {
-    margin-top: 4%;
-}
-
-.container {
-    text-align: center;
-    width: 96%;
-}
-
-.extension-bottom {
-    height: 20px;
-    font-size: 0.7vw;
-}
-
-.bottom-info {
-    display: inline;
-}
 
 .panel-heading {
     font-size: 0.8vw;
