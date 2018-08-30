@@ -21,16 +21,14 @@ $(function() {
 
         var data = $(this).serialize();
         var url = '/api/login';
-        var token;
 
         $.ajax({
             type: "POST",
             url: url,
             data: data,
             success: function (data) {
-                token = data.token;
-                setJwtToken(token);
-                console.log(getJwtToken());
+                setJwtToken(data.token);
+                goHome();
             }
         });
     });
@@ -40,17 +38,21 @@ $(function() {
 
         var data = $(this).serialize();
         var url = '/api/signup';
-        var token;
 
         $.ajax({
             type: "POST",
             url: url,
             data: data,
-            success: function (data) {
-                token = data.token;
-                console.log(token);
+            success: function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/api/login',
+                    data: data,
+                    success: function (data) {                    
+                        setJwtToken(data.token);
+                    }
+                });
             }
         });
     });
-
 });

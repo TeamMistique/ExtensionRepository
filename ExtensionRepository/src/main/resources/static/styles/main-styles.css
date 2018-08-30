@@ -1,3 +1,7 @@
+body{
+    min-height: 100%;
+}
+
 header {
     position: fixed;
     width: 100%;
@@ -269,8 +273,6 @@ img {
     cursor: pointer;   */
 
 /* new styles */
-
-
 
 .panel-heading {
     font-size: 0.8vw;

@@ -4,10 +4,27 @@ $(document).ready(function () {
     fillNewList();
 });
 
+var goHome = function () {
+    $('.page').addClass('hide');
+    $('#main-page').removeClass('hide');
+}
+
 $('#home-button').on('click', function (e) {
     e.preventDefault();
-    $('#main-page').removeClass('hide');  
-    $('#one-extension-page').addClass('hide');  
+    goHome();
+});
+
+$('#my-account').on('click', function (e) {
+    e.preventDefault();
+    var token = getJwtToken();
+    if (token) {
+        getMyExtensions();
+        $('.page').addClass('hide');
+        $('#my-extensions-page').removeClass('hide');
+    } else {
+        $('.page').addClass('hide');
+        $('#login-page').removeClass('hide');
+    }
 });
 
 var fillPopularList = function () {
@@ -51,7 +68,7 @@ var fillMainPageList = function (location, data) {
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
-        
+
             location.append(html)
         });
     } else {
@@ -59,19 +76,19 @@ var fillMainPageList = function (location, data) {
     }
 };
 
-$('#featured-category, #popular-category, #new-category').on('click', '.extension', function(){
+$('#featured-category, #popular-category, #new-category').on('click', '.extension', function () {
     console.log("Extension has been clicked - 1.")
-    console.log($(this)+'..................................'+$(this).attr('value'));
+    console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
     getExtensionData(id);
-    $('#main-page').addClass('hide');  
+    $('#main-page').addClass('hide');
     $('#one-extension-page').removeClass('hide');
 });
 
 var getExtensionData = function (id) {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/"+id,
+        url: "/api/extensions/" + id,
         success: function (data) {
             fillExtensionPage($('#one-extension-page'), data)
         }
@@ -83,14 +100,14 @@ var fillExtensionPage = function (location, extension) {
 
     if (extension !== '') {
         var html = "";
-        html +='<div class="extension-page" value="'>+ extension.id + '">';
+        html += '<div class="extension-page" value="' > +extension.id + '">';
         html += '<div class="top"><div class="inner-top"><div id="image-container">';
         html += '<img src="' + extension.image + '"></div>';
         html += '<div class="basic-info vertical">';
         html += '<div id="name" class="title">' + extension.name + '</div>';
         html += '<div id="owner" class="overview">' + extension.owner + '</div>';
         html += '<div id="downloads-number" class="overview"><i class="fas fa-download"></i>' + '  ' + extension.downloadsCounter + '</div>';
-        html += '<div id="download-link"><a href="'+ extension.file + '" id="download-button">Download</a></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
+        html += '<div id="download-link"><a href="' + extension.file + '" id="download-button">Download</a></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
         html += '<div id="github" class="vertical"><div><a href="' + extension.link + '" class="caption">GitHub</a></div>';
         html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extension.issuesCounter + '</div></div></div>';
         html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extension.pullRequestsCounter + '</div></div></div>';
@@ -107,3 +124,16 @@ var fillExtensionPage = function (location, extension) {
     }
 };
 
+var getMyExtensions = function () {
+    var token = getJwtToken();
+    if (token) {
+        $.ajax({
+            type: "GET",
+            url: "/api/extensions/mine",
+            headers: createAuthorizationTokenHeader(),
+            success: function (data) {
+                fillMainPageList($('#my-extension-page'), data)
+            }
+        });
+    }
+};

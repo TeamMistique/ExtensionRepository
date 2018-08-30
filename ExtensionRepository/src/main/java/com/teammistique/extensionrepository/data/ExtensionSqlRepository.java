@@ -150,7 +150,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         Object extension = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            extension = session.createQuery("FROM Extension extension WHERE extension.file LIKE '%"+ fileName +"%'").stream().findFirst();
+            extension = session.createQuery("FROM Extension extension WHERE extension.file LIKE '%"+ fileName +"%'").stream().findFirst().orElse(null);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
