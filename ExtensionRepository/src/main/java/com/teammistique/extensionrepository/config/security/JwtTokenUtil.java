@@ -1,13 +1,10 @@
 package com.teammistique.extensionrepository.config.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teammistique.extensionrepository.models.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
