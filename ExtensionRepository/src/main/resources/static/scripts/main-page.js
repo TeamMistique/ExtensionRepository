@@ -91,7 +91,7 @@ var fillExtensionPage = function (location, extension) {
         html += '<div id="name" class="title">' + extension.name + '</div>';
         html += '<div id="owner" class="overview">' + extension.owner + '</div>';
         html += '<div id="downloads-number" class="overview"><i class="fas fa-download"></i>' + '  ' + extension.downloadsCounter + '</div>';
-        html += '<div id="download-link"><button id="download-button">Download</button></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
+        html += '<div id="download-link"><a href="'+ extension.file + '" id="download-button">Download</a></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
         html += '<div id="github" class="vertical"><div><a href="' + extension.link + '" class="caption">GitHub</a></div>';
         html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extension.issuesCounter + '</div></div></div>';
         html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extension.pullRequestsCounter + '</div></div></div>';
