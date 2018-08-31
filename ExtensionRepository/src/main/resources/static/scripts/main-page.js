@@ -162,13 +162,29 @@ $('#open-new-extension-modal').on('click', function () {
 
 $('#add-extension-button').on('click', function () {
 
-    var image,
-        file,
-        name = $('#extension-name').val(),
-        description = $('#extension-description').val(),
-        link = $('#github-link').val(),
-        tags = $('#extension-tags').val().split(' ,');
+    var dto = {
+        'name': $('#extension-name').val(),
+        'description': $('#extension-description').val(),
+        'link': $('#github-link').val(),
+        'tagNames': $('#extension-tags').val().split(' ,'),
+    }
 
+    function uploadExtension() {
+        console.log(dto);
+
+        $.ajax({
+            type: "POST",
+            url: "/api/extensions/add",
+            data: dto,
+            contentType: 'application/json',
+            headers: createAuthorizationTokenHeader(),
+            success: function (response) {
+                console.log(response);
+                getMyExtensions();
+                $('#new-extension-modal').modal('hide');
+            }
+        });
+    };
 
     $('#file-upload-form').submit(function (event) {
         var formElement = this;
@@ -182,9 +198,11 @@ $('#add-extension-button').on('click', function () {
             processData: false,
             contentType: false,
             headers: createAuthorizationTokenHeader(),
-            success: function (response) {
-                console.log(response);
-                file = response.downloadURI;
+            success: function (data) {
+                dto.file = data.downloadURI;
+                if(typeof dto.image!== 'undefined'){
+                    uploadExtension();
+                }
             }
         });
 
@@ -203,9 +221,11 @@ $('#add-extension-button').on('click', function () {
             processData: false,
             contentType: false,
             headers: createAuthorizationTokenHeader(),
-            success: function (response) {
-                console.log(response);
-                image = response.downloadURI;
+            success: function (data) {
+                dto.image = data.downloadURI;
+                if(typeof dto.file!== 'undefined'){
+                    uploadExtension();
+                }
             }
         });
 
@@ -214,30 +234,5 @@ $('#add-extension-button').on('click', function () {
 
     $('#file-upload-form').trigger('submit');
     $('#image-upload-form').trigger('submit');
-
-    var extension = {
-        'name': name,
-        'description': description,
-        'link': link,
-        'tags': tags,
-        'image': image,
-        'file': file
-    }
-
-    $.when(typeof extension.image!=='undefined', typeof extension.file!=='undefined').then(function () {
-        console.log(extension);
-
-        $.ajax({
-            type: "POST",
-            url: "/api/extensions/add",
-            data: extension,
-            headers: createAuthorizationTokenHeader(),
-            success: function (response) {
-                console.log(response);
-                getMyExtensions();
-                $('#new-extension-modal').modal('hide');
-            }
-        });
-    });
 
 });
