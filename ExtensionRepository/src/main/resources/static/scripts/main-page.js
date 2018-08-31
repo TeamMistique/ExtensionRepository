@@ -176,70 +176,71 @@ $('#open-new-extension-modal').on('click', function () {
     $('#new-extension-modal').modal('show');
 })
 
-$('#add-extension-button').on('click', function () {
-    var name = $('#extension-name').val();
-    var description = $('#extension-description').val();
-    var link = $('#github-link').val();
-    var tags = $('#extension-tags').val().split(' ,');
-    var getimage = function () {
-        var data = new FormData();
-        data.append('image', $('#extension-image')[0].files[0]);
+// $('#add-extension-button').on('click', function () {
+//     var name = $('#extension-name').val();
+//     var description = $('#extension-description').val();
+//     var link = $('#github-link').val();
+//     var tags = $('#extension-tags').val().split(' ,');
+//     var getimage = function () {
+//         var data = new FormData();
+//         data.append('image', $('#extension-image')[0]);
+//         console.log(data.image);
 
-        return $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/api/files/uploadImage",
-            data: data,
-            processData: false,
-            contentType: false,
-            headers: createAuthorizationTokenHeader(),
-            success: function (data) {
-                console.log('Image: ' + data);
-                return data;
-            }
-        });
-    };
+//         return $.ajax({
+//             type: "POST",
+//             enctype: 'multipart/form-data',
+//             url: "/api/files/uploadImage",
+//             data: data,
+//             processData: false,
+//             contentType: false,
+//             headers: createAuthorizationTokenHeader(),
+//             success: function (data) {
+//                 console.log('Image: ' + data);
+//                 return data;
+//             }
+//         });
+//     };
 
-    var getfile = function () {
-        var data = new FormData();
-        data.append('file', $('#extension-file')[0].files[0]);
+//     var getfile = function () {
+//         var data = new FormData();
+//         data.append('file', $('#extension-file')[0].files[0]);
 
-        return $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/api/files/uploadFile",
-            data: data,
-            processData: false,
-            contentType: false,
-            headers: createAuthorizationTokenHeader(),
-            success: function (data) {
-                console.log('File: ' + data);
-                return data;
-            }
-        });
-    };
+//         return $.ajax({
+//             type: "POST",
+//             enctype: 'multipart/form-data',
+//             url: "/api/files/uploadFile",
+//             data: data,
+//             processData: false,
+//             contentType: false,
+//             headers: createAuthorizationTokenHeader(),
+//             success: function (data) {
+//                 console.log('File: ' + data);
+//                 return data;
+//             }
+//         });
+//     };
 
-    var extension = {
-        'name': name,
-        'description': description,
-        'tags': tags,
-        'link': link,
-        'image': getfile(),
-        'file': getimage()
-    }
+//     var extension = {
+//         'name': name,
+//         'description': description,
+//         'tags': tags,
+//         'link': link,
+//         'image': getfile(),
+//         'file': getimage()
+//     }
 
-    $.when(extension.image && extension.file).then(function () {
-        console.log(extension);
+//     $.when(extension.image && extension.file).then(function () {
+//         console.log(extension);
 
-        $.ajax({
-            type: "POST",
-            data: extension,
-            headers: createAuthorizationTokenHeader(),
-            url: "/api/extensions/add",
-            success: function (data) {
-                console.log(data);
-            }
-        });
-    });
+//         $.ajax({
+//             type: "POST",
+//             data: extension,
+//             headers: createAuthorizationTokenHeader(),
+//             url: "/api/extensions/add",
+//             success: function (data) {
+//                 console.log(data);
+//             }
+//         });
+//     });
 
-});
+// });
