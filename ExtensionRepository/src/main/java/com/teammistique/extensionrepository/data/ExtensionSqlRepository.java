@@ -66,7 +66,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             Query query = null;
-            if(published){
+            if (published) {
                 query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NOT NULL ORDER BY extension.publishedDate DESC");
             } else {
                 query = session.createQuery("FROM Extension extension WHERE extension.publishedDate IS NULL ORDER BY extension.publishedDate DESC");
@@ -85,7 +85,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         try (Session session = factory.openSession()) {
             session.beginTransaction();
             Query query = null;
-            if(featured){
+            if (featured) {
                 query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NOT NULL ORDER BY extension.featuredDate DESC");
             } else {
                 query = session.createQuery("FROM Extension extension WHERE extension.featuredDate IS NULL ORDER BY extension.publishedDate DESC");
@@ -103,7 +103,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%"+name+"%' AND extension.publishedDate IS NOT NULL");
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%" + name + "%' AND extension.publishedDate IS NOT NULL");
             extensions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
@@ -117,7 +117,7 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%"+name+"%'");
+            Query query = session.createQuery("FROM Extension extension WHERE LOWER(extension.name) LIKE '%" + name + "%'");
             extensions = query.list();
             session.getTransaction().commit();
         } catch (Exception e) {

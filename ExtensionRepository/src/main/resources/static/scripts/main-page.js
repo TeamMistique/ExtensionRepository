@@ -2,30 +2,23 @@ $(document).ready(function () {
     fillPopularList();
     fillFeaturedList();
     fillNewList();
+    fillAllList();
+    ResCarouselOnInit();
 });
 
-var goHome = function () {
-    $('.page').addClass('hide');
-    $('#main-page').removeClass('hide');
-}
-
-$('#home-button').on('click', function (e) {
+$('#home-button, #home-button2').on('click', function (e) {
     e.preventDefault();
+    $('body > div').addClass('hide');
+    $('#main-page').removeClass('hide');
+});
+
+$('#search-button').on('click', function (e) {
+    e.preventDefault();
+    $('body > div').addClass('hide');
+    $('#search-page').removeClass('hide');
+
     goHome();
 });
-
-// $('#my-account').on('click', function (e) {
-//     e.preventDefault();
-//     var token = getJwtToken();
-//     if (token) {
-//         getMyExtensions();
-//         $('.page').addClass('hide');
-//         $('#my-extensions-page').removeClass('hide');
-//     } else {
-//         $('.page').addClass('hide');
-//         $('#login-page').removeClass('hide');
-//     }
-// });
 
 $('#user-dropdown').on('click', '#go-to-mine', function (e) {
     getMyExtensions();
@@ -98,6 +91,37 @@ var fillNewList = function () {
 };
 
 var fillMainPageList = function (location, data) {
+
+    location.html('');
+
+    if (data !== '') {
+        $.each(data, function (k, v) {
+            var html = "";
+            html += '<div class="col-md-2 item" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading">' + v.name + '</div>';
+            html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+            html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+
+            location.append(html)
+        });
+    } else {
+        console.log('error');
+    }
+};
+
+var fillAllList = function () {
+    $.ajax({
+        type: "GET",
+        url: "/api/extensions/published",
+        success: function (data) {
+            fillSearchPageList($('#search-container'), data)
+        }
+    });
+};
+
+var fillSearchPageList = function (location, data) {
+
     location.html('');
 
     if (data !== '') {
@@ -116,10 +140,12 @@ var fillMainPageList = function (location, data) {
     }
 };
 
-$('#featured-category, #popular-category, #new-category').on('click', '.extension', function () {
+$('#featured-container, #popular-container, #new-container, #search-container').on('click', '.col-md-2', function () {
+    console.log("Extension has been clicked - 1.")
+    console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
     getExtensionData(id);
-    $('#main-page').addClass('hide');
+    $('body > div').addClass('hide');
     $('#one-extension-page').removeClass('hide');
 });
 
@@ -138,23 +164,29 @@ var fillExtensionPage = function (location, extension) {
 
     if (extension !== '') {
         var html = "";
-        html += '<div class="extension-page" value="' > +extension.id + '">';
-        html += '<div class="top"><div class="inner-top"><div id="image-container">';
-        html += '<img src="' + extension.image + '"></div>';
-        html += '<div class="basic-info vertical">';
-        html += '<div id="name" class="title">' + extension.name + '</div>';
-        html += '<div id="owner" class="overview">' + extension.owner + '</div>';
-        html += '<div id="downloads-number" class="overview"><i class="fas fa-download"></i>' + '  ' + extension.downloadsCounter + '</div>';
-        html += '<div id="download-link"><a href="' + extension.file + '" id="download-button">Download</a></div></div><div class="additional-info vertical"><div id="version">Version<div class="small-padding">' + extension.version + '</div></div>';
-        html += '<div id="github" class="vertical"><div><a href="' + extension.link + '" class="caption">GitHub</a></div>';
-        html += '<div class="text"><div>Open Issues<div class="small-padding caption">' + extension.issuesCounter + '</div></div></div>';
-        html += '<div class="text"><div>Pull Requests<div class="small-padding caption">' + extension.pullRequestsCounter + '</div></div></div>';
-        html += '<div class="text"><div>Last commit<div class="small-padding caption">' + extension.lastCommitDate + '</div></div></div></div></div></div></div>';
-        html += '<div class="bottom-extension-page"><div class="text">' + extension.description + '</div>';
-        html += '<div id="tag-section" class="tag-section"><div class="caption">Tags</div><div id="tag-list">';
-        // how to fill tags
+        html += '<div class="container justify-content-center" value="' + extension.id + '">';
+        html += '<div class="row justify-content-center "><div class="col-md-7"><h1 class="page-header">' + extension.name + '</h1></div></div>';
+        html += '<div class="row"><div class="col-md-3"><img class="img-responsive" src="' + extension.image + '"></div>';
+        html += '<div class="col-md-2 text-left"><h3>Information</h3><div>' + extension.owner + '</div>';
+        html += '<div><i class="fas fa-download"> </i> ' + extension.downloadsCounter + '</div>';
+        html += '<div>Version' + extension.version + '</div>';
+        html += '<div id="download"><a id="download-button" class="row btn btn-success" type="button" href="' + extension.file + '">Download</a></div></div>';
+        html += '<div class="col-md-2 text-left"><h3 id="github"><a href="' + extension.link + '"><i class="fab fa-github-alt">' + '  ' + '</i>GitHub</a></h3>';
+        html += '<div>Open Issues  ' + extension.issuesCounter + '</div>';
+        html += '<div>Pull Requests  ' + extension.pullRequestsCounter + '</div>';
+        html += '<div>Last commit ' + extension.lastCommitDate + '</div></div></div><div style="margin-bottom: 1%;"></div>';
+        html += '<div class="row"><div class="col-md-7"><p>' + extension.description + '</p></div></div>';
 
-
+        if (extension.tags.length > 0) {
+            html += '<div class="col-md-6"><h3 class="tags">Tags</h3><div id="tag-section" class="tag-container">';
+            $.each(extension.tags, function (k, v) {
+                var tagsHtml = "";
+                tagsHtml += '<div class="tag border">' + v.tagName + '</div>';
+                html += tagsHtml;
+            });
+        } else {
+            console.log('error');
+        }
         html += '</div></div></div></div></div>';
 
         location.append(html)
@@ -412,6 +444,167 @@ function getExtensionById(id) {
         headers: createAuthorizationTokenHeader()
     })
 };
+    };
+}
+
+// ------------------  Carousel ---------------------
+
+function ResCarouselOnInit() {
+    ResCarouselSize();
+    $(document).on('click', '.leftLst, .rightLst', function() {
+        ResCarousel(this);
+    });
+    $(document).on("mouseenter", ".ResHover", function() {
+        $(this).addClass("ResHovered");
+    });
+
+    $(document).on("mouseleave", ".ResHover", function() {
+        $(this).removeClass("ResHovered");
+    });
+}
+
+$(window).resize(function() {
+    var r = new Date();
+    setTimeout(function() {
+        ResCarouselResize(r);
+    }, 200);
+});
+
+function ResCarouselSlide(e) {
+    var thiss = $(e).find(".rightLst");
+    var dataInterval = $(e).attr('data-interval');
+    !isNaN(dataInterval) && $(e).addClass("ResHover") && setInterval(function() {
+        !(thiss.parent().hasClass("ResHovered")) && ResCarousel(thiss);
+    }, +(dataInterval));
+}
+
+function ResCarouselResize() {
+    function myfunction() {
+        console.log("resize Works");
+        $('.resCarousel').each(function() {
+            var divValue = $(this).attr('data-value');
+            var itemWidth = $(this).find('.item').width();
+            $(this).find(".resCarousel-inner").scrollLeft(divValue * itemWidth);
+        });
+    }
+    myfunction();
+}
+
+//this function define the size of the items
+function ResCarouselSize() {
+    var t0 = performance.now();
+
+    //    styleCollector0 = styleCollector1 = styleCollector2 = styleCollector3 = "";
+    $('.resCarousel').each(function(index) {
+        var itemsSplit = $(this).attr("data-items").split('-');
+        $(this).addClass("ResSlid" + index);
+
+        for (var i = 0; i < 4; i++) {
+            if (i == 0) {
+                var styleCollector0 = ".ResSlid" + index + " .item {width: " + 100 / itemsSplit[i] + "%}";
+            } else if (i == 1) {
+                var styleCollector1 = ".ResSlid" + index + " .item {width: " + 100 / itemsSplit[i] + "%}";
+            } else if (i == 2) {
+                var styleCollector2 = ".ResSlid" + index + " .item {width: " + 100 / itemsSplit[i] + "%}";
+            } else if (i == 3) {
+                var styleCollector3 = ".ResSlid" + index + " .item {width: " + 100 / itemsSplit[i] + "%}";
+            }
+        }
+
+        $(this).attr("data-value", "0");
+        //var r = $('body').width();
+        //var it = r >= 1200 ? itemsSplit[3] : r >= 992 ? itemsSplit[2] : r >= 768 ? itemsSplit[1] : itemsSplit[0];
+        //$(this).attr("data-itm", it);
+
+        var styleCollector = "@media (max-width:767px){" + styleCollector0 + "}" +
+            "@media (min-width:768px){" + styleCollector1 + "}" +
+            "@media (min-width:992px){" + styleCollector2 + "}" +
+            "@media (min-width:1200px){" + styleCollector3 + "}";
+        //$(this).append("<div class=\"ResStyleManager\"></div>")
+        $(this).find("style").remove();
+        $(this).append("<style>" + styleCollector + "</style>");
+        ResCarouselSlide(this);
+
+    });
+    //console.log(styleCollector);
+    //$("body").append("<div class=\"ResStyleManager\"></div>")
+    //$('.ResStyleManager').html(null).append("<style>" + styleCollector + "</style>");
+    var t1 = performance.now();
+    console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to Size');
+}
+
+//this function used to move the items
+function ResCarousel(Btn) {
+    //var t0 = performance.now();
+    var parent = $(Btn).parent(),
+        slide = +parent.attr("data-slide"),
+        itemsDiv = parent.find('.resCarousel-inner'),
+        //divValueq = +parent.attr('data-value'),
+        itemSpeed = +parent.attr("data-speed"),
+        itemLoad = +parent.attr("data-load"),
+        //animi = parent.attr("data-animator"),
+        translateXval = '',
+        currentSlide = "",
+        itemLenght = itemsDiv.find(".item").length,
+        itemWidth = itemsDiv.find('.item').outerWidth(),
+        dataItm = +Math.round(itemsDiv.outerWidth() / itemWidth),
+        cond = $(Btn).hasClass("leftLst"),
+        divValue = Math.round(itemsDiv.scrollLeft() / itemWidth);
+    //console.log(dataItm + "," + Math.abs(dataItmq));
+    //console.log(divValue + "," + divValueq);
+    //console.log(cond);
+    //console.log(typeof + parent.attr("data-slide"))
+    itemSpeed = !isNaN(itemSpeed) ? itemSpeed : 400;
+    slide = slide < dataItm ? slide : dataItm;
+
+    if (cond) {
+        currentSlide = divValue - slide;
+        translateXval = currentSlide * itemWidth;
+        var MoveSlide = currentSlide + slide;
+        //console.log(itemloop);
+        if (divValue == 0) {
+            currentSlide = itemLenght - slide;
+            translateXval = currentSlide * itemWidth;
+            currentSlide = itemLenght - dataItm;
+            itemSpeed = 400;
+            //console.log(currentSlide + "," + translateXval);
+        } else if (slide >= MoveSlide) {
+            currentSlide = translateXval = 0;
+        }
+    } else {
+        currentSlide = divValue + slide;
+        translateXval = currentSlide * itemWidth;
+        var MoveSlide = currentSlide + slide;
+
+        //console.log(itemLenght + "," + (MoveSlide + "," + slide + "," + dataItm));
+        //console.log(itemLenght + "," + (MoveSlide - slide + dataItm));
+        //console.log((divValue + dataItm) + "," + itemLenght);
+        if (divValue + dataItm == itemLenght) {
+            currentSlide = translateXval = 0;
+            itemSpeed = 400;
+        } else if (itemLenght <= (MoveSlide - slide + dataItm)) {
+            currentSlide = itemLenght - slide;
+            translateXval = currentSlide * itemWidth;
+            currentSlide = itemLenght - dataItm;
+        }
+        // resCarouselAnimator(itemsDiv, currentSlide + 1, currentSlide + slide);
+    }
+    //console.log(slide + "," + itemWidth);
+    parent.attr("data-animator") == "lazy" && resCarouselAnimator(itemsDiv, cond ? 0 : 1, currentSlide + 1, currentSlide + dataItm, itemSpeed, (slide * itemWidth));
+    //console.log(itemsDiv.scrollLeft() + "," + translateXval)
+    //console.log(itemSpeed);
+    if (!isNaN(itemLoad)) {
+        itemLoad = itemLoad >= slide ? itemLoad : slide;
+        //console.log((itemLenght - itemLoad) <= currentSlide + dataItm);
+        //console.log((itemLenght - itemLoad) + " ," + (currentSlide + dataItm) + " ," + (itemLenght - dataItm));
+        (itemLenght - itemLoad) <= (currentSlide + dataItm) && ResCarouselLoad1(itemsDiv);
+    }
+    itemsDiv.animate({ scrollLeft: translateXval }, itemSpeed);
+    parent.attr("data-value", currentSlide);
+
+    //var t1 = performance.now();
+    //console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to generate');
+}
 
 function editExtension(data) {
     return $.ajax({
@@ -427,6 +620,40 @@ function editExtension(data) {
     });
 };
 
+function ResCarouselLoad1(e) {
+    //console.log(e.attr("id"));
+    $("#" + e.attr("id")).trigger("ResCarouselLoad");
+}
+
+function resCarouselAnimator(parent, direction, start, end, speed, length) {
+    //console.log(parent + "," + start + "," + end);
+    var val = 5;
+    if (direction == 0) {
+        for (var i = start - 1; i < end + 1; i++) {
+            val = val * 2;
+        }
+        val = -val;
+    }
+    //console.log(length);
+    //if (direction == 1) {
+    //    for (var i = start - 1; i < end + 1; i++) {
+    //        length = length / 2
+    //        console.log(length);
+    //    }
+    //    //val = val;
+    //}
+    //val = direction == 1 ? length : -length;
+
+    for (var i = start - 1; i < end; i++) {
+        val = direction == 0 ? val / 2 : val * 2;
+        //console.log(val);
+        //console.log(parent.find(".item").eq(i).find("h1").text());
+        parent.find(".item").eq(i).css("transform", "translateX(" + val + "px)");
+    }
+    setTimeout(function() {
+        parent.find(".item").attr("style", "");
+    }, speed - 70);
+}
 var helpers = {
     fillEditMenu: function (extension) {
         $('#edit-extension-modal').val(extension.id);
