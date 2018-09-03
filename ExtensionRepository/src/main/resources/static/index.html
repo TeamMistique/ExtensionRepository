@@ -51,8 +51,19 @@
                                 <span class="glyphicon glyphicon-search"></span> Search</a>
                         </li>
                         <li id="my-account">
-                            <a href="#">
-                                <span class="glyphicon glyphicon-user"></span> Your Account</a>
+                            <div class="btn-group">
+                                <button id="my-account-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fas fa-user"></i> My Account <span class="caret"></span>
+                                </button>
+                                <ul id="user-dropdown" class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
                         </li>
 
                     </ul>

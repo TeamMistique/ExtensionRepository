@@ -334,3 +334,7 @@ img {
     justify-content: space-between;
 }
 
+#user-dropdown li{
+    cursor: pointer;
+}
+

@@ -14,17 +14,57 @@ $('#home-button').on('click', function (e) {
     goHome();
 });
 
-$('#my-account').on('click', function (e) {
+// $('#my-account').on('click', function (e) {
+//     e.preventDefault();
+//     var token = getJwtToken();
+//     if (token) {
+//         getMyExtensions();
+//         $('.page').addClass('hide');
+//         $('#my-extensions-page').removeClass('hide');
+//     } else {
+//         $('.page').addClass('hide');
+//         $('#login-page').removeClass('hide');
+//     }
+// });
+
+$('#user-dropdown').on('click', '#go-to-mine', function (e) {
+    getMyExtensions();
+    $('.page').addClass('hide');
+    $('#my-extensions-page').removeClass('hide');
+    $('#user-dropdown').toggle();
     e.preventDefault();
+});
+
+$('#user-dropdown').on('click', '#log-out-button', function (e) {
+    removeJwtToken();
+    $('.page').addClass('hide');
+    $('#main-page').removeClass('hide');
+    $('#user-dropdown').toggle();
+    e.preventDefault();
+});
+
+$('#user-dropdown').on('click', '#login-button', function (e) {
+    $('.page').addClass('hide');
+    $('#login-page').removeClass('hide');
+    $('#user-dropdown').toggle();
+    e.preventDefault();
+});
+
+$('#my-account-button').on('click', function (e) {
     var token = getJwtToken();
-    if (token) {
-        getMyExtensions();
-        $('.page').addClass('hide');
-        $('#my-extensions-page').removeClass('hide');
+    var html = '';
+    if (token && !isTokenExpired(token)) {
+        html += "<li><a id=" + "go-to-mine" + ">My extensions</a></li>";
+        html += "<li><a id=" + "log-out-button" + ">Log out</a></li>";
     } else {
-        $('.page').addClass('hide');
-        $('#login-page').removeClass('hide');
+        html += "<li><a id=" + "login-button" + ">Log in</a></li>";
     }
+
+    $('#user-dropdown').html("");
+    $('#user-dropdown').append(html);
+    $('#user-dropdown').toggle();
+
+    e.preventDefault();
 });
 
 var fillPopularList = function () {
@@ -254,18 +294,19 @@ var fillWithEditableExtensions = function (location, data) {
     }
 };
 
-$('#delete-extension-button').on('click', function(event){
+$('#delete-extension-button').on('click', function (event) {
     var id = $('#edit-extension-modal').val();
 
     $.ajax({
         type: "POST",
-        url: "/api/extensions/delete?id="+id,
+        url: "/api/extensions/delete?id=" + id,
         headers: createAuthorizationTokenHeader(),
-        success: function(){
+        success: function () {
             getMyExtensions();
         }
     });
 
+    $('#edit-extension-modal').modal('toggle');
     event.preventDefault();
 });
 
@@ -352,13 +393,13 @@ $("#my-extensions-container").on('click', '.click-to-edit', function (e) {
 
     getExtensionById(id).done(function (extension) {
         helpers.fillEditMenu(extension);
-        $('#edit-extension-modal').modal('show');        
+        $('#edit-extension-modal').modal('show');
     });
 });
 
 function triggerEdit(dto) {
     editExtension(dto).done(function () {
-        getMyExtensions().done(function(){
+        getMyExtensions().done(function () {
             $('#edit-extension-modal').modal('toggle');
         })
     });
