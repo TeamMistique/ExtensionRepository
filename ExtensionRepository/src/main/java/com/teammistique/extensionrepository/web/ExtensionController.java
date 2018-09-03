@@ -79,12 +79,7 @@ public class ExtensionController {
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
 
-        try {
-            return extensionService.updateExtension(dto, authToken);
-        } catch (InvalidLinkException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return extensionService.updateExtension(dto, authToken);
     }
 
     @GetMapping("/mine")

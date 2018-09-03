@@ -12,7 +12,7 @@ public interface ExtensionService {
 
     Extension getExtensionById(int id, String authToken);
 
-    Extension updateExtension(ExtensionDTO dto, String authToken) throws InvalidLinkException;
+    Extension updateExtension(ExtensionDTO dto, String authToken);
 
     void deleteExtension(int id, String authToken);
 

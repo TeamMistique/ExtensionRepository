@@ -76,8 +76,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension updateExtension(ExtensionDTO dto, String authToken) throws InvalidLinkException {
-        if(dto.getLink().contains("github.com")) throw new InvalidLinkException("This link doesn't link to github");
+    public Extension updateExtension(ExtensionDTO dto, String authToken){
         Extension extension = extensionRepository.findById(dto.getId());
 
         if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
