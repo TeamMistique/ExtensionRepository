@@ -123,6 +123,7 @@ var fillExtensionPage = function (location, extension) {
 
     }
 };
+76
 
 var getMyExtensions = function () {
     var token = getJwtToken();
@@ -132,7 +133,7 @@ var getMyExtensions = function () {
             url: "/api/extensions/mine",
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
-                fillMainPageList($('#my-extensions-container'), data)
+                fillWithEditableExtensions($('#my-extensions-container'), data);
             }
         });
     }
@@ -202,7 +203,7 @@ $('#add-extension-button').on('click', function () {
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
                 dto.file = data.downloadURI;
-                if(typeof dto.image!== 'undefined'){
+                if (typeof dto.image !== 'undefined') {
                     uploadExtension();
                 }
             }
@@ -225,7 +226,7 @@ $('#add-extension-button').on('click', function () {
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
                 dto.image = data.downloadURI;
-                if(typeof dto.file!== 'undefined'){
+                if (typeof dto.file !== 'undefined') {
                     uploadExtension();
                 }
             }
@@ -238,3 +239,62 @@ $('#add-extension-button').on('click', function () {
     $('#image-upload-form').trigger('submit');
 
 });
+
+var fillWithEditableExtensions = function (location, data) {
+    location.html('');
+
+    if (data !== '') {
+        $.each(data, function (k, v) {
+            var html = "";
+            html += '<div class="col-md-2" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading flex-spread"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+            html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+            html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+
+            location.append(html)
+        });
+    } else {
+        console.log('error');
+    }
+};
+
+$("#my-extensions-container").on('click', '.click-to-edit', function (e) {
+    e.stopPropagation();
+    var $extensionToEdit = $(this).closest('.col-md-2');
+    var id = $extensionToEdit.attr('value');
+
+    $.ajax({
+        type: "GET",
+        url: "/api/extensions/" + id,
+        headers: createAuthorizationTokenHeader(),
+        success: function (data) {
+            helpers.fillEditMenu(data);
+            $('#edit-extension-modal').modal('show');
+        }
+    })
+});
+
+var helpers = {
+    fillEditMenu: function (extension) {
+        $('#edit-extension-modal').val(extension.id);
+        $('#edit-extension-name').val(extension.name);
+        $('#edit-extension-description').val(extension.description);
+        $('#edit-github-link').val(extension.link);
+
+        var tags = "";
+        $.each(extension.tags, function(k,v){
+            tags += v.tagName + ", "
+        });
+        if(tags.length>0) tags.slice(0, -2);
+
+        $('#edit-extension-tags').val(tags);
+        $('#edit-image-upload-form .form-control').val(this.getNameFromFileLink(extension.image));
+        $('#edit-file-upload-form .form-control').val(this.getNameFromFileLink(extension.file));
+    },
+
+    getNameFromFileLink: function(file){
+        var index = file.indexOf("downloadFile/") + "downloadFile/".length;
+        return file.substring(index);
+    }
+}

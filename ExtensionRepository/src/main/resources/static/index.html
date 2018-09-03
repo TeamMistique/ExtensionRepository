@@ -651,6 +651,67 @@
             </div>
         </div>
 
+        <div id="edit-extension-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Edit Extension</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="edit-extension-form">
+                            <div class="form-group">
+                                <label for="extension-name">Name</label>
+                                <input type="text" class="form-control" id="edit-extension-name" placeholder="Extension">
+                            </div>
+                            <div class="form-group">
+                                <label for="extension-description">Description</label>
+                                <textarea type="text" class="form-control" id="edit-extension-description" placeholder="This extension...."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="github-link">GitHub Link</label>
+                                <input type="text" class="form-control" id="edit-github-link" placeholder="https://github.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label for="tags">Tags</label>
+                                <input type="text" class="form-control" id="edit-extension-tags" placeholder="separate, your, tags, with, commas">
+                            </div>
+                        </form>
+
+                        <form id="edit-image-upload-form">
+                            <label>Upload Image</label>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Browse… <input type="file" name="image">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </form>
+                        <br>
+
+                        <form id="edit-file-upload-form">
+                            <label>Upload File</label>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Browse… <input type="file" name="file">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="edit-extension-button" type="button" class="btn btn-primary">Publish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <br>
 
         <div id="my-extensions-container">

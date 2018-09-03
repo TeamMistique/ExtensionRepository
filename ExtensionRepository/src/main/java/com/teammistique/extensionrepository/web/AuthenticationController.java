@@ -17,9 +17,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import static com.teammistique.extensionrepository.models.security.Constants.HEADER_STRING;
+import static com.teammistique.extensionrepository.models.security.Constants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api")
@@ -64,5 +69,12 @@ public class AuthenticationController {
     public User saveAdmin(@ModelAttribute User user) {
         List<Role> roles = Arrays.asList(roleService.getRoleByName("ROLE_ADMIN"), roleService.getRoleByName("ROLE_USER"));
         return userService.save(user, roles);
+    }
+
+    @GetMapping("/expired")
+    public boolean isTokenExpired(HttpServletRequest request){
+        String header = request.getHeader(HEADER_STRING);
+        String authToken = header.replace(TOKEN_PREFIX, "");
+        return jwtTokenUtil.getExpirationDateFromToken(authToken).before(new Date());
     }
 }

@@ -23,4 +23,19 @@ var createAuthorizationTokenHeader = function () {
             'Content-Type': 'application/json'
         };
     }
-}
+};
+
+var isTokenExpired = function(){
+
+    var request = function(){
+        return $.ajax({
+            type: "GET",
+            url: "/api/expired",
+            headers: createAuthorizationTokenHeader()
+        });
+    }
+    
+    request().done(function(result){
+        return result;
+    });
+};

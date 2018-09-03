@@ -329,3 +329,8 @@ img {
     min-height: 38px;
 } */
 
+.flex-spread{
+    display: flex;
+    justify-content: space-between;
+}
+
