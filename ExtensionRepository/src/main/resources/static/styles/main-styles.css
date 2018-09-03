@@ -2,7 +2,7 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1;
+    z-index: 10;
 }
 
 .navbar {
@@ -328,4 +328,41 @@ img {
 .content {
     min-height: calc(100vh - 120px);
     /* 80px header + 40px footer = 120px  */
+}
+
+
+/* ----- carousel --------- */
+
+.col-xs-1 {
+    text-align: center;
+}
+
+
+ .resCarousel {
+    overflow: hidden;
+    width: 100%;    
+    display: flex;
+} 
+
+.resCarousel-inner {
+    overflow-x: hidden;
+    white-space: nowrap;
+    font-size: 0;
+}
+
+.resCarousel-inner .item {
+    display: inline-block;
+
+}
+
+
+.item{
+    float: none;
+}
+
+
+@media (max-width: 767px) {
+    .resCarousel-inner {
+        overflow-x: auto;
+    }
 }
