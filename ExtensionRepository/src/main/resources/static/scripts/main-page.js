@@ -171,12 +171,14 @@ $('#add-extension-button').on('click', function () {
 
     function uploadExtension() {
         console.log(dto);
+        console.log(JSON.stringify(dto));
 
         $.ajax({
             type: "POST",
             url: "/api/extensions/add",
-            data: dto,
+            data: JSON.stringify(dto),
             contentType: 'application/json',
+            dataType: 'json',
             headers: createAuthorizationTokenHeader(),
             success: function (response) {
                 console.log(response);

@@ -25,22 +25,23 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     private GitHubService gitHubService;
     private ExtensionRepository extensionRepository;
+    private StorageService fileService;
     private TagService tagService;
     private UserService userService;
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public ExtensionServiceImpl(GitHubService gitHubService, ExtensionRepository extensionRepository, TagService tagService, UserService userService, JwtTokenUtil jwtTokenUtil) {
+    public ExtensionServiceImpl(GitHubService gitHubService, ExtensionRepository extensionRepository, StorageService fileService, TagService tagService, UserService userService, JwtTokenUtil jwtTokenUtil) {
         this.gitHubService = gitHubService;
         this.extensionRepository = extensionRepository;
+        this.fileService = fileService;
         this.tagService = tagService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
-    public Extension createExtension(ExtensionDTO dto) throws InvalidLinkException {
-        if(dto.getLink().contains("github.com")) throw new InvalidLinkException("This link doesn't link to github");
+    public Extension createExtension(ExtensionDTO dto) {
 
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
@@ -56,10 +57,6 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         extension.setFile(dto.getFile());
         extension.setImage(dto.getImage());
         extension.setTags(tags);
-
-        extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
-        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
-        extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
         extension.setCreatedDate(new Date());
 
         return extensionRepository.create(extension);
@@ -83,7 +80,6 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         if(dto.getLink().contains("github.com")) throw new InvalidLinkException("This link doesn't link to github");
         Extension extension = extensionRepository.findById(dto.getId());
 
-        //make sure a user can only edit his own extensions
         if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
             return null;
 
@@ -93,13 +89,22 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             tags.add(tagService.createTag(tag));
         }
 
-        if (!extension.getFile().equals(dto.getFile())) extension.setVersion(extension.getVersion() + 0.1);
+        if (!extension.getFile().equals(dto.getFile())){
+            extension.setVersion(extension.getVersion() + 0.1);
+            String fileName = getFileNameFromFileLink(extension.getFile());
+            fileService.deleteFile(fileName);
+            extension.setFile(dto.getFile());
+        }
+
+        if(!extension.getImage().equals(dto.getImage())){
+            String imageName = getFileNameFromFileLink(extension.getImage());
+            fileService.deleteFile(imageName);
+            extension.setImage(dto.getImage());
+        }
 
         extension.setName(dto.getName());
         extension.setDescription(dto.getDescription());
         extension.setLink(dto.getLink());
-        extension.setFile(dto.getFile());
-        extension.setImage(dto.getImage());
         extension.setTags(tags);
 
         return extensionRepository.update(extension);
@@ -216,9 +221,12 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     @Override
     public Extension publishExtension(int id) {
-        Extension published = extensionRepository.findById(id);
-        published.setPublishedDate(new Date());
-        return extensionRepository.update(published);
+        Extension extension = extensionRepository.findById(id);
+        extension.setPublishedDate(new Date());
+        extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
+        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
+        extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
+        return extensionRepository.update(extension);
     }
 
     public int getMaxListSize() {
@@ -229,8 +237,8 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         this.maxListSize = maxListSize;
     }
 
-    @Override
-    public void disableUser(int id) {
-
+    private String getFileNameFromFileLink(String file){
+        int index = file.indexOf("downloadFile/") + "downloadFile/".length();
+        return file.substring(index);
     }
 }

@@ -17,6 +17,4 @@ public interface AdminExtensionService extends ExtensionService{
     Extension publishExtension(int id);
 
     void setMaxListSize(int maxListSize);
-
-    void disableUser(int id);
 }

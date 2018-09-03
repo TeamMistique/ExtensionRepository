@@ -81,4 +81,9 @@ public class FileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
+    @DeleteMapping("/deleteFile/")
+    public void deleteFile(@RequestBody String fileName){
+        fileStorageService.deleteFile(fileName);
+    }
 }

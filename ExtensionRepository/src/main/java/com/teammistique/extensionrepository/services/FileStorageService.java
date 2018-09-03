@@ -67,4 +67,21 @@ public class FileStorageService implements StorageService {
             throw new MyFileNotFoundException("File not found " + fileName, ex);
         }
     }
+
+    @Override
+    public void deleteFile(String fileName) {
+        try{
+            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if(resource.exists()) {
+                Files.delete(filePath);
+            } else {
+                throw new MyFileNotFoundException("File not found " + fileName);
+            }
+        } catch (MalformedURLException ex) {
+            throw new MyFileNotFoundException("File not found " + fileName, ex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
