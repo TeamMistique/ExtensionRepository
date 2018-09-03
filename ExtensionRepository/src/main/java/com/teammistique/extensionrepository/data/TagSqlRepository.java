@@ -50,6 +50,18 @@ public class TagSqlRepository extends AbstractGenericRepository<Tag> implements 
     }
 
     @Override
+    public void delete(int id) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Tag tag = session.get(Tag.class, id);
+            session.delete(tag);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public Tag saveOrUpdate(Tag tag) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();

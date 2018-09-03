@@ -77,8 +77,6 @@ var fillMainPageList = function (location, data) {
 };
 
 $('#featured-category, #popular-category, #new-category').on('click', '.extension', function () {
-    console.log("Extension has been clicked - 1.")
-    console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
     getExtensionData(id);
     $('#main-page').addClass('hide');
@@ -125,10 +123,10 @@ var fillExtensionPage = function (location, extension) {
 };
 76
 
-var getMyExtensions = function () {
+function getMyExtensions() {
     var token = getJwtToken();
     if (token) {
-        $.ajax({
+        return $.ajax({
             type: "GET",
             url: "/api/extensions/mine",
             headers: createAuthorizationTokenHeader(),
@@ -136,7 +134,7 @@ var getMyExtensions = function () {
                 fillWithEditableExtensions($('#my-extensions-container'), data);
             }
         });
-    }
+    } else return;
 };
 
 $(document).on('change', '.btn-file :file', function () {
@@ -151,7 +149,7 @@ $('.btn-file :file').on('fileselect', function (event, label) {
         log = label;
 
     if (input.length) {
-        input.val(log);
+        input.attr('value', log);
     } else {
         if (log) alert(log);
     }
@@ -256,99 +254,113 @@ var fillWithEditableExtensions = function (location, data) {
     }
 };
 
+$('#delete-extension-button').on('click', function(event){
+    var id = $('#edit-extension-modal').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/api/extensions/delete?id="+id,
+        headers: createAuthorizationTokenHeader(),
+        success: function(){
+            getMyExtensions();
+        }
+    });
+
+    event.preventDefault();
+});
+
+$('#edit-extension-button').on('click', function (event) {
+    var dto = {
+        "id": $('#edit-extension-modal').val(),
+        "name": $('#edit-extension-name').val(),
+        "description": $('#edit-extension-description').val(),
+        "link": $('#edit-github-link').val(),
+        "tagNames": $('#edit-extension-tags').val().split(", ")
+    }
+
+    if ($('#edit-image-name-text').val() !== helpers.getNameFromFileLink($('#edit-image-name-text').attr('oldValue'))) {
+        $('#edit-image-upload-form').submit(function (event) {
+            var formElement = this;
+            var formData = new FormData(formElement);
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/api/files/uploadImage",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: createAuthorizationTokenHeader(),
+                success: function (data) {
+                    dto.image = data.downloadURI;
+                    if (typeof dto.file !== 'undefined') {
+                        triggerEdit(dto);
+                    }
+                }
+            });
+        });
+
+        $('#edit-image-upload-form').submit();
+    } else {
+        dto.image = $('#edit-image-name-text').attr('oldValue');
+        if (typeof dto.file !== 'undefined') {
+            triggerEdit(dto);
+        }
+    }
+
+    if ($('#edit-file-name-text').val() !== helpers.getNameFromFileLink($('#edit-file-name-text').attr('oldValue'))) {
+        $('#edit-file-upload-form').submit(function (event) {
+            var formElement = this;
+            var formData = new FormData(formElement);
+
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/api/files/uploadFile",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: createAuthorizationTokenHeader(),
+                success: function (data) {
+                    dto.file = data.downloadURI;
+                    if (typeof dto.image !== 'undefined') {
+                        triggerEdit(dto);
+                    }
+                }
+            });
+
+            event.preventDefault();
+        });
+
+        $('#edit-file-upload-form').submit();
+    } else {
+        dto.file = $('#edit-file-name-text').attr('oldValue');
+        if (typeof dto.image !== 'undefined') {
+            triggerEdit(dto);
+        }
+    }
+
+    event.preventDefault();
+});
+
+
 $("#my-extensions-container").on('click', '.click-to-edit', function (e) {
     e.stopPropagation();
     var $extensionToEdit = $(this).closest('.col-md-2');
     var id = $extensionToEdit.attr('value');
+    $('#edit-extension-modal').val(id);
 
     getExtensionById(id).done(function (extension) {
-        $('#edit-extension-modal').modal('show');
-        $('#edit-extension-button').on('click', function () {
-            debugger;
-            var counter = 0;
-            var dto = {
-                "id": extension.id,
-                "name": $('#edit-extension-name').val(),
-                "description": $('#edit-extension-description').val(),
-                "link": $('#edit-github-link').val(),
-                "tagNames": $('#edit-extension-tags').val().split(", ")
-            }
-
-            if ($('#edit-image-upload-form .form-control').val() !== helpers.getNameFromFileLink(extension.image)) {
-                $('#edit-image-upload-form').submit(function (event) {
-                    var formElement = this;
-                    var formData = new FormData(formElement);
-
-                    $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url: "/api/files/uploadImage",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: createAuthorizationTokenHeader(),
-                        success: function (data) {
-                            dto.image = data.downloadURI;
-                            ++counter;
-                            if (counter === 2) {
-                                triggerEdit(dto);
-                            }
-                        }
-                    });
-
-                    event.preventDefault();
-                });
-
-                $('#edit-image-upload-form').submit();
-            } else {
-                dto.image = extension.image;
-                ++counter;
-                if (counter === 2) {
-                    triggerEdit(dto);
-                }
-            }
-
-            if ($('#edit-file-upload-form .form-control').val() !== helpers.getNameFromFileLink(extension.file)) {
-                $('#edit-file-upload-form').submit(function (event) {
-                    var formElement = this;
-                    var formData = new FormData(formElement);
-
-                    $.ajax({
-                        type: "POST",
-                        enctype: 'multipart/form-data',
-                        url: "/api/files/uploadFile",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        headers: createAuthorizationTokenHeader(),
-                        success: function (data) {
-                            dto.file = data.downloadURI;
-                            ++counter;
-                            if (counter === 2) {
-                                triggerEdit(dto);
-                            }
-                        }
-                    });
-
-                    event.preventDefault();
-                });
-
-                $('#edit-file-upload-form').submit();
-            } else {
-                dto.file = extension.file;
-                ++counter;
-                if (counter === 2) {
-                    triggerEdit(dto);
-                }
-            }
-        })
+        helpers.fillEditMenu(extension);
+        $('#edit-extension-modal').modal('show');        
     });
 });
 
 function triggerEdit(dto) {
     editExtension(dto).done(function () {
-        getMyExtensions();
-        $('#edit-extension-modal').modal('toggle');
+        getMyExtensions().done(function(){
+            $('#edit-extension-modal').modal('toggle');
+        })
     });
 }
 
@@ -356,11 +368,7 @@ function getExtensionById(id) {
     return $.ajax({
         type: "GET",
         url: "/api/extensions/" + id,
-        headers: createAuthorizationTokenHeader(),
-        success: function (data) {
-            console.log(data);
-            helpers.fillEditMenu(data);
-        }
+        headers: createAuthorizationTokenHeader()
     })
 };
 
@@ -392,12 +400,19 @@ var helpers = {
         if (tags.length > 0) tags.slice(0, -2);
 
         $('#edit-extension-tags').val(tags);
-        $('#edit-image-upload-form .form-control').val(this.getNameFromFileLink(extension.image));
-        $('#edit-file-upload-form .form-control').val(this.getNameFromFileLink(extension.file));
+
+        $('#edit-image-name-text').attr('value', this.getNameFromFileLink(extension.image));
+        $('#edit-image-name-text').attr('oldValue', extension.image);
+        $('#edit-file-name-text').attr('value', this.getNameFromFileLink(extension.file));
+        $('#edit-file-name-text').attr('oldValue', extension.file);
     },
 
     getNameFromFileLink: function (file) {
         var index = file.indexOf("downloadFile/") + "downloadFile/".length;
         return file.substring(index);
+    },
+
+    getFullFileLink: function (fileName) {
+        return "http://localhost:8080/api/files/downloadFile/" + fileName;
     }
 }

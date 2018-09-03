@@ -58,4 +58,16 @@ public class RoleSqlRepository extends AbstractGenericRepository<Role> implement
         }
         return role;
     }
+
+    @Override
+    public void delete(int id) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Role role = session.get(Role.class, id);
+            session.delete(role);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

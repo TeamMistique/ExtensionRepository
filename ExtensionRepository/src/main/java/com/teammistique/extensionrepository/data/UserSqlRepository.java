@@ -48,6 +48,18 @@ public class UserSqlRepository extends AbstractGenericRepository<User> implement
     }
 
     @Override
+    public void delete(int id) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            User user = session.get(User.class, id);
+            session.delete(user);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public User getUserByUsername(String username) {
         List users = new ArrayList<>();
         try (Session session = factory.openSession()) {

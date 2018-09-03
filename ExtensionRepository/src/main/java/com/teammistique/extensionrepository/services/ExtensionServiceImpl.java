@@ -112,9 +112,10 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     @Override
     public void deleteExtension(int id, String authToken) {
         Extension extension = extensionRepository.findById(id);
-        if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
-            return;
-        extensionRepository.delete(extension);
+        boolean admin = jwtTokenUtil.isAdmin(authToken);
+        String username = jwtTokenUtil.getUsernameFromToken(authToken);
+        String owner = extension.getOwnerUsername();
+        if (admin || username.equals(owner)) extensionRepository.delete(id);
     }
 
     @Override

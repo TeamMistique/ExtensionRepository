@@ -49,6 +49,18 @@ public class ExtensionSqlRepository extends AbstractGenericRepository<Extension>
     }
 
     @Override
+    public void delete(int id) {
+        try (Session session = factory.openSession()) {
+            session.beginTransaction();
+            Extension extension = session.get(Extension.class, id);
+            session.delete(extension);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
     public List<Extension> listPublishedExtensions(boolean published) {
         List extensions = new ArrayList<>();
         try (Session session = factory.openSession()) {
