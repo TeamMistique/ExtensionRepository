@@ -132,7 +132,7 @@ var getMyExtensions = function () {
             url: "/api/extensions/mine",
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
-                fillMainPageList($('#my-extension-page'), data)
+                fillMainPageList($('#my-extensions-container'), data)
             }
         });
     }
@@ -166,7 +166,7 @@ $('#add-extension-button').on('click', function () {
         'name': $('#extension-name').val(),
         'description': $('#extension-description').val(),
         'link': $('#github-link').val(),
-        'tagNames': $('#extension-tags').val().split(' ,'),
+        'tagNames': $('#extension-tags').val().split(', '),
     }
 
     function uploadExtension() {
@@ -183,7 +183,7 @@ $('#add-extension-button').on('click', function () {
             success: function (response) {
                 console.log(response);
                 getMyExtensions();
-                $('#new-extension-modal').modal('hide');
+                $('#new-extension-modal').modal('toggle');
             }
         });
     };
