@@ -60,10 +60,10 @@ $('#my-account-button').on('click', function (e) {
     var html = '';
     if (token) {
         html += "<li><a id=" + "go-to-mine" + ">My extensions</a></li>";
-        if(isAdmin()){
+        if (isAdmin()) {
             html += "<li><a id=" + "go-to-admin-panel" + ">Admin Panel</a></li>";
         }
-        html += "<li><a id=" + "log-out-button" + ">Log out</a></li>"; 
+        html += "<li><a id=" + "log-out-button" + ">Log out</a></li>";
     } else {
         html += "<li><a id=" + "login-button" + ">Log in</a></li>";
     }
@@ -244,7 +244,7 @@ $('.btn-file :file').on('fileselect', function (event, label) {
 $.fn.extend({
     clearFiles: function () {
         $(this).each(function () {
-            var isIE = (window.navigator.userAgent.indexOf("MSIE ") > 0 || !! navigator.userAgent.match(/Trident.*rv\:11\./));
+            var isIE = (window.navigator.userAgent.indexOf("MSIE ") > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./));
             if ($(this).prop("type") == 'file') {
                 if (isIE == true) {
                     $(this).replaceWith($(this).val('').clone(true));
@@ -279,10 +279,8 @@ function uploadExtension(dto) {
     });
 }
 
-var resetAddExtesnionForms = function() {
-    $("[type='file']").clearFiles();
-    $("[type='text']").val('');
-    $('#new-extension-form').get(0).reset();
+var refresh = function () {
+    window.location.reload(true);
 }
 
 $('#add-extension-button').on('click', function () {
@@ -308,11 +306,7 @@ $('#add-extension-button').on('click', function () {
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
                 dto.file = data.downloadURI;
-                if (typeof dto.image !== 'undefined') {
-                    uploadExtension(dto).done(function () {
-                        resetAddExtesnionForms();
-                    });
-                }
+                $('#image-upload-form').trigger('submit');
             }
         });
 
@@ -333,11 +327,9 @@ $('#add-extension-button').on('click', function () {
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
                 dto.image = data.downloadURI;
-                if (typeof dto.file !== 'undefined') {
-                    uploadExtension(dto).done(function () {
-                        resetAddExtesnionForms();
-                    });
-                }
+                uploadExtension(dto).done(function () {
+                    refresh();
+                });
             }
         });
 
@@ -345,33 +337,7 @@ $('#add-extension-button').on('click', function () {
     });
 
     $('#file-upload-form').trigger('submit');
-    $('#image-upload-form').trigger('submit');
-
 });
-
-// var fillWithEditableExtensions = function (data) {
-//     var publishedLocation = $('#my-published');
-//     var unpublshedLocation = $('#my-unpublished');
-//     publishedLocation.html('');
-//     unpublshedLocation.html('');
-
-//     if (data !== '') {
-//         $.each(data, function (k, v) {
-//             debugger;
-//             var html = "";
-//                 html += '<div class="col-md-2" value="' + v.id + '">';
-//                 html += '<div class="panel panel-primary"><div class="panel-heading flex-spread"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
-//                 html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
-//                 html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
-//                 html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>';
-//             if(v.publishedDate!==null){
-//                 publishedLocation.append(html);
-//             } else {
-//                 unpublshedLocation.append(html);
-//             }
-//         });
-//     } 
-// };
 
 var fillWithEditableExtensions = function (data) {
     var publishedLocation = $('#my-published-container');
@@ -387,7 +353,7 @@ var fillWithEditableExtensions = function (data) {
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
-            if(v.publishedDate!==null){
+            if (v.publishedDate !== null) {
                 publishedLocation.append(html);
             } else {
                 unpublshedLocation.append(html);
@@ -509,12 +475,8 @@ $("#my-extensions-container").on('click', '.click-to-edit', function (e) {
 });
 
 function triggerEdit(dto) {
-    console.log("edit triggered");
     editExtension(dto).done(function () {
-        getMyExtensions().done(function () {
-            $('#edit-extension-modal').modal('toggle');
-            resetEditForms();
-        })
+        refresh();
     });
 }
 
