@@ -159,7 +159,7 @@ $('#featured-container, #popular-container, #new-container, #search-container').
     console.log("Extension has been clicked - 1.")
     console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
-    getExtensionById(id).done(function(data){
+    getExtensionById(id).done(function (data) {
         fillExtensionPage($('#one-extension-page'), data);
     })
 });
@@ -212,7 +212,7 @@ var fillExtensionPage = function (location, extension) {
         }
 
         html += '</div></div><div class="modal-footer"><div class="col-md-9"></div><div id="download-button" class="col-md-2">';
-        html += '<button type="button" class="btn btn-success btn-lg" value="'+extension.file+'">Download</button></div></div></div></div></div>';
+        html += '<button type="button" class="btn btn-success btn-lg" value="' + extension.file + '">Download</button></div></div></div></div></div>';
 
         location.append(html)
 
@@ -359,7 +359,7 @@ var fillWithEditableExtensions = function (data) {
         $.each(data, function (k, v) {
             var html = "";
             html += '<div class="col-md-2 item" value="' + v.id + '">';
-            html += '<div class="panel panel-primary"><div class="panel-heading"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+            html += '<div class="panel panel-primary"><div class="panel-heading" style= "display: flex; justify-content: space-between"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
@@ -513,7 +513,7 @@ function editExtension(data) {
     });
 }
 
-$('#one-extension-page').on('click', 'button', function(event){
+$('#one-extension-page').on('click', 'button', function (event) {
     debugger;
     var url = $(this).attr('value');
     var index = url.indexOf('/api');
@@ -525,7 +525,9 @@ $('#one-extension-page').on('click', 'button', function(event){
     });
 
     event.preventDefault();
-})
+});
+
+
 
 var helpers = {
     fillEditMenu: function (extension) {
@@ -714,24 +716,18 @@ function resCarouselAnimator(parent, direction, start, end, speed, length) {
 }
 
 // ---------- search filter -------------
-
-function filterNames() {
-
-    $('#search-magnifier').on('click', function (e) {
-        e.preventDefault();
-        var word = $('#search_param').find('input').val();
-        console.log(word)
-        fiterByName(word);
-
-    });
-}
-
-var fiterByName = function () {
-    $.ajax({
+function filterByName(name) {
+    return $.ajax({
         type: "GET",
-        url: "/api/extensions/filter",
-        success: function (data) {
-            fillMainPageList($('#all-container'), data)
-        }
+        url: "/api/extensions/filter?name=" + name,
     });
 };
+
+$('#search-magnifier').on('click', function (e) {
+    var word = $('#search-param').val();
+    console.log(word);
+    filterByName(word).done(function (data) {
+        fillSearchPageList($('#search-container'), data);
+    })
+    e.preventDefault();
+});
