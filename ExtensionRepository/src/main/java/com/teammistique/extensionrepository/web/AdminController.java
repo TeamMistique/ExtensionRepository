@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.teammistique.extensionrepository.models.security.Constants.HEADER_STRING;
+import static com.teammistique.extensionrepository.models.security.Constants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -58,5 +62,10 @@ public class AdminController {
     @PostMapping("/disableUser")
     public void changeUsersEnabledStatus(@RequestParam String username){
         userService.changeEnabled(userService.findOne(username));
+    }
+
+    @GetMapping("/userExtensions")
+    public List<Extension> listUsersExtensions(@RequestParam String username) {
+        return userService.findOne(username).getExtensions();
     }
 }
