@@ -372,12 +372,6 @@ var fillWithEditableExtensions = function (data) {
     }
 };
 
-function resetEditForms() {
-    $('#edit-extension-form')[0].reset();
-    $('#edit-image-upload-form')[0].reset();
-    $('#edit-file-upload-form')[0].reset();
-}
-
 $('#delete-extension-button').on('click', function (event) {
     var id = $('#edit-extension-modal').val();
 
@@ -391,7 +385,6 @@ $('#delete-extension-button').on('click', function (event) {
     });
 
     $('#edit-extension-modal').modal('toggle');
-    resetEditForms();
     event.preventDefault();
 });
 
@@ -548,6 +541,20 @@ var helpers = {
         $('#edit-image-name-text').attr('oldValue', extension.image);
         $('#edit-file-name-text').attr('value', this.getNameFromFileLink(extension.file));
         $('#edit-file-name-text').attr('oldValue', extension.file);
+
+        //add buttons for publish and feature
+        if(isAdmin()){
+            debugger;
+            var $buttonsLocation = $('#edit-buttons-container');
+            var html = '';
+            var publishText = 'Publish';
+            var featureText = 'Feature';
+            if(extension.publishedDate!==null) publishText = 'Unpublish';
+            if(extension.featuredDate!==null) featureText = 'Unfeature'; 
+            html += '<button id="publish-extension-button" type="button" class="btn btn-primary">'+publishText+'</button>';
+            html += '<button id="feature-extension-button" type="button" class="btn btn-primary">'+featureText+'</button>';
+            $buttonsLocation.prepend(html);
+        }
     },
 
     getNameFromFileLink: function (file) {
