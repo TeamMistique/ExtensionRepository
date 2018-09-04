@@ -723,11 +723,64 @@ function filterByName(name) {
     });
 };
 
+function sortByDownloads(name){
+    return $.ajax({
+        type: "GET",
+        url: "/api/extensions/sortByNumberOfDownloads?name=" + name,
+    });
+};
+
+function sortByLastCommit(name){
+    return $.ajax({
+        type: "GET",
+        url: "/api/extensions/sortByLastCommit?name=" + name,
+    });
+};
+
+function sortByUpload(name){
+    return $.ajax({
+        type: "GET",
+        url: "/api/extensions/sortByUpload?name=" + name,
+    });
+};
+
 $('#search-magnifier').on('click', function (e) {
     var word = $('#search-param').val();
     console.log(word);
     filterByName(word).done(function (data) {
         fillSearchPageList($('#search-container'), data);
+        $('#search-concept').html('Order by');
     })
     e.preventDefault();
 });
+
+$('#sort-by-downloads').on('click', function(event){
+    var $this = $(this);
+    var name = $('#search-param').val();
+    sortByDownloads(name).done(function(data){
+        fillSearchPageList($('#search-container'), data);
+        $('#search-concept').html($this.html());
+    })
+    event.preventDefault();
+});
+
+$('#sort-by-upload').on('click', function(event){
+    var $this = $(this);
+    var name = $('#search-param').val();
+    sortByUpload(name).done(function(data){
+        fillSearchPageList($('#search-container'), data);
+        $('#search-concept').html($this.html());
+    })
+    event.preventDefault();
+});
+
+$('#sort-by-last-commit').on('click', function(event){
+    var $this = $(this);
+    var name = $('#search-param').val();
+    sortByLastCommit(name).done(function(data){
+        fillSearchPageList($('#search-container'), data);
+        $('#search-concept').html($this.html());
+    })
+    event.preventDefault();
+});
+

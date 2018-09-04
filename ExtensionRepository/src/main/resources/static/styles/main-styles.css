@@ -369,6 +369,10 @@ img {
     display: block;
 }
 
+a:hover{
+    cursor: pointer;
+}
+
 .resCarousel-inner {
     overflow-x: hidden;
     white-space: nowrap;
