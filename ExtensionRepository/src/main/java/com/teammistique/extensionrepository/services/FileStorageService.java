@@ -38,8 +38,9 @@ public class FileStorageService implements StorageService {
 
     @Override
     public String storeFile(MultipartFile file) {
-//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileName = String.valueOf(UUID.randomUUID());
+        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+        int index = originalFileName.lastIndexOf('.');
+        String fileName = String.valueOf(UUID.randomUUID()) + originalFileName.substring(index);
 
         try{
             if(fileName.contains("..")){
