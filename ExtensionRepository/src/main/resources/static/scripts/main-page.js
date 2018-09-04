@@ -8,13 +8,18 @@ $(document).ready(function () {
 
 $('#home-button, #home-button2').on('click', function (e) {
     e.preventDefault();
-    $('body > div').addClass('hide');
+    $('.page').addClass('hide');
     $('#main-page').removeClass('hide');
 });
 
+function goHome() {
+    $('.page').addClass('hide');
+    $('#main-page').removeClass('hide');
+}
+
 $('#search-button').on('click', function (e) {
     e.preventDefault();
-    $('body > div').addClass('hide');
+    $('.page').addClass('hide');
     $('#search-page').removeClass('hide');
 
     goHome();
@@ -46,7 +51,8 @@ $('#user-dropdown').on('click', '#login-button', function (e) {
 $('#my-account-button').on('click', function (e) {
     var token = getJwtToken();
     var html = '';
-    if (token && !isTokenExpired(token)) {
+    debugger;
+    if (token) {
         html += "<li><a id=" + "go-to-mine" + ">My extensions</a></li>";
         html += "<li><a id=" + "log-out-button" + ">Log out</a></li>";
     } else {
@@ -131,9 +137,9 @@ var fillSearchPageList = function (location, data) {
             html += '<div class="panel panel-primary"><div class="panel-heading">' + v.name + '</div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
-            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>';
 
-            location.append(html)
+            location.append(html);
         });
     } else {
         console.log('error');
@@ -141,7 +147,7 @@ var fillSearchPageList = function (location, data) {
 };
 
 $('#featured-container, #popular-container, #new-container, #search-container').on('click', '.col-md-2', function () {
-    console.log("Extension has been clicked - 1.")
+    console.log("Extension has been clicked - 1.");
     console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
     getExtensionData(id);
@@ -193,7 +199,6 @@ var fillExtensionPage = function (location, extension) {
 
     }
 };
-76
 
 function getMyExtensions() {
     var token = getJwtToken();
@@ -206,8 +211,8 @@ function getMyExtensions() {
                 fillWithEditableExtensions($('#my-extensions-container'), data);
             }
         });
-    } else return;
-};
+    }
+}
 
 $(document).on('change', '.btn-file :file', function () {
     var input = $(this);
@@ -237,11 +242,17 @@ $('#add-extension-button').on('click', function () {
         'name': $('#extension-name').val(),
         'description': $('#extension-description').val(),
         'link': $('#github-link').val(),
-        'tagNames': $('#extension-tags').val().split(', '),
+        'tagNames': $('#extension-tags').val().split(', ')
+    };
+
+    function resetAddExtesnionForms() {
+        $('#image-upload-form')[0].reset();
+        $('#file-upload-form')[0].reset();
+        $('#new-extension-form')[0].reset();
     }
 
     function uploadExtension() {
-        $.ajax({
+        return $.ajax({
             type: "POST",
             url: "/api/extensions/add",
             data: JSON.stringify(dto),
@@ -254,7 +265,7 @@ $('#add-extension-button').on('click', function () {
                 $('#new-extension-modal').modal('toggle');
             }
         });
-    };
+    }
 
     $('#file-upload-form').submit(function (event) {
         var formElement = this;
@@ -271,7 +282,9 @@ $('#add-extension-button').on('click', function () {
             success: function (data) {
                 dto.file = data.downloadURI;
                 if (typeof dto.image !== 'undefined') {
-                    uploadExtension();
+                    uploadExtension().done(function () {
+                        resetAddExtesnionForms();
+                    });
                 }
             }
         });
@@ -294,7 +307,9 @@ $('#add-extension-button').on('click', function () {
             success: function (data) {
                 dto.image = data.downloadURI;
                 if (typeof dto.file !== 'undefined') {
-                    uploadExtension();
+                    uploadExtension().done(function () {
+                        resetAddExtesnionForms();
+                    });
                 }
             }
         });
@@ -317,7 +332,7 @@ var fillWithEditableExtensions = function (location, data) {
             html += '<div class="panel panel-primary"><div class="panel-heading flex-spread"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
-            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>';
 
             location.append(html)
         });
@@ -326,7 +341,14 @@ var fillWithEditableExtensions = function (location, data) {
     }
 };
 
+function resetEditForms() {
+    $('#edit-extension-form')[0].reset();
+    $('#edit-image-upload-form')[0].reset();
+    $('#edit-file-upload-form')[0].reset();
+}
+
 $('#delete-extension-button').on('click', function (event) {
+    debugger;
     var id = $('#edit-extension-modal').val();
 
     $.ajax({
@@ -339,6 +361,7 @@ $('#delete-extension-button').on('click', function (event) {
     });
 
     $('#edit-extension-modal').modal('toggle');
+    resetEditForms();
     event.preventDefault();
 });
 
@@ -349,7 +372,7 @@ $('#edit-extension-button').on('click', function (event) {
         "description": $('#edit-extension-description').val(),
         "link": $('#edit-github-link').val(),
         "tagNames": $('#edit-extension-tags').val().split(", ")
-    }
+    };
 
     if ($('#edit-image-name-text').val() !== helpers.getNameFromFileLink($('#edit-image-name-text').attr('oldValue'))) {
         $('#edit-image-upload-form').submit(function (event) {
@@ -371,6 +394,8 @@ $('#edit-extension-button').on('click', function (event) {
                     }
                 }
             });
+
+            event.preventDefault();
         });
 
         $('#edit-image-upload-form').submit();
@@ -433,6 +458,7 @@ function triggerEdit(dto) {
     editExtension(dto).done(function () {
         getMyExtensions().done(function () {
             $('#edit-extension-modal').modal('toggle');
+            resetEditForms();
         })
     });
 }
@@ -443,29 +469,70 @@ function getExtensionById(id) {
         url: "/api/extensions/" + id,
         headers: createAuthorizationTokenHeader()
     })
-};
-    };
 }
+
+function editExtension(data) {
+    return $.ajax({
+        type: "POST",
+        url: "/api/extensions/edit",
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        dataType: 'json',
+        cache: false,
+        headers: createAuthorizationTokenHeader(),
+        success: function (response) {
+            console.log(response);
+        }
+    });
+}
+
+var helpers = {
+    fillEditMenu: function (extension) {
+        $('#edit-extension-modal').val(extension.id);
+        $('#edit-extension-name').val(extension.name);
+        $('#edit-extension-description').val(extension.description);
+        $('#edit-github-link').val(extension.link);
+
+        debugger;
+        var tags = "";
+        $.each(extension.tags, function (k, v) {
+            tags += v.tagName + ", "
+        });
+        if (tags.length > 0) tags = tags.slice(0, -2);
+
+        $('#edit-extension-tags').val(tags);
+
+        $('#edit-image-name-text').attr('value', this.getNameFromFileLink(extension.image));
+        $('#edit-image-name-text').attr('oldValue', extension.image);
+        $('#edit-file-name-text').attr('value', this.getNameFromFileLink(extension.file));
+        $('#edit-file-name-text').attr('oldValue', extension.file);
+    },
+
+    getNameFromFileLink: function (file) {
+        var index = file.indexOf("downloadFile/") + "downloadFile/".length;
+        return file.substring(index);
+    }
+};
 
 // ------------------  Carousel ---------------------
 
 function ResCarouselOnInit() {
     ResCarouselSize();
-    $(document).on('click', '.leftLst, .rightLst', function() {
+    $(document).on('click', '.leftLst, .rightLst', function () {
         ResCarousel(this);
     });
-    $(document).on("mouseenter", ".ResHover", function() {
+    $(document).on("mouseenter", ".ResHover", function () {
         $(this).addClass("ResHovered");
     });
 
-    $(document).on("mouseleave", ".ResHover", function() {
+    $(document).on("mouseleave", ".ResHover", function () {
         $(this).removeClass("ResHovered");
     });
 }
 
-$(window).resize(function() {
+$(window).resize(function () {
     var r = new Date();
-    setTimeout(function() {
+    setTimeout(function () {
         ResCarouselResize(r);
     }, 200);
 });
@@ -473,7 +540,7 @@ $(window).resize(function() {
 function ResCarouselSlide(e) {
     var thiss = $(e).find(".rightLst");
     var dataInterval = $(e).attr('data-interval');
-    !isNaN(dataInterval) && $(e).addClass("ResHover") && setInterval(function() {
+    !isNaN(dataInterval) && $(e).addClass("ResHover") && setInterval(function () {
         !(thiss.parent().hasClass("ResHovered")) && ResCarousel(thiss);
     }, +(dataInterval));
 }
@@ -481,7 +548,7 @@ function ResCarouselSlide(e) {
 function ResCarouselResize() {
     function myfunction() {
         console.log("resize Works");
-        $('.resCarousel').each(function() {
+        $('.resCarousel').each(function () {
             var divValue = $(this).attr('data-value');
             var itemWidth = $(this).find('.item').width();
             $(this).find(".resCarousel-inner").scrollLeft(divValue * itemWidth);
@@ -495,7 +562,7 @@ function ResCarouselSize() {
     var t0 = performance.now();
 
     //    styleCollector0 = styleCollector1 = styleCollector2 = styleCollector3 = "";
-    $('.resCarousel').each(function(index) {
+    $('.resCarousel').each(function (index) {
         var itemsSplit = $(this).attr("data-items").split('-');
         $(this).addClass("ResSlid" + index);
 
@@ -599,26 +666,14 @@ function ResCarousel(Btn) {
         //console.log((itemLenght - itemLoad) + " ," + (currentSlide + dataItm) + " ," + (itemLenght - dataItm));
         (itemLenght - itemLoad) <= (currentSlide + dataItm) && ResCarouselLoad1(itemsDiv);
     }
-    itemsDiv.animate({ scrollLeft: translateXval }, itemSpeed);
+    itemsDiv.animate({
+        scrollLeft: translateXval
+    }, itemSpeed);
     parent.attr("data-value", currentSlide);
 
     //var t1 = performance.now();
     //console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to generate');
 }
-
-function editExtension(data) {
-    return $.ajax({
-        type: "POST",
-        url: "/api/extensions/edit",
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        dataType: 'json',
-        headers: createAuthorizationTokenHeader(),
-        success: function (response) {
-            console.log(response);
-        }
-    });
-};
 
 function ResCarouselLoad1(e) {
     //console.log(e.attr("id"));
@@ -650,37 +705,7 @@ function resCarouselAnimator(parent, direction, start, end, speed, length) {
         //console.log(parent.find(".item").eq(i).find("h1").text());
         parent.find(".item").eq(i).css("transform", "translateX(" + val + "px)");
     }
-    setTimeout(function() {
+    setTimeout(function () {
         parent.find(".item").attr("style", "");
     }, speed - 70);
-}
-var helpers = {
-    fillEditMenu: function (extension) {
-        $('#edit-extension-modal').val(extension.id);
-        $('#edit-extension-name').val(extension.name);
-        $('#edit-extension-description').val(extension.description);
-        $('#edit-github-link').val(extension.link);
-
-        var tags = "";
-        $.each(extension.tags, function (k, v) {
-            tags += v.tagName + ", "
-        });
-        if (tags.length > 0) tags.slice(0, -2);
-
-        $('#edit-extension-tags').val(tags);
-
-        $('#edit-image-name-text').attr('value', this.getNameFromFileLink(extension.image));
-        $('#edit-image-name-text').attr('oldValue', extension.image);
-        $('#edit-file-name-text').attr('value', this.getNameFromFileLink(extension.file));
-        $('#edit-file-name-text').attr('oldValue', extension.file);
-    },
-
-    getNameFromFileLink: function (file) {
-        var index = file.indexOf("downloadFile/") + "downloadFile/".length;
-        return file.substring(index);
-    },
-
-    getFullFileLink: function (fileName) {
-        return "http://localhost:8080/api/files/downloadFile/" + fileName;
-    }
 }

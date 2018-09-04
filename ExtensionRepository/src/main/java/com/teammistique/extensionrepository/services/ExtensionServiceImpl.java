@@ -115,7 +115,11 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         boolean admin = jwtTokenUtil.isAdmin(authToken);
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
         String owner = extension.getOwnerUsername();
-        if (admin || username.equals(owner)) extensionRepository.delete(id);
+        if (admin || username.equals(owner)) {
+            fileService.deleteFile(getFileNameFromFileLink(extension.getFile()));
+            fileService.deleteFile(getFileNameFromFileLink(extension.getImage()));
+            extensionRepository.delete(id);
+        }
     }
 
     @Override

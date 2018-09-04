@@ -50,7 +50,12 @@ public class Extension implements Serializable {
     @Column(name = "Version")
     private double version;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    }, fetch = FetchType.EAGER)
     @JoinTable(
             name = "extension_tag",
             joinColumns = {@JoinColumn(name = "ExtensionID")},
