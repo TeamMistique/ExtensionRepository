@@ -541,76 +541,97 @@
 
     </div>
 
-    <div id="one-extension-page" class="hide">
-        <div class="container justify-content-center">
-
-            <!-- Portfolio Item Heading -->
-            <div class="row justify-content-center ">
-                <div class="col-md-7">
-                    <h1 class="page-header">Debugger</h1>
-                </div>
+    <div id="extension-modal" class="modal fade">
+            <!-- class modal and fade -->
+            <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    
+                            <div id="one-extension-page" class="modal-header">
+                                <!-- modal header -->
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h2 class="modal-title">Debugger</h2>
+                            </div>
+            
+                            <div class="modal-body">
+                                <!-- modal body -->
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <!-- Portfolio Item Row -->
+                                        <div class="col-xs-1"></div>
+                                        <div class="col-md-4">
+                                            <img class="img-responsive" src="https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png" alt="">
+                                        </div>
+            
+                                        <div class="extension-info col-md-2 ml-auto text-left">
+                                            <h3>Information</h3>
+                                            <div class="text-bold">Owner</div>
+                                            <div>
+                                                <i class="fas fa-download text-bold"> 100</i>
+                                            </div>
+                                            <div>Version
+                                                <div class="inline text-bold">1.0</div>
+                                            </div>
+            
+            
+                                        </div>
+            
+                                        <div class="extension-info col-md-4 ml-auto text-left">
+                                            <h3 id="github">
+                                                <a href="https://github.com"target="_blank">
+                                                    <i class="fab fa-github-alt"> </i> GitHub</a>
+                                            </h3>
+                                            <div>Open Issues
+                                                <div class="inline text-bold">12</div>
+                                            </div>
+                                            <div>Pull Requests
+                                                <div class="inline text-bold">10</div>
+                                            </div>
+                                            <div>Last commit
+                                                <div class="inline text-bold">12.06.2017</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.row -->
+                                    <div style="margin-bottom: 3%;"></div>
+                                    <!-- Related Projects Row -->
+                                    <div class="row">
+                                        <div class="col-xs-1"></div>
+                                        <div id="extension-description" class="col-md-10">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida
+                                                pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum
+                                                nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-1"></div>
+                                        <div class="col-md-7">
+                                            <h3 class="tags">Tags</h3>
+                                            <div class="tag-container">
+                                                <div class="inline border">Tag 1</div>
+                                                <div class="inline border">Tag 1</div>
+                                                
+                                            </div>
+                                        </div>
+                                       
+                                            <div id="download-button" class="col-xs-2">
+                                                <button type="button" class="btn btn-success btn-lg">Download</button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                            <div class="modal-footer">
+                                <!-- modal footer -->
+                            </div>
+            
+                        </div>
+                <!-- / .modal-content -->
+    
             </div>
-            <!-- /.row -->
-
-            <!-- Portfolio Item Row -->
-            <div class="row">
-
-                <div class="col-md-3">
-                    <img class="img-responsive" src="https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png" alt="">
-                </div>
-
-                <div class="col-md-2 item text-left">
-                    <h3>Information</h3>
-                    <div>Owner</div>
-                    <div>
-                        <i class="fas fa-download"></i>100</div>
-                    <div>Version 1.0</div>
-
-                    <div id="download">
-                        <a id="download-button" class="row btn btn-success" type="button" href="">Download</a>
-
-
-                    </div>
-                </div>
-
-                <div class="col-md-2 item text-left">
-                    <h3 id="github">
-
-                        <a href="github.com">
-                            <i class="fab fa-github-alt">_ </i>GitHub</a>
-                    </h3>
-                    <div>Open Issues 12</div>
-                    <div>Pull Requests 10</div>
-                    <div>Last commit 12.06.2017</div>
-
-                </div>
-
-
-            </div>
-            <!-- /.row -->
-            <div style="margin-bottom: 1%;"></div>
-            <!-- Related Projects Row -->
-            <div class="row">
-                <div class="col-md-7">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque
-                        urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies,
-                        justo eu convallis placerat, felis enim.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3 class="tags">Tags</h3>
-                    <div class="tag-container">
-                        <div class="tag border">Tag 1</div>
-                        <div class="tag border">Tag 1</div>
-                        <div class="tag border">Tag 1</div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
+            <!-- / .modal-dialog -->
+    
         </div>
-
-    </div>
 
     <div id="search-page" class="full-page hide">
         <div id="all-category">
@@ -646,7 +667,7 @@
                             </div>
                             <input type="hidden" name="search_param" value="all" id="search_param">
                             <input type="text" class="form-control" name="x" placeholder="Search...">
-                            <span class="input-group-btn">
+                            <span id="search-magnifier" class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>

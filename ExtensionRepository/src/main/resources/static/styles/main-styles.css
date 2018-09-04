@@ -54,9 +54,9 @@ footer {
     width: 96%;
 }
 
-#one-extension-page .container {
+/* #one-extension-page .container {
     width: 65%;
-}
+} */
 
 .col-md-2 {
     cursor: pointer;
@@ -90,13 +90,13 @@ footer {
     display: inline;
 }
 
-#one-extension-page {
+/* #one-extension-page {
     height: 100%;
     width: 100%;
     font-family: 'Roboto', sans-serif;
     align-items: center;
     padding-top: 6%;
-}
+} */
 
 .extension-image .img-responsive {
     width: 100%;
@@ -104,7 +104,7 @@ footer {
 
 .border {
     border: 1px solid black;
-    border-radius: 4%;
+    border-radius: 4px;
     padding: 7px;
     margin-right: 15px;
 }
@@ -285,7 +285,7 @@ img {
     margin-bottom: 25px;
 }
 
-.tag {
+.inline {
     display: inline;
 }
 
@@ -293,15 +293,15 @@ img {
     margin-bottom: 5%;
 }
 
-#one-extension-page .container {
+/* #one-extension-page .container {
     background-color: blanchedalmond;
     border-radius: 6px;
     margin-top: 1%;
-}
+} */
 
-#download {
+/* #download {
     text-align: center;
-}
+} */
 
 /*  ------- Search page styles----- */
 
@@ -337,8 +337,7 @@ img {
     text-align: center;
 }
 
-
- .resCarousel {
+.resCarousel {
     overflow: hidden;
     width: 100%;    
     display: flex;
@@ -355,14 +354,53 @@ img {
 
 }
 
-
 .item{
     float: none;
 }
-
 
 @media (max-width: 767px) {
     .resCarousel-inner {
         overflow-x: auto;
     }
+}
+
+/* --------- modal page -------- */
+.DemoModal2{
+    margin:20px;
+}
+
+/* .modal-content{
+    background-color: #f8dec2;
+} */
+
+#extension-modal {
+    background-color: #eeeeee;
+    top:5%;
+}
+
+.close {
+    font-size: 2vw;
+}
+
+.modal-title {
+    padding-left: 10%
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+#extension-description {
+    font-size: 1vw;
+}
+
+.extension-info > div {
+    font-size: 14pt;
+    padding: 5px 0;
+}
+
+#download-button{
+    top: 16px;
+    left: 50px;
+    font-size: 3vw;
 }
