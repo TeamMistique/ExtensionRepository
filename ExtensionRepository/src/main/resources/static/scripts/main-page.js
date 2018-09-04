@@ -212,7 +212,7 @@ var fillExtensionPage = function (location, extension) {
         }
 
         html += '</div></div><div class="modal-footer"><div class="col-md-9"></div><div id="download-button" class="col-md-2">';
-        html += '<button type="button" class="btn btn-success btn-lg">Download</button></div></div></div></div></div>';
+        html += '<button type="button" class="btn btn-success btn-lg" value="'+extension.file+'">Download</button></div></div></div></div></div>';
 
         location.append(html)
 
@@ -512,6 +512,20 @@ function editExtension(data) {
         }
     });
 }
+
+$('#one-extension-page').on('click', 'button', function(event){
+    debugger;
+    var url = $(this).attr('value');
+    var index = url.indexOf('/api');
+    var cutUrl = url.substring(index);
+
+    $.ajax({
+        type: "GET",
+        url: cutUrl,
+    });
+
+    event.preventDefault();
+})
 
 var helpers = {
     fillEditMenu: function (extension) {
