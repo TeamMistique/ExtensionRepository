@@ -48,13 +48,22 @@ $('#user-dropdown').on('click', '#login-button', function (e) {
     e.preventDefault();
 });
 
+$('#user-dropdown').on('click', '#go-to-admin-panel', function (e) {
+    $('.page').addClass('hide');
+    $('#admin-page').removeClass('hide');
+    $('#user-dropdown').toggle();
+    e.preventDefault();
+});
+
 $('#my-account-button').on('click', function (e) {
     var token = getJwtToken();
     var html = '';
-    debugger;
     if (token) {
         html += "<li><a id=" + "go-to-mine" + ">My extensions</a></li>";
-        html += "<li><a id=" + "log-out-button" + ">Log out</a></li>";
+        if(isAdmin()){
+            html += "<li><a id=" + "go-to-admin-panel" + ">Admin Panel</a></li>";
+        }
+        html += "<li><a id=" + "log-out-button" + ">Log out</a></li>"; 
     } else {
         html += "<li><a id=" + "login-button" + ">Log in</a></li>";
     }
@@ -208,7 +217,7 @@ function getMyExtensions() {
             url: "/api/extensions/mine",
             headers: createAuthorizationTokenHeader(),
             success: function (data) {
-                fillWithEditableExtensions($('#my-extensions-container'), data);
+                fillWithEditableExtensions(data);
             }
         });
     }
@@ -232,9 +241,49 @@ $('.btn-file :file').on('fileselect', function (event, label) {
     }
 });
 
+$.fn.extend({
+    clearFiles: function () {
+        $(this).each(function () {
+            var isIE = (window.navigator.userAgent.indexOf("MSIE ") > 0 || !! navigator.userAgent.match(/Trident.*rv\:11\./));
+            if ($(this).prop("type") == 'file') {
+                if (isIE == true) {
+                    $(this).replaceWith($(this).val('').clone(true));
+                } else {
+                    $(this).val("");
+                }
+            }
+        });
+        return this;
+    }
+});
+
 $('#open-new-extension-modal').on('click', function () {
     $('#new-extension-modal').modal('show');
+    console.log($("#image-upload").val());
+    console.log($("#file-upload").val());
 });
+
+function uploadExtension(dto) {
+    return $.ajax({
+        type: "POST",
+        url: "/api/extensions/add",
+        data: JSON.stringify(dto),
+        contentType: 'application/json',
+        dataType: 'json',
+        headers: createAuthorizationTokenHeader(),
+        success: function (response) {
+            console.log(response);
+            getMyExtensions();
+            $('#new-extension-modal').modal('toggle');
+        }
+    });
+}
+
+var resetAddExtesnionForms = function() {
+    $("[type='file']").clearFiles();
+    $("[type='text']").val('');
+    $('#new-extension-form').get(0).reset();
+}
 
 $('#add-extension-button').on('click', function () {
 
@@ -244,28 +293,6 @@ $('#add-extension-button').on('click', function () {
         'link': $('#github-link').val(),
         'tagNames': $('#extension-tags').val().split(', ')
     };
-
-    function resetAddExtesnionForms() {
-        $('#image-upload-form')[0].reset();
-        $('#file-upload-form')[0].reset();
-        $('#new-extension-form')[0].reset();
-    }
-
-    function uploadExtension() {
-        return $.ajax({
-            type: "POST",
-            url: "/api/extensions/add",
-            data: JSON.stringify(dto),
-            contentType: 'application/json',
-            dataType: 'json',
-            headers: createAuthorizationTokenHeader(),
-            success: function (response) {
-                console.log(response);
-                getMyExtensions();
-                $('#new-extension-modal').modal('toggle');
-            }
-        });
-    }
 
     $('#file-upload-form').submit(function (event) {
         var formElement = this;
@@ -282,7 +309,7 @@ $('#add-extension-button').on('click', function () {
             success: function (data) {
                 dto.file = data.downloadURI;
                 if (typeof dto.image !== 'undefined') {
-                    uploadExtension().done(function () {
+                    uploadExtension(dto).done(function () {
                         resetAddExtesnionForms();
                     });
                 }
@@ -307,7 +334,7 @@ $('#add-extension-button').on('click', function () {
             success: function (data) {
                 dto.image = data.downloadURI;
                 if (typeof dto.file !== 'undefined') {
-                    uploadExtension().done(function () {
+                    uploadExtension(dto).done(function () {
                         resetAddExtesnionForms();
                     });
                 }
@@ -322,22 +349,50 @@ $('#add-extension-button').on('click', function () {
 
 });
 
-var fillWithEditableExtensions = function (location, data) {
-    location.html('');
+// var fillWithEditableExtensions = function (data) {
+//     var publishedLocation = $('#my-published');
+//     var unpublshedLocation = $('#my-unpublished');
+//     publishedLocation.html('');
+//     unpublshedLocation.html('');
+
+//     if (data !== '') {
+//         $.each(data, function (k, v) {
+//             debugger;
+//             var html = "";
+//                 html += '<div class="col-md-2" value="' + v.id + '">';
+//                 html += '<div class="panel panel-primary"><div class="panel-heading flex-spread"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+//                 html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+//                 html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+//                 html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>';
+//             if(v.publishedDate!==null){
+//                 publishedLocation.append(html);
+//             } else {
+//                 unpublshedLocation.append(html);
+//             }
+//         });
+//     } 
+// };
+
+var fillWithEditableExtensions = function (data) {
+    var publishedLocation = $('#my-published-container');
+    var unpublshedLocation = $('#my-unpublished-container');
+    publishedLocation.html('');
+    unpublshedLocation.html('');
 
     if (data !== '') {
         $.each(data, function (k, v) {
             var html = "";
-            html += '<div class="col-md-2" value="' + v.id + '">';
-            html += '<div class="panel panel-primary"><div class="panel-heading flex-spread"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+            html += '<div class="col-md-2 item" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
-            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>';
-
-            location.append(html)
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+            if(v.publishedDate!==null){
+                publishedLocation.append(html);
+            } else {
+                unpublshedLocation.append(html);
+            }
         });
-    } else {
-        console.log('error');
     }
 };
 
@@ -348,7 +403,6 @@ function resetEditForms() {
 }
 
 $('#delete-extension-button').on('click', function (event) {
-    debugger;
     var id = $('#edit-extension-modal').val();
 
     $.ajax({
@@ -455,6 +509,7 @@ $("#my-extensions-container").on('click', '.click-to-edit', function (e) {
 });
 
 function triggerEdit(dto) {
+    console.log("edit triggered");
     editExtension(dto).done(function () {
         getMyExtensions().done(function () {
             $('#edit-extension-modal').modal('toggle');
@@ -493,7 +548,6 @@ var helpers = {
         $('#edit-extension-description').val(extension.description);
         $('#edit-github-link').val(extension.link);
 
-        debugger;
         var tags = "";
         $.each(extension.tags, function (k, v) {
             tags += v.tagName + ", "

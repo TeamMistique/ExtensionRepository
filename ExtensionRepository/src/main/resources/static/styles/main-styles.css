@@ -345,7 +345,6 @@ img {
  .resCarousel {
     overflow: hidden;
     width: 100%;
-    display: flex;
 }
 #my-extensions-page{
     padding: 5%;

@@ -24,3 +24,25 @@ var createAuthorizationTokenHeader = function () {
         };
     }
 }
+
+function parseJwt () {
+    var token = getJwtToken();
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+};
+
+function isAdmin(){
+    var claims = parseJwt();
+    var admin = false;
+    $.each(claims.scopes, function(k, v){
+        if(v.role == "ROLE_ADMIN") admin = true;
+    });
+    return admin;
+};
+
+function getExpiryTimeFromToken (){
+    var claims = parseJwt();
+    return claims.exp;
+}
+

@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 @Service
 public class FileStorageService implements StorageService {
@@ -37,7 +38,8 @@ public class FileStorageService implements StorageService {
 
     @Override
     public String storeFile(MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String fileName = String.valueOf(UUID.randomUUID());
 
         try{
             if(fileName.contains("..")){
