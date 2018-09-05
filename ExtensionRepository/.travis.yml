@@ -1,5 +1,6 @@
 language: java
 install: true
+sudo: false # faster builds
 
 jdk:
   - oraclejdk8
@@ -15,3 +16,7 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+after_success:
+  - export CODECOV_TOKEN="8dc5b9f1-d6fd-43d5-a937-b53600c458b7"
+  - bash <(curl -s https://codecov.io/bash)
