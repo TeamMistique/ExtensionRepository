@@ -31,22 +31,4 @@ public class GitHubServiceImplTest {
         String result = GitHubServiceImpl.GitHubHelpers.getRepo("https://github.com/biaedwards/Java-Alpha-Module-1");
         Assert.assertEquals("Java-Alpha-Module-1", result);
     }
-
-    @Test
-    public void getNumberOfIssues_shouldNotReturnNull() {
-        Integer openIssues = gitHubService.getNumberOfIssues("https://github.com/ValveSoftware/Proton");
-        Assert.assertNotNull(openIssues);
-    }
-
-    @Test
-    public void getNumberOfPullRequests_shouldNotReturnNull() {
-        Integer openIssues = gitHubService.getNumberOfPullRequests("https://github.com/ValveSoftware/Proton");
-        Assert.assertNotNull(openIssues);
-    }
-
-    @Test
-    public void getLastCommitDate_shouldNotReturnNull() {
-        Date lastCommitDate = gitHubService.getLastCommitDate("https://github.com/ValveSoftware/Proton");
-        Assert.assertNotNull(lastCommitDate);
-    }
 }
