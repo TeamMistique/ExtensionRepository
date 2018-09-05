@@ -35,12 +35,6 @@ $('#user-dropdown').on('click', '#go-to-mine', function (e) {
     e.preventDefault();
 });
 
-$('#user-dropdown').on('click', '#log-out-button', function (e) {
-    removeJwtToken();
-    refresh();
-    e.preventDefault();
-});
-
 $('#user-dropdown').on('click', '#login-button', function (e) {
     $('.page').addClass('hide');
     $('#login-page').removeClass('hide');
@@ -80,7 +74,7 @@ var fillPopularList = function () {
         type: "GET",
         url: "/api/extensions/featured",
         success: function (data) {
-            if(getJwtToken()&&isAdmin()){
+            if(isAdmin()){
                 adminFillWithEditable($('#popular-container'), data);
             } else {
                 fillMainPageList($('#popular-container'), data);
@@ -94,7 +88,7 @@ var fillFeaturedList = function () {
         type: "GET",
         url: "/api/extensions/popular",
         success: function (data) {
-            if(getJwtToken()&&isAdmin()){
+            if(isAdmin()){
                 adminFillWithEditable($('#featured-container'), data);
             } else {
                 fillMainPageList($('#featured-container'), data);
@@ -108,7 +102,7 @@ var fillNewList = function () {
         type: "GET",
         url: "/api/extensions/new",
         success: function (data) {
-            if(getJwtToken()&&isAdmin()){
+            if(isAdmin()){
                 adminFillWithEditable($('#new-container'), data);
             } else {
                 fillMainPageList($('#new-container'), data);
@@ -142,7 +136,7 @@ var fillAllList = function () {
         type: "GET",
         url: "/api/extensions/published",
         success: function (data) {
-            if(getJwtToken()&&isAdmin()){
+            if(isAdmin()){
                 adminFillSearch($('#search-container'), data);
             } else {
                 fillSearchPageList($('#search-container'), data);
@@ -810,7 +804,7 @@ $('#search-magnifier').on('click', function (e) {
     var word = $('#search-param').val();
     console.log(word);
     filterByName(word).done(function (data) {
-        if(getJwtToken()&&isAdmin()){
+        if(isAdmin()){
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -824,7 +818,7 @@ $('#sort-by-downloads').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByDownloads(name).done(function(data){
-        if(getJwtToken()&&isAdmin()){
+        if(isAdmin()){
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -838,7 +832,7 @@ $('#sort-by-upload').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByUpload(name).done(function(data){
-        if(getJwtToken()&&isAdmin()){
+        if(isAdmin()){
             adminFillWithEditable($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -852,7 +846,7 @@ $('#sort-by-last-commit').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByLastCommit(name).done(function(data){
-        if(getJwtToken()&&isAdmin()){
+        if(isAdmin()){
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);

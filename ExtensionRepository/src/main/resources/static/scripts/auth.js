@@ -1,8 +1,18 @@
 var TOKEN_KEY = 'jwtToken';
 
 var getJwtToken = function () {
-    return localStorage.getItem(TOKEN_KEY);
+    var token =  localStorage.getItem(TOKEN_KEY);
+    debugger;
+    if(getExpiryTimeFromToken() < Date.now()/1000){
+        removeJwtToken();
+        refresh();
+    }
+    return token;
 };
+
+var justGetJwtToken = function(){
+    return localStorage.getItem(TOKEN_KEY);
+}
 
 var setJwtToken = function (token) {
     localStorage.setItem(TOKEN_KEY, token);
@@ -26,13 +36,13 @@ var createAuthorizationTokenHeader = function () {
 }
 
 function parseJwt () {
-    var token = getJwtToken();
+    var token = justGetJwtToken();
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(window.atob(base64));
 };
 
-function isAdmin(){
+function ajaxisAdmin(){
     var claims = parseJwt();
     var admin = false;
     $.each(claims.scopes, function(k, v){
