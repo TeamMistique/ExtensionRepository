@@ -1,5 +1,0 @@
-test:
-    post:
-        - if [ -e ./gradlew ]; then ./gradlew jacocoTestReport;else gradle jacocoTestReport;fi
-        - export CODECOV_TOKEN="8dc5b9f1-d6fd-43d5-a937-b53600c458b7"
-        - bash <(curl -s https://codecov.io/bash)
