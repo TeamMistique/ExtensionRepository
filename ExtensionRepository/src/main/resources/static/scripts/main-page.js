@@ -11,6 +11,7 @@ $('#home-button, #home-button2').on('click', function (e) {
     $('.page').addClass('hide');
     $('#main-page').removeClass('hide');
     $('#extension-modal').removeClass('hide');
+    $('#edit-extension-modal').removeClass('hide');
 });
 
 function goHome() {
@@ -23,6 +24,7 @@ $('#search-button').on('click', function (e) {
     $('.page').addClass('hide');
     $('#search-page').removeClass('hide');
     $('#extension-modal').removeClass('hide');
+    $('#edit-extension-modal').removeClass('hide');
 });
 
 $('#user-dropdown').on('click', '#go-to-mine', function (e) {
@@ -80,7 +82,11 @@ var fillPopularList = function () {
         type: "GET",
         url: "/api/extensions/featured",
         success: function (data) {
-            fillMainPageList($('#featured-container'), data)
+            if(getJwtToken()&&isAdmin()){
+                adminFillWithEditable($('#popular-container'), data);
+            } else {
+                fillMainPageList($('#popular-container'), data);
+            }
         }
     });
 };
@@ -90,7 +96,11 @@ var fillFeaturedList = function () {
         type: "GET",
         url: "/api/extensions/popular",
         success: function (data) {
-            fillMainPageList($('#popular-container'), data)
+            if(getJwtToken()&&isAdmin()){
+                adminFillWithEditable($('#featured-container'), data);
+            } else {
+                fillMainPageList($('#featured-container'), data);
+            }
         }
     });
 };
@@ -100,7 +110,11 @@ var fillNewList = function () {
         type: "GET",
         url: "/api/extensions/new",
         success: function (data) {
-            fillMainPageList($('#new-container'), data)
+            if(getJwtToken()&&isAdmin()){
+                adminFillWithEditable($('#new-container'), data);
+            } else {
+                fillMainPageList($('#new-container'), data);
+            }
         }
     });
 };
@@ -361,6 +375,21 @@ var fillWithEditableExtensions = function (data) {
     }
 };
 
+var adminFillWithEditable = function(location, data){
+    location.html('');
+    if (data !== '') {
+        $.each(data, function (k, v) {
+            var html = "";
+            html += '<div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading" style= "display: flex; justify-content: space-between"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+            html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+            html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+            location.append(html);
+        });
+    }
+}
+
 $('#delete-extension-button').on('click', function (event) {
     var id = $('#edit-extension-modal').val();
 
@@ -454,8 +483,9 @@ $('#edit-extension-button').on('click', function (event) {
 });
 
 
-$("#my-extensions-container").on('click', '.click-to-edit', function (e) {
+$("#my-extensions-container, #popular-container, #featured-container, #new-container").on('click', '.click-to-edit', function (e) {
     e.stopPropagation();
+    e.preventDefault();
     var $extensionToEdit = $(this).closest('.col-md-2');
     var id = $extensionToEdit.attr('value');
     $('#edit-extension-modal').val(id);
