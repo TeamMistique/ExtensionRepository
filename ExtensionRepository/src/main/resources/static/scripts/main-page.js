@@ -37,9 +37,7 @@ $('#user-dropdown').on('click', '#go-to-mine', function (e) {
 
 $('#user-dropdown').on('click', '#log-out-button', function (e) {
     removeJwtToken();
-    $('.page').addClass('hide');
-    $('#main-page').removeClass('hide');
-    $('#user-dropdown').toggle();
+    refresh();
     e.preventDefault();
 });
 
@@ -144,7 +142,11 @@ var fillAllList = function () {
         type: "GET",
         url: "/api/extensions/published",
         success: function (data) {
-            fillSearchPageList($('#search-container'), data)
+            if(getJwtToken()&&isAdmin()){
+                adminFillSearch($('#search-container'), data);
+            } else {
+                fillSearchPageList($('#search-container'), data);
+            }
         }
     });
 };
@@ -388,7 +390,27 @@ var adminFillWithEditable = function(location, data){
             location.append(html);
         });
     }
-}
+};
+
+var adminFillSearch = function (location, data) {
+
+    location.html('');
+
+    if (data !== '') {
+        $.each(data, function (k, v) {
+            var html = "";
+            html += '<div class="col-md-2" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
+            html += '<div class="panel panel-primary"><div class="panel-heading" style= "display: flex; justify-content: space-between"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
+            html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+            html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+            html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+
+            location.append(html)
+        });
+    } else {
+        console.log('error');
+    }
+};
 
 $('#delete-extension-button').on('click', function (event) {
     var id = $('#edit-extension-modal').val();
@@ -483,7 +505,7 @@ $('#edit-extension-button').on('click', function (event) {
 });
 
 
-$("#my-extensions-container, #popular-container, #featured-container, #new-container").on('click', '.click-to-edit', function (e) {
+$("#my-extensions-container, #popular-container, #featured-container, #new-container, #search-container").on('click', '.click-to-edit', function (e) {
     e.stopPropagation();
     e.preventDefault();
     var $extensionToEdit = $(this).closest('.col-md-2');
@@ -788,7 +810,11 @@ $('#search-magnifier').on('click', function (e) {
     var word = $('#search-param').val();
     console.log(word);
     filterByName(word).done(function (data) {
-        fillSearchPageList($('#search-container'), data);
+        if(getJwtToken()&&isAdmin()){
+            adminFillSearch($('#search-container'), data);
+        } else {
+            fillSearchPageList($('#search-container'), data);
+        }
         $('#search-concept').html('Order by');
     })
     e.preventDefault();
@@ -798,7 +824,11 @@ $('#sort-by-downloads').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByDownloads(name).done(function(data){
-        fillSearchPageList($('#search-container'), data);
+        if(getJwtToken()&&isAdmin()){
+            adminFillSearch($('#search-container'), data);
+        } else {
+            fillSearchPageList($('#search-container'), data);
+        }
         $('#search-concept').html($this.html());
     })
     event.preventDefault();
@@ -808,7 +838,11 @@ $('#sort-by-upload').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByUpload(name).done(function(data){
-        fillSearchPageList($('#search-container'), data);
+        if(getJwtToken()&&isAdmin()){
+            adminFillWithEditable($('#search-container'), data);
+        } else {
+            fillSearchPageList($('#search-container'), data);
+        }
         $('#search-concept').html($this.html());
     })
     event.preventDefault();
@@ -818,7 +852,11 @@ $('#sort-by-last-commit').on('click', function(event){
     var $this = $(this);
     var name = $('#search-param').val();
     sortByLastCommit(name).done(function(data){
-        fillSearchPageList($('#search-container'), data);
+        if(getJwtToken()&&isAdmin()){
+            adminFillSearch($('#search-container'), data);
+        } else {
+            fillSearchPageList($('#search-container'), data);
+        }
         $('#search-concept').html($this.html());
     })
     event.preventDefault();
