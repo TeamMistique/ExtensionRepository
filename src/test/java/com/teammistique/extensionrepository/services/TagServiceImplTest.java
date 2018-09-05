@@ -1,7 +1,6 @@
 package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.data.TagSqlRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.data.base.TagRepository;
 import com.teammistique.extensionrepository.models.Tag;
 import org.junit.Assert;
