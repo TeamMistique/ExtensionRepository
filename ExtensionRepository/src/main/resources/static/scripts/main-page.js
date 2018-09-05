@@ -34,9 +34,6 @@ $('#user-dropdown').on('click', '#go-to-mine', function (e) {
 });
 
 $('#user-dropdown').on('click', '#log-out-button', function (e) {
-    if(isAdmin()){
-        $('.admin-button').hide();
-    }
     removeJwtToken();
     $('.page').addClass('hide');
     $('#main-page').removeClass('hide');
@@ -555,6 +552,15 @@ $('#edit-buttons-container').on('click', '#publish-extension-button', function (
     debugger;
     var id = $('#edit-extension-modal').val();
     ajaxCalls.publishExtension(id).done(function(){
+        refresh();
+    });
+    event.preventDefault();
+});
+
+$('#edit-buttons-container').on('click', '#feature-extension-button', function (event) {
+    debugger;
+    var id = $('#edit-extension-modal').val();
+    ajaxCalls.changeFeatureStatus(id).done(function(){
         refresh();
     });
     event.preventDefault();

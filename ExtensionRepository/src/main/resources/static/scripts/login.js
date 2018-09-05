@@ -30,6 +30,8 @@ $(function() {
                 setJwtToken(data.token);
                 if(!isAdmin()){
                     $('.admin-button').hide();
+                } else {
+                    $('.admin-button').show();
                 }
                 goHome();
             }
