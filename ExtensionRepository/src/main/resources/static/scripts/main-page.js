@@ -164,20 +164,9 @@ $('#featured-container, #popular-container, #new-container, #search-container').
     })
 });
 
-// var getExtensionData = function (id) {
-//     $.ajax({
-//         type: "GET",
-//         url: "/api/extensions/" + id,
-//         success: function (data) {
-//             fillExtensionPage($('#one-extension-page'), data)
-//         }
-//     });
-// };
-
 var fillExtensionPage = function (location, extension) {
     location.html('');
 
-    debugger;
     if (extension !== '') {
         var html = "";
 
@@ -211,8 +200,8 @@ var fillExtensionPage = function (location, extension) {
             console.log(extension.tags.length);
         }
 
-        html += '</div></div><div class="modal-footer"><div class="col-md-9"></div><div id="download-button" class="col-md-2">';
-        html += '<button type="button" class="btn btn-success btn-lg" value="' + extension.file + '">Download</button></div></div></div></div></div>';
+        html += '</div></div><div class="modal-footer"><div class="col-md-9"></div><div class="col-md-2">';
+        html += '<button id="download-button" type="button" class="btn btn-success btn-lg" value="' + extension.file + '">Download</button></div></div></div></div></div>';
 
         location.append(html)
 
@@ -506,17 +495,17 @@ function editExtension(data) {
     });
 }
 
-$('#one-extension-page').on('click', 'button', function (event) {
+function downloadURI(uri) {
+    var link = document.createElement("a");
+    link.download = helpers.getNameFromFileLink(uri);
+    link.href = uri;
+    link.click();
+}
+
+$('#one-extension-page').on('click', '#download-button', function (event) {
     debugger;
-    var url = $(this).attr('value');
-    var index = url.indexOf('/api');
-    var cutUrl = url.substring(index);
-
-    $.ajax({
-        type: "GET",
-        url: cutUrl,
-    });
-
+    var uri = $(this).attr('value');
+    downloadURI(uri);
     event.preventDefault();
 });
 
