@@ -24,7 +24,7 @@ public class TagServiceImplTest {
     @Test
     public void createTag_shouldReturnTag() {
         Tag tag = new Tag();
-        when(mockTagRepository.create(tag)).thenReturn(tag);
+        when(mockTagRepository.saveOrUpdate(tag)).thenReturn(tag);
 
         Tag result = tagService.createTag(tag);
 
