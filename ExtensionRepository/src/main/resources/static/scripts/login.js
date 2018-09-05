@@ -28,6 +28,9 @@ $(function() {
             data: data,
             success: function (data) {
                 setJwtToken(data.token);
+                if(!isAdmin()){
+                    $('.admin-button').hide();
+                }
                 goHome();
             }
         });

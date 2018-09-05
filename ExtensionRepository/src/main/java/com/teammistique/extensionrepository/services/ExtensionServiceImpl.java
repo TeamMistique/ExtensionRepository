@@ -224,12 +224,16 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension publishExtension(int id) {
+    public Extension changePublishedStatus(int id) {
         Extension extension = extensionRepository.findById(id);
-        extension.setPublishedDate(new Date());
-        extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
-        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
-        extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
+        if(extension.getPublishedDate()!=null){
+            extension.setPublishedDate(null);
+        } else {
+            extension.setPublishedDate(new Date());
+            extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
+            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
+            extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
+        }
         return extensionRepository.update(extension);
     }
 

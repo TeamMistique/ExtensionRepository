@@ -34,6 +34,9 @@ $('#user-dropdown').on('click', '#go-to-mine', function (e) {
 });
 
 $('#user-dropdown').on('click', '#log-out-button', function (e) {
+    if(isAdmin()){
+        $('.admin-button').hide();
+    }
     removeJwtToken();
     $('.page').addClass('hide');
     $('#main-page').removeClass('hide');
@@ -369,7 +372,7 @@ $('#delete-extension-button').on('click', function (event) {
         url: "/api/extensions/delete?id=" + id,
         headers: createAuthorizationTokenHeader(),
         success: function () {
-            getMyExtensions();
+            refresh();
         }
     });
 
@@ -533,16 +536,12 @@ var helpers = {
 
         //add buttons for publish and feature
         if(isAdmin()){
-            debugger;
-            var $buttonsLocation = $('#edit-buttons-container');
-            var html = '';
             var publishText = 'Publish';
             var featureText = 'Feature';
             if(extension.publishedDate!==null) publishText = 'Unpublish';
-            if(extension.featuredDate!==null) featureText = 'Unfeature'; 
-            html += '<button id="publish-extension-button" type="button" class="btn btn-primary">'+publishText+'</button>';
-            html += '<button id="feature-extension-button" type="button" class="btn btn-primary">'+featureText+'</button>';
-            $buttonsLocation.prepend(html);
+            if(extension.featuredDate!==null) featureText = 'Unfeature';
+            $('#publish-extension-button').html(publishText);
+            $('#feature-extension-button').html(featureText);
         }
     },
 
@@ -551,6 +550,15 @@ var helpers = {
         return file.substring(index);
     }
 };
+
+$('#edit-buttons-container').on('click', '#publish-extension-button', function (event) {
+    debugger;
+    var id = $('#edit-extension-modal').val();
+    ajaxCalls.publishExtension(id).done(function(){
+        refresh();
+    });
+    event.preventDefault();
+});
 
 // ------------------  Carousel ---------------------
 

@@ -225,7 +225,7 @@
 //    public void publishExtension_shouldSetExtensionPublishedDateToNow() {
 //        Extension extension = new Extension();
 //
-//        extensionService.publishExtension(extension);
+//        extensionService.changePublishedStatus(extension);
 //
 //        Assert.assertNotNull(extension.getPublishedDate());
 //        Assert.assertTrue(new Date().getTime() - extension.getPublishedDate().getTime() < 1000);
@@ -235,7 +235,7 @@
 //    public void publishExtension_shouldCallUpdateExtensionRepositoryMethod() {
 //        Extension extension = new Extension();
 //
-//        extensionService.publishExtension(extension);
+//        extensionService.changePublishedStatus(extension);
 //
 //        verify(mockExtensionRepository).update(extension);
 //    }

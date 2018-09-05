@@ -14,7 +14,7 @@ public interface AdminExtensionService extends ExtensionService{
 
     List<Extension> filterAllByName(String name);
 
-    Extension publishExtension(int id);
+    Extension changePublishedStatus(int id);
 
     void setMaxListSize(int maxListSize);
 }

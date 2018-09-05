@@ -9,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
-import static com.teammistique.extensionrepository.models.security.Constants.HEADER_STRING;
-import static com.teammistique.extensionrepository.models.security.Constants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -39,8 +35,8 @@ public class AdminController {
     }
 
     @PostMapping("/publish")
-    public Extension publishExtension(@RequestParam int id){
-        return extensionService.publishExtension(id);
+    public Extension changePublishedStatus(@RequestParam int id){
+        return extensionService.changePublishedStatus(id);
     }
 
     @PostMapping("/feature")
