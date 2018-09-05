@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ExtensionRepository.iml" filepath="$PROJECT_DIR$/.idea/ExtensionRepository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/extension-repository.iml" filepath="$PROJECT_DIR$/.idea/modules/extension-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/extension-repository_main.iml" filepath="$PROJECT_DIR$/.idea/modules/extension-repository_main.iml" group="extension-repository" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/extension-repository_test.iml" filepath="$PROJECT_DIR$/.idea/modules/extension-repository_test.iml" group="extension-repository" />
     </modules>
   </component>
 </project>
