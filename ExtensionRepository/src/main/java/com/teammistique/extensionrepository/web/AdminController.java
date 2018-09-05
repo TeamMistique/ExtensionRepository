@@ -50,9 +50,14 @@ public class AdminController {
         return extension;
     }
 
-    @PostMapping("/feature/size")
+    @PostMapping("/featured/size")
     public void changeFeaturedListSize(@RequestParam int size){
         extensionService.setMaxListSize(size);
+    }
+
+    @PostMapping("/sync")
+    public void changeSyncTimer(@RequestParam long delay){
+        extensionService.setUpdateGitHubPeriod(delay);
     }
 
     @PostMapping("/disableUser")
