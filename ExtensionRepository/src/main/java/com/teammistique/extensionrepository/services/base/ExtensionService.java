@@ -38,5 +38,9 @@ public interface ExtensionService {
 
     Extension getExtensionByFile(String fileName);
 
-    void updateGitHub();
+    void updateAllGitHubInfo();
+
+    void updateOneGitHubInfo(Extension extension);
+
+    void setUpdateGitHubPeriod(long delay);
 }

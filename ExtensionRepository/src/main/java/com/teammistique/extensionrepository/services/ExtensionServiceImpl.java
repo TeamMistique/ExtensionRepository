@@ -3,14 +3,12 @@ package com.teammistique.extensionrepository.services;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
-import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.services.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class ExtensionServiceImpl implements ExtensionService, AdminExtensionService {
     private int maxListSize = 10;
+    private static Thread updateManager;
+    private static long updateInterval = 600000L;
 
     private GitHubService gitHubService;
     private ExtensionRepository extensionRepository;
@@ -38,6 +38,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         this.tagService = tagService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
+        setUpdateGitHubPeriod(updateInterval);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension updateExtension(ExtensionDTO dto, String authToken){
+    public Extension updateExtension(ExtensionDTO dto, String authToken) {
         Extension extension = extensionRepository.findById(dto.getId());
 
         if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
@@ -88,14 +89,14 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             tags.add(tagService.createTag(tag));
         }
 
-        if (!extension.getFile().equals(dto.getFile())){
+        if (!extension.getFile().equals(dto.getFile())) {
             extension.setVersion(extension.getVersion() + 0.1);
             String fileName = getFileNameFromFileLink(extension.getFile());
             fileService.deleteFile(fileName);
             extension.setFile(dto.getFile());
         }
 
-        if(!extension.getImage().equals(dto.getImage())){
+        if (!extension.getImage().equals(dto.getImage())) {
             String imageName = getFileNameFromFileLink(extension.getImage());
             fileService.deleteFile(imageName);
             extension.setImage(dto.getImage());
@@ -142,7 +143,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         Extension extension = extensionRepository.findById(id);
         boolean add = extension.getFeaturedDate() == null;
 
-        if(add && extension.getPublishedDate()==null){
+        if (add && extension.getPublishedDate() == null) {
             throw new UnpublishedExtensionException("Only published extensions can be featured.");
         }
 
@@ -211,22 +212,9 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-//    @Scheduled(fixedRate = 3000000)
-    public void updateGitHub() {
-        List<Extension> extensions = listAllExtensions();
-        for(Extension extension:extensions){
-            String repo = extension.getLink();
-            extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
-            extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
-            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
-            extensionRepository.update(extension);
-        }
-    }
-
-    @Override
     public Extension changePublishedStatus(int id) {
         Extension extension = extensionRepository.findById(id);
-        if(extension.getPublishedDate()!=null){
+        if (extension.getPublishedDate() != null) {
             extension.setPublishedDate(null);
         } else {
             extension.setPublishedDate(new Date());
@@ -237,6 +225,47 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         return extensionRepository.update(extension);
     }
 
+    @Override
+    public void updateAllGitHubInfo() {
+        List<Extension> extensions = listPublishedExtensions(true);
+        extensions.forEach(this::updateOneGitHubInfo);
+    }
+
+    @Override
+    public void updateOneGitHubInfo(Extension extension) {
+        String repo = extension.getLink();
+        extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
+        extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
+        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+        extensionRepository.update(extension);
+    }
+
+    @Override
+    public void setUpdateGitHubPeriod(long delay) {
+        if (updateManager != null) {
+            try {
+                if (!updateManager.isInterrupted()) updateManager.wait();
+                updateManager.interrupt();
+            } catch (InterruptedException e) {
+                System.out.println("Interrupted syncing thread successfully. Creating new thread.");
+                e.printStackTrace();
+            }
+        }
+
+        updateManager = new Thread(() -> {
+            while (true) {
+                try {
+                    updateAllGitHubInfo();
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        updateManager.setDaemon(true);
+        updateManager.start();
+    }
+
     public int getMaxListSize() {
         return maxListSize;
     }
@@ -245,7 +274,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         this.maxListSize = maxListSize;
     }
 
-    private String getFileNameFromFileLink(String file){
+    private String getFileNameFromFileLink(String file) {
         int index = file.indexOf("downloadFile/") + "downloadFile/".length();
         return file.substring(index);
     }
