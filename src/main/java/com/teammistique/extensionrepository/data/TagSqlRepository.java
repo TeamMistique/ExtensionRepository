@@ -1,7 +1,6 @@
 package com.teammistique.extensionrepository.data;
 
 import com.teammistique.extensionrepository.data.base.AbstractGenericRepository;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.data.base.TagRepository;
 import com.teammistique.extensionrepository.models.Tag;
 import org.hibernate.Session;
@@ -37,11 +36,11 @@ public class TagSqlRepository extends AbstractGenericRepository<Tag> implements 
     }
 
     @Override
-    public Tag findById(int id) {
+    public Tag findByName(String name) {
         Tag tag = null;
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            tag = session.get(Tag.class, id);
+            tag = session.get(Tag.class, name);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -50,10 +49,10 @@ public class TagSqlRepository extends AbstractGenericRepository<Tag> implements 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(String name) {
         try (Session session = factory.openSession()) {
             session.beginTransaction();
-            Tag tag = session.get(Tag.class, id);
+            Tag tag = session.get(Tag.class, name);
             session.delete(tag);
             session.getTransaction().commit();
         } catch (Exception e) {

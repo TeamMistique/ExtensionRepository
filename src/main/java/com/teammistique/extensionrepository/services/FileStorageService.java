@@ -1,10 +1,8 @@
 package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.config.FileStorageProperties;
-import com.teammistique.extensionrepository.data.base.GenericRepository;
 import com.teammistique.extensionrepository.exceptions.FileStorageException;
 import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
-import com.teammistique.extensionrepository.models.File;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

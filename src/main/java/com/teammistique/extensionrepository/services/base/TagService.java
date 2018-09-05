@@ -4,5 +4,5 @@ import com.teammistique.extensionrepository.models.Tag;
 
 public interface TagService {
    Tag createTag(Tag tag);
-   Tag getByID(int id);
+   Tag getByName(String tag);
 }

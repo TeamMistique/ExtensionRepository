@@ -4,7 +4,7 @@ import com.teammistique.extensionrepository.models.Extension;
 
 import java.util.List;
 
-public interface ExtensionRepository extends GenericRepository<Extension>{
+public interface ExtensionRepository extends NumericId<Extension> {
     List<Extension> listPublishedExtensions(boolean published);
     List<Extension> listFeaturedExtensions(boolean featured);
     List<Extension> filterPublishedByName(String name);

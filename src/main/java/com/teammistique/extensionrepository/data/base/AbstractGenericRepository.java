@@ -4,9 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
-import java.util.stream.Stream;
-
 public abstract class AbstractGenericRepository<T> implements GenericRepository<T> {
 
     @Autowired

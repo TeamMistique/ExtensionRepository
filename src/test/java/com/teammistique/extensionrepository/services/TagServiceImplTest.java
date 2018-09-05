@@ -11,7 +11,7 @@ import static org.mockito.Mockito.*;
 
 public class TagServiceImplTest {
 
-    private TagRepository mockTagRepository = mock(TagSqlRepository.class);
+    private TagRepository mockTagRepository = mock(TagRepository.class);
 
     private TagServiceImpl tagService;
 
@@ -28,12 +28,13 @@ public class TagServiceImplTest {
         Tag result = tagService.createTag(tag);
 
         Assert.assertSame(tag, result);
-
     }
 
-
-
-
-
-
+    @Test
+    public void getByID_shouldCallRepoMethod() {
+        String name = "name";
+        when(mockTagRepository.findByName(name)).thenReturn(new Tag(name));
+        Tag tag = tagService.getByName(name);
+        verify(mockTagRepository).findByName(name);
+    }
 }
