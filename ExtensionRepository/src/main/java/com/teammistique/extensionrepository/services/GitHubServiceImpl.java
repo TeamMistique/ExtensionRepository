@@ -24,22 +24,14 @@ public class GitHubServiceImpl implements GitHubService {
     @Override
     public Integer getNumberOfIssues(String repo) {
         Integer openIssues = null;
-        String owner = GitHubHelpers.getOwner(repo);
-        String repoName = GitHubHelpers.getRepo(repo);
+        String ownerAndRepo = GitHubHelpers.getOwnerAndRepo(repo);
 
-        String url = "https://api.github.com/users/"+owner+"/repos";
+        String url = "https://api.github.com/repos/" + ownerAndRepo;
         String data = GitHubHelpers.getDataFromUrl(url);
 
         try {
-            JSONArray jsonArray = new JSONArray(data);
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                if(jsonObject.get("name").equals(repoName)){
-                    openIssues = (Integer) jsonObject.get("open_issues_count");
-                    break;
-                }
-            }
+            JSONObject repoInfo = new JSONObject(data);
+            openIssues = (Integer) repoInfo.get("open_issues_count");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,7 +42,7 @@ public class GitHubServiceImpl implements GitHubService {
     @Override
     public Date getLastCommitDate(String repo) {
         Date lastCommitDate = null;
-        String url = "https://api.github.com/repos/"+GitHubHelpers.getOwnerAndRepo(repo)+"/commits";
+        String url = "https://api.github.com/repos/" + GitHubHelpers.getOwnerAndRepo(repo) + "/commits";
         String data = GitHubHelpers.getDataFromUrl(url);
 
         try {
@@ -68,7 +60,7 @@ public class GitHubServiceImpl implements GitHubService {
     @Override
     public Integer getNumberOfPullRequests(String repo) {
         Integer pulls = null;
-        String url = "https://api.github.com/repos/"+GitHubHelpers.getOwnerAndRepo(repo)+"/pulls?state=all";
+        String url = "https://api.github.com/repos/" + GitHubHelpers.getOwnerAndRepo(repo) + "/pulls?state=all";
         String data = GitHubHelpers.getDataFromUrl(url);
 
         try {
@@ -82,8 +74,8 @@ public class GitHubServiceImpl implements GitHubService {
         return pulls;
     }
 
-    static class GitHubHelpers{
-        static String getOwnerAndRepo(String gitHubUrl){
+    static class GitHubHelpers {
+        static String getOwnerAndRepo(String gitHubUrl) {
             String result = null;
             int lengthToSkip = "github.com/".length();
             int beginningOfResult = gitHubUrl.indexOf("github.com/") + lengthToSkip;
@@ -91,7 +83,7 @@ public class GitHubServiceImpl implements GitHubService {
             return result;
         }
 
-        static String getOwner(String gitHubUrl){
+        static String getOwner(String gitHubUrl) {
             String result = null;
             int lengthToSkip = "github.com/".length();
             int beginningOfResult = gitHubUrl.indexOf("github.com/") + lengthToSkip;
@@ -100,16 +92,16 @@ public class GitHubServiceImpl implements GitHubService {
             return result;
         }
 
-        static String getRepo(String gitHubUrl){
+        static String getRepo(String gitHubUrl) {
             String result = null;
             int lengthToSkip = "github.com/".length();
             int beginningOfResult = gitHubUrl.indexOf("github.com/") + lengthToSkip;
             int endOfResult = gitHubUrl.indexOf("/", beginningOfResult);
-            result = gitHubUrl.substring(endOfResult+1);
+            result = gitHubUrl.substring(endOfResult + 1);
             return result;
         }
 
-        static String getDataFromUrl(String url){
+        static String getDataFromUrl(String url) {
             HttpClient client = HttpClientBuilder.create().build();
             HttpGet request = new HttpGet(url);
 

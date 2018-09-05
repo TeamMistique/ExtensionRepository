@@ -43,7 +43,6 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-
     public ResponseEntity register(@ModelAttribute LoginUser loginUser) throws AuthenticationException {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
