@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8364488f-e5a8-4adb-86cf-8a3628420e4f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/UserServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -25,54 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RoleServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/services/RoleServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ExtensionServiceImplTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/ExtensionServiceImplTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="104" column="50" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TagServiceImplTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/TagServiceImplTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/services/UserServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="UserServiceImplTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/UserServiceImplTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
-              <folding>
-                <element signature="e#440#441#0" expanded="true" />
-                <element signature="e#472#473#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-1372">
+              <caret line="31" column="51" lean-forward="true" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
             </state>
           </provider>
         </entry>
@@ -640,8 +596,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="956" />
-    <option name="width" value="971" />
+    <option name="x" value="953" />
+    <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -809,103 +765,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserServiceImplTest.findOne_shouldCallRepoMethod">
+  <component name="RunManager" selected="JUnit.UserServiceImplTest.loadUserByUsername_shouldCallFindOne">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
-    <configuration name="RoleServiceImplTest.getRoleByID_shouldCallRepoMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="extension-repository_test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
-      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.RoleServiceImplTest" />
-      <option name="METHOD_NAME" value="getRoleByID_shouldCallRepoMethod" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="RoleServiceImplTest.getRoleByName_shouldCallRepoMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="extension-repository_test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
-      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.RoleServiceImplTest" />
-      <option name="METHOD_NAME" value="getRoleByName_shouldCallRepoMethod" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="TagServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="extension-repository_test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
-      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.TagServiceImplTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="TagServiceImplTest.getByID_shouldCallRepoMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="extension-repository_test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
-      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.TagServiceImplTest" />
-      <option name="METHOD_NAME" value="getByID_shouldCallRepoMethod" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <patterns />
-    </configuration>
-    <configuration name="UserServiceImplTest.findOne_shouldCallRepoMethod" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="extension-repository_test" />
       <extension name="coverage">
         <pattern>
@@ -917,7 +781,99 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
       <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.UserServiceImplTest" />
-      <option name="METHOD_NAME" value="findOne_shouldCallRepoMethod" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="UserServiceImplTest.changeEnabled_shouldDisableUser_ifItWasEnabled" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="extension-repository_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
+      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.UserServiceImplTest" />
+      <option name="METHOD_NAME" value="changeEnabled_shouldDisableUser_ifItWasEnabled" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="UserServiceImplTest.changeEnabled_shouldEnableUser_ifItWasDisabled" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="extension-repository_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
+      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.UserServiceImplTest" />
+      <option name="METHOD_NAME" value="changeEnabled_shouldEnableUser_ifItWasDisabled" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="UserServiceImplTest.loadUserByUsername_shouldCallFindOne" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="extension-repository_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
+      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.UserServiceImplTest" />
+      <option name="METHOD_NAME" value="loadUserByUsername_shouldCallFindOne" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
+    <configuration name="UserServiceImplTest.save_shouldReturnAUserWithAListOfRoles" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="extension-repository_test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.teammistique.extensionrepository.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.teammistique.extensionrepository.services" />
+      <option name="MAIN_CLASS_NAME" value="com.teammistique.extensionrepository.services.UserServiceImplTest" />
+      <option name="METHOD_NAME" value="save_shouldReturnAUserWithAListOfRoles" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -972,19 +928,19 @@
     </configuration>
     <list>
       <item itemvalue="Spring Boot.ExtensionRepositoryApplication" />
-      <item itemvalue="JUnit.RoleServiceImplTest.getRoleByName_shouldCallRepoMethod" />
-      <item itemvalue="JUnit.RoleServiceImplTest.getRoleByID_shouldCallRepoMethod" />
-      <item itemvalue="JUnit.TagServiceImplTest.getByID_shouldCallRepoMethod" />
-      <item itemvalue="JUnit.TagServiceImplTest" />
-      <item itemvalue="JUnit.UserServiceImplTest.findOne_shouldCallRepoMethod" />
+      <item itemvalue="JUnit.UserServiceImplTest.save_shouldReturnAUserWithAListOfRoles" />
+      <item itemvalue="JUnit.UserServiceImplTest.changeEnabled_shouldEnableUser_ifItWasDisabled" />
+      <item itemvalue="JUnit.UserServiceImplTest.changeEnabled_shouldDisableUser_ifItWasEnabled" />
+      <item itemvalue="JUnit.UserServiceImplTest.loadUserByUsername_shouldCallFindOne" />
+      <item itemvalue="JUnit.UserServiceImplTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.UserServiceImplTest.findOne_shouldCallRepoMethod" />
-        <item itemvalue="JUnit.TagServiceImplTest" />
-        <item itemvalue="JUnit.TagServiceImplTest.getByID_shouldCallRepoMethod" />
-        <item itemvalue="JUnit.RoleServiceImplTest.getRoleByID_shouldCallRepoMethod" />
-        <item itemvalue="JUnit.RoleServiceImplTest.getRoleByName_shouldCallRepoMethod" />
+        <item itemvalue="JUnit.UserServiceImplTest.loadUserByUsername_shouldCallFindOne" />
+        <item itemvalue="JUnit.UserServiceImplTest" />
+        <item itemvalue="JUnit.UserServiceImplTest.changeEnabled_shouldDisableUser_ifItWasEnabled" />
+        <item itemvalue="JUnit.UserServiceImplTest.changeEnabled_shouldEnableUser_ifItWasDisabled" />
+        <item itemvalue="JUnit.UserServiceImplTest.save_shouldReturnAUserWithAListOfRoles" />
       </list>
     </recent_temporary>
   </component>
@@ -1023,21 +979,8 @@
       <workItem from="1536123165910" duration="15562000" />
       <workItem from="1536150353217" duration="8375000" />
       <workItem from="1536160622041" duration="67000" />
-      <workItem from="1536161037565" duration="8269000" />
-    </task>
-    <task id="LOCAL-00076" summary="Filling a user's extensions page is working">
-      <created>1535631156308</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1535631156309</updated>
-    </task>
-    <task id="LOCAL-00077" summary="Add new extension modal form">
-      <created>1535640966917</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1535640966918</updated>
+      <workItem from="1536161037565" duration="8488000" />
+      <workItem from="1536219104202" duration="3090000" />
     </task>
     <task id="LOCAL-00078" summary="fILE NOT UPLOADING">
       <created>1535651561712</created>
@@ -1368,46 +1311,60 @@
       <option name="project" value="LOCAL" />
       <updated>1536168991017</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="Created user service test class">
+      <created>1536169534260</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1536169534260</updated>
+    </task>
+    <task id="LOCAL-00126" summary="Written all tests for user service">
+      <created>1536221810701</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1536221810701</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="GitHubServiceImplTest - 2018.09.05 at 19h 10m 20s.xml">
-      <configuration name="GitHubServiceImplTest" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_save_shouldReturnANewUserWithBCryptedPassword - 2018.09.06 at 10h 55m 18s.xml">
+      <configuration name="UserServiceImplTest.save_shouldReturnANewUserWithBCryptedPassword" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TagServiceImplTest - 2018.09.05 at 19h 10m 35s.xml">
-      <configuration name="TagServiceImplTest" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_save_shouldReturnANewUserWithBCryptedPassword - 2018.09.06 at 11h 00m 42s.xml">
+      <configuration name="UserServiceImplTest.save_shouldReturnANewUserWithBCryptedPassword" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ExtensionRepositoryApplicationTests - 2018.09.05 at 19h 16m 30s.xml">
-      <configuration name="ExtensionRepositoryApplicationTests" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_save_shouldReturnAnEnabledUser - 2018.09.06 at 11h 03m 19s.xml">
+      <configuration name="UserServiceImplTest.save_shouldReturnAnEnabledUser" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GitHubServiceImplTest - 2018.09.05 at 19h 17m 56s.xml">
-      <configuration name="GitHubServiceImplTest" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_save_shouldReturnAnEnabledUser - 2018.09.06 at 11h 03m 56s.xml">
+      <configuration name="UserServiceImplTest.save_shouldReturnAnEnabledUser" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ExtensionRepositoryApplicationTests - 2018.09.05 at 19h 37m 16s.xml">
-      <configuration name="ExtensionRepositoryApplicationTests" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_save_shouldReturnAUserWithAListOfRoles - 2018.09.06 at 11h 06m 28s.xml">
+      <configuration name="UserServiceImplTest.save_shouldReturnAUserWithAListOfRoles" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RoleServiceImplTest_getRoleByName_shouldCallRepoMethod - 2018.09.05 at 20h 13m 08s.xml">
-      <configuration name="RoleServiceImplTest.getRoleByName_shouldCallRepoMethod" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_changeEnabled_shouldEnableUser_ifItWasDisabled - 2018.09.06 at 11h 09m 39s.xml">
+      <configuration name="UserServiceImplTest.changeEnabled_shouldEnableUser_ifItWasDisabled" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="RoleServiceImplTest_getRoleByID_shouldCallRepoMethod - 2018.09.05 at 20h 15m 29s.xml">
-      <configuration name="RoleServiceImplTest.getRoleByID_shouldCallRepoMethod" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_changeEnabled_shouldDisableUser_ifItWasEnabled - 2018.09.06 at 11h 11m 13s.xml">
+      <configuration name="UserServiceImplTest.changeEnabled_shouldDisableUser_ifItWasEnabled" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TagServiceImplTest_getByID_shouldCallRepoMethod - 2018.09.05 at 20h 34m 34s.xml">
-      <configuration name="TagServiceImplTest.getByID_shouldCallRepoMethod" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_loadUserByUsername_shouldCallFindOne - 2018.09.06 at 11h 14m 57s.xml">
+      <configuration name="UserServiceImplTest.loadUserByUsername_shouldCallFindOne" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TagServiceImplTest_getByID_shouldCallRepoMethod - 2018.09.05 at 20h 35m 44s.xml">
-      <configuration name="TagServiceImplTest.getByID_shouldCallRepoMethod" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest_loadUserByUsername_shouldCallFindOne - 2018.09.06 at 11h 16m 15s.xml">
+      <configuration name="UserServiceImplTest.loadUserByUsername_shouldCallFindOne" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TagServiceImplTest - 2018.09.05 at 20h 35m 51s.xml">
-      <configuration name="TagServiceImplTest" configurationId="JUnit" />
+    <history-entry file="UserServiceImplTest - 2018.09.06 at 11h 16m 26s.xml">
+      <configuration name="UserServiceImplTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342136000" />
+    <option name="totallyTimeSpent" value="345445000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="956" y="0" width="971" height="1047" extended-state="0" />
+    <frame x="953" y="0" width="974" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -1416,12 +1373,11 @@
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info id="Capture Tool" order="8" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Build" order="12" weight="0.3261339" />
       <window_info anchor="right" id="Database" order="5" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.2693566" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.36069113" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Messages" order="8" weight="0.31857452" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
@@ -1429,7 +1385,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="13" weight="0.28725702" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24863686" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2508179" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32937366" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32937366" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.3937173" />
@@ -1442,6 +1398,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Build" order="12" weight="0.3261339" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32824427" />
@@ -1484,8 +1441,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-    <MESSAGE value="Publish button working great" />
-    <MESSAGE value="Admin buttons showing when appropriate" />
     <MESSAGE value="If admin - main page fills with editable" />
     <MESSAGE value="Admin edit working everywhere" />
     <MESSAGE value="Fixed tag test" />
@@ -1509,11 +1464,13 @@
     <MESSAGE value="Deleted some tests" />
     <MESSAGE value="Added role service tests" />
     <MESSAGE value="Added tag tests and broke generic repository to two smaller interfaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tag tests and broke generic repository to two smaller interfaces" />
+    <MESSAGE value="Created user service test class" />
+    <MESSAGE value="Written all tests for user service" />
+    <option name="LAST_COMMIT_MESSAGE" value="Written all tests for user service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <option name="time" value="14" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -1607,9 +1564,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
           <caret line="130" selection-start-line="130" selection-end-line="130" />
-          <folding>
-            <element signature="e#2936#2937#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1639,9 +1593,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1675,9 +1626,7 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/test/classes/com/teammistique/extensionrepository/ExtensionRepositoryApplicationTests.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/out/test/classes/com/teammistique/extensionrepository/ExtensionRepositoryApplicationTests.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/web/AdminController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="446">
@@ -1699,13 +1648,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/buildOutputCleanup/cache.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" lean-forward="true" selection-start-column="10" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/buildOutputCleanup/cache.properties" />
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -1745,9 +1688,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="15" column="3" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding>
-            <element signature="e#0#407#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1762,15 +1702,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
           <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/ExtensionServiceImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
+        <state relative-caret-position="2392">
           <caret line="104" column="50" selection-start-line="104" selection-start-column="40" selection-end-line="104" selection-end-column="50" />
         </state>
       </provider>
@@ -1779,18 +1716,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
           <caret line="26" column="9" lean-forward="true" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#372#373#0" expanded="true" />
-            <element signature="e#437#438#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/services/RoleServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
-          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -1798,9 +1730,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1850,12 +1779,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="824">
           <caret line="62" column="13" lean-forward="true" selection-start-line="62" selection-start-column="13" selection-end-line="62" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#findByName#0;class#TagSqlRepository#0" />
-            <element signature="method#delete#0;class#TagSqlRepository#0" />
-            <element signature="method#saveOrUpdate#0;class#TagSqlRepository#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1863,38 +1786,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
           <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
-          <folding>
-            <element signature="e#739#740#0" expanded="true" />
-            <element signature="e#788#789#0" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/services/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/TagServiceImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/teammistique/extensionrepository/services/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="26" column="19" lean-forward="true" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/teammistique/extensionrepository/services/UserServiceImplTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="17" column="85" selection-start-line="17" selection-start-column="85" selection-end-line="17" selection-end-column="85" />
-          <folding>
-            <element signature="e#440#441#0" expanded="true" />
-            <element signature="e#472#473#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-1372">
+          <caret line="31" column="51" lean-forward="true" selection-start-line="31" selection-start-column="51" selection-end-line="31" selection-end-column="51" />
         </state>
       </provider>
     </entry>

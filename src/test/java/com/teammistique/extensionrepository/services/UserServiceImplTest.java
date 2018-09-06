@@ -107,7 +107,7 @@ public class UserServiceImplTest {
     @Test
     public void loadUserByUsername_shouldCallFindOne() {
         String toFind = "toFind";
-        UserDetails user = userService.findOne(toFind);
+        UserDetails user = userService.loadUserByUsername(toFind);
         verify(mockUserRepository).getUserByUsername(toFind);
     }
 }
