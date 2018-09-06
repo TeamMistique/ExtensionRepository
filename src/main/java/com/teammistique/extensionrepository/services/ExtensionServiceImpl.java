@@ -38,7 +38,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         this.tagService = tagService;
         this.userService = userService;
         this.jwtTokenUtil = jwtTokenUtil;
-        setUpdateGitHubPeriod(updateInterval);
+//        setUpdateGitHubPeriod(updateInterval);
     }
 
     @Override
