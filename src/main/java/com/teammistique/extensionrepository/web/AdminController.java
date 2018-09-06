@@ -60,7 +60,7 @@ public class AdminController {
         extensionService.setUpdateGitHubPeriod(delay);
     }
 
-    @PostMapping("/disableUser")
+    @PostMapping("/changeUserEnabled")
     public void changeUsersEnabledStatus(@RequestParam String username){
         userService.changeEnabled(userService.findOne(username));
     }

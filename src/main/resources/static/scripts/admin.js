@@ -23,10 +23,10 @@ var ajaxCalls = {
         });
     },
 
-    disableUser: function(username){
+    changeUserEnabled: function(username){
         return $.ajax({
             type: "POST",
-            url: "/api/admin/disableUser?username="+username,
+            url: "/api/admin/changeUserEnabled?username="+username,
             headers: createAuthorizationTokenHeader(),
         })
     },

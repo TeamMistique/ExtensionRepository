@@ -44,7 +44,7 @@ $('#user-dropdown').on('click', '#login-button', function (e) {
 
 $('#user-dropdown').on('click', '#go-to-admin-panel', function (e) {
     ajaxCalls.getUnpublished().done(function (data) {
-        fillMainPageList($('#unpublished-container'), data);
+        adminFillWithEditable($('#unpublished-container'), data);
     });
 
     ajaxCalls.getAllUsers().done(function (data) {
@@ -917,7 +917,7 @@ var fillUsersTable = function (location, data) {
             var username = v.username;
             var html = "";
             html += '<tr value="' + v.id + '"><td class="text-center" style="vertical-align: middle;">' + v.id + '</td>';
-            html += '<td style="vertical-align: middle;">' + username + '</td>';
+            html += '<td class="username" style="vertical-align: middle;">' + username + '</td>';
             html += '<td style="vertical-align: middle;">';
 
             ajaxCalls.getUserExtensions(username).done(function (data) {
@@ -925,15 +925,21 @@ var fillUsersTable = function (location, data) {
                     html += '<div>' + value.name + '</div>';
                 })
                 html += '</td><td class="text-center" style="vertical-align: middle;">';
-                if(v.enabled == true){
-                    html += '<a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
-                    html += '<a id="" class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
-                    console.log("test if")
-                    location.append(html);
+                if(!isAdmin()){
+                    if(v.enabled == true){
+                        html += '<a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                        html += '<a id="" class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                        console.log("test if")
+                        location.append(html);
+                    } else {
+                        console.log("test else")
+                        html += '<a id="" href="#" class="btn btn-danger hide btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                        html += '<a id="" class="btn btn-success btn-sm  enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                        location.append(html);
+                    }
                 } else {
-                    console.log("test else")
-                    html += '<a id="" href="#" class="btn btn-danger hide btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
-                    html += '<a id="" class="btn btn-success btn-sm  enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+
+                    html += '<div id="" class="btn btn-success btn-sm  enable-button"><span class="glyphicon glyphicon-ok-circle"></span> Admin</div></td></tr>';
                     location.append(html);
                 }
 
@@ -944,21 +950,12 @@ var fillUsersTable = function (location, data) {
     }
 };
 
-// closest('tr').value()
-
-
-$(".disable-button").on('click', function (e) {
-    e.stopPropagation();
-    e.preventDefault();
-    var userToBan = $(this).closest('tr').value();
-    var username = userToBan.username;
-    ajaxCalls.disableUser(username).done(function (data) {
-
-    var id = $extensionToEdit.attr('value');
-    $('#edit-extension-modal').val(id);
-
-    getExtensionById(id).done(function (extension) {
-        helpers.fillEditMenu(extension);
-        $('#edit-extension-modal').modal('show');
+$('#user-container').on('click', '.disable-button, .enable-button', function (e) {
+    var userToBan = $(this).parent().siblings('.username');
+    var username = userToBan.html();
+    ajaxCalls.changeUserEnabled(username).done(function () {
+        ajaxCalls.getAllUsers().done(function (data) {
+            fillUsersTable($('#user-info'), data);
+        });
     });
 });
