@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class GitHubServiceImplTest {
     private GitHubServiceImpl gitHubService;
-//    String repo
+    private static final String repo = "https://github.com/biaedwards/Java-Alpha-Module-1";
 
     @Before
     public void setUp(){
@@ -15,24 +15,19 @@ public class GitHubServiceImplTest {
 
     @Test
     public void getOwnerAndRepo_shouldReturnACorrectString() {
-        String result = GitHubServiceImpl.GitHubHelpers.getOwnerAndRepo("https://github.com/biaedwards/Java-Alpha-Module-1");
+        String result = GitHubServiceImpl.GitHubHelpers.getOwnerAndRepo(repo);
         Assert.assertEquals("biaedwards/Java-Alpha-Module-1", result);
     }
 
     @Test
     public void getOwner_shouldReturnACorrectString() {
-        String result = GitHubServiceImpl.GitHubHelpers.getOwner("https://github.com/biaedwards/Java-Alpha-Module-1");
+        String result = GitHubServiceImpl.GitHubHelpers.getOwner(repo);
         Assert.assertEquals("biaedwards", result);
     }
 
     @Test
     public void getRepo_shouldReturnNameOfRepo() {
-        String result = GitHubServiceImpl.GitHubHelpers.getRepo("https://github.com/biaedwards/Java-Alpha-Module-1");
+        String result = GitHubServiceImpl.GitHubHelpers.getRepo(repo);
         Assert.assertEquals("Java-Alpha-Module-1", result);
-    }
-
-    @Test
-    public void getNumberOfIssues_shouldReturnAPositiveNumber() {
-
     }
 }
