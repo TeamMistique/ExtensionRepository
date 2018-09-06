@@ -909,30 +909,6 @@ $(document).ready(function () {
     });
 });
 
-
-// var fillUnpublishedList = function (location, data) {
-
-//     location.html('');
-
-//     if (data !== '') {
-//         $.each(data, function (k, v) {
-//             var html = "";
-//             html += '<div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
-//             html += '<div class="panel panel-primary"><div class="panel-heading extension-title">' + v.name + '</div>';
-//             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
-//             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
-//             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
-
-//             location.append(html)
-//         });
-//     } else {
-//         console.log('error');
-//     }
-// };
-
-// ---- fill user table
-
-
 var fillUsersTable = function (location, data) {
     location.html('');
 
@@ -949,11 +925,6 @@ var fillUsersTable = function (location, data) {
                     html += '<div>' + value.name + '</div>';
                 })
                 html += '</td><td class="text-center" style="vertical-align: middle;">';
-
-                console.log("test")
-
-
-
                 if(v.enabled == true){
                     html += '<a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
                     html += '<a id="" class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
@@ -980,7 +951,8 @@ $(".disable-button").on('click', function (e) {
     e.stopPropagation();
     e.preventDefault();
     var userToBan = $(this).closest('tr').value();
-
+    var username = userToBan.username;
+    ajaxCalls.disableUser(username).done(function (data) {
 
     var id = $extensionToEdit.attr('value');
     $('#edit-extension-modal').val(id);
