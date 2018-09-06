@@ -28,13 +28,16 @@ CREATE TABLE IF NOT EXISTS `extensions` (
   `Link` varchar(200) NOT NULL,
   `Issues` int(11) DEFAULT 0,
   `PullRequests` int(11) DEFAULT 0,
-  `LastCommit` date DEFAULT NULL,
-  `FeaturedDate` date DEFAULT NULL,
-  `PublishedDate` date DEFAULT NULL,
+  `LastCommit` timestamp NULL DEFAULT NULL,
+  `FeaturedDate` timestamp NULL DEFAULT NULL,
+  `PublishedDate` timestamp NULL DEFAULT NULL,
   `CreatedDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `Image` varchar(500) NOT NULL,
   `File` varchar(500) NOT NULL,
   `Version` decimal(10,1) NOT NULL DEFAULT 1.0,
+  `LastSuccessfulSync` timestamp NULL DEFAULT NULL,
+  `LastFailedSync` timestamp NULL DEFAULT NULL,
+  `FailedSyncDetails` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`ExtensionID`),
   KEY `FK_extensions_users` (`Owner`),
   CONSTRAINT `FK_extensions_users` FOREIGN KEY (`Owner`) REFERENCES `users` (`UserID`)
@@ -87,10 +90,10 @@ DROP TABLE IF EXISTS `users_roles`;
 CREATE TABLE IF NOT EXISTS `users_roles` (
   `UserID` int(11) NOT NULL,
   `RoleID` int(11) NOT NULL,
-  KEY `FK_users_roles_users` (`UserID`),
   KEY `FK_users_roles_roles` (`RoleID`),
-  CONSTRAINT `FK_users_roles_roles` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`),
-  CONSTRAINT `FK_users_roles_users` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
+  KEY `FK_users_roles_users` (`UserID`),
+  CONSTRAINT `FK_users_roles_roles` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_users_roles_users` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
