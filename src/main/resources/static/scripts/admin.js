@@ -37,5 +37,13 @@ var ajaxCalls = {
             url: "/api/admin/userExtensions?username="+username,
             headers: createAuthorizationTokenHeader()
         });
+    },
+
+    getAllUsers: function(){
+        return $.ajax({
+            type: "GET",
+            url: "/api/user",
+            headers: createAuthorizationTokenHeader()
+        });
     }
 }
