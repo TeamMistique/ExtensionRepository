@@ -6,7 +6,7 @@ $(document).ready(function () {
     ResCarouselOnInit();
 });
 
-$('#home-button, #home-button2').on('click', function (e) {
+$('#home-button').on('click', function (e) {
     e.preventDefault();
     $('.page').addClass('hide');
     $('#main-page').removeClass('hide');
@@ -43,6 +43,14 @@ $('#user-dropdown').on('click', '#login-button', function (e) {
 });
 
 $('#user-dropdown').on('click', '#go-to-admin-panel', function (e) {
+    ajaxCalls.getUnpublished().done(function (data) {
+        fillMainPageList($('#unpublished-container'), data);
+    });
+
+    ajaxCalls.getAllUsers().done(function (data) {
+        fillUsersTable($('#user-info'), data);
+    });
+
     $('.page').addClass('hide');
     $('#admin-page').removeClass('hide');
     $('#user-dropdown').toggle();
@@ -153,7 +161,7 @@ var fillSearchPageList = function (location, data) {
         $.each(data, function (k, v) {
             var html = "";
             html += '<div class="col-md-2" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
-            html += '<div class="panel panel-primary"><div class="panel-heading">' + v.name + '</div>';
+            html += '<div class="panel panel-primary"><div class="panel-heading extension-title">' + v.name + '</div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
@@ -193,7 +201,7 @@ var fillExtensionPage = function (location, extension) {
         html += '<a href="' + extension.link + '" target="_blank"><i class="fab fa-github-alt"> </i> GitHub</a></h3>';
         html += '<div>Open Issues <div>' + extension.issuesCounter + '</div></div>';
         html += '<div>Pull Requests <div>' + extension.pullRequestsCounter + '</div></div>';
-        html += '<div>Last commit <div>' + extension.lastCommitDate + '</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
+        html += '<div>Last commit <div class="date">' + moment(extension.lastCommitDate).format('DD-MM-YYYY') + '</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
         html += '<div class="col-xs-1"></div><div id="extension-description" class="col-md-10"><p>' + extension.description + '</p></div></div>';
 
         if (extension.tags.length > 0) {
@@ -499,7 +507,7 @@ $('#edit-extension-button').on('click', function (event) {
 });
 
 
-$("#my-extensions-container, #popular-container, #featured-container, #new-container, #search-container").on('click', '.click-to-edit', function (e) {
+$("#my-extensions-container, #popular-container, #featured-container, #new-container, #search-container, #unpublished-container").on('click', '.click-to-edit', function (e) {
     e.stopPropagation();
     e.preventDefault();
     var $extensionToEdit = $(this).closest('.col-md-2');
@@ -856,3 +864,129 @@ $('#sort-by-last-commit').on('click', function(event){
     event.preventDefault();
 });
 
+//  ------------ admin page -----------------
+
+$(document).ready(function () {
+    $('.filterable .btn-filter').click(function () {
+        var $panel = $(this).parents('.filterable'),
+            $filters = $panel.find('.filters input'),
+            $tbody = $panel.find('.table tbody');
+        if ($filters.prop('disabled') == true) {
+            $filters.prop('disabled', false);
+            $filters.first().focus();
+        } else {
+            $filters.val('').prop('disabled', true);
+            $tbody.find('.no-result').remove();
+            $tbody.find('tr').show();
+        }
+    });
+
+    $('.filterable .filters input').keyup(function (e) {
+        /* Ignore tab key */
+        var code = e.keyCode || e.which;
+        if (code == '9') return;
+        /* Useful DOM data and selectors */
+        var $input = $(this),
+            inputContent = $input.val().toLowerCase(),
+            $panel = $input.parents('.filterable'),
+            column = $panel.find('.filters th').index($input.parents('th')),
+            $table = $panel.find('.table'),
+            $rows = $table.find('tbody tr');
+        /* Dirtiest filter function ever ;) */
+        var $filteredRows = $rows.filter(function () {
+            var value = $(this).find('td').eq(column).text().toLowerCase();
+            return value.indexOf(inputContent) === -1;
+        });
+        /* Clean previous no-result if exist */
+        $table.find('tbody .no-result').remove();
+        /* Show all rows, hide filtered ones (never do that outside of a demo ! xD) */
+        $rows.show();
+        $filteredRows.hide();
+        /* Prepend no-result row if all rows are filtered */
+        if ($filteredRows.length === $rows.length) {
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="' + $table.find('.filters th').length + '"><b>No result found</b></td></tr>'));
+        }
+    });
+});
+
+
+// var fillUnpublishedList = function (location, data) {
+
+//     location.html('');
+
+//     if (data !== '') {
+//         $.each(data, function (k, v) {
+//             var html = "";
+//             html += '<div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
+//             html += '<div class="panel panel-primary"><div class="panel-heading extension-title">' + v.name + '</div>';
+//             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
+//             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';
+//             html += '<div class="pull-right"><i class="fas fa-download"> ' + v.downloadsCounter + '</i></div></div></div></div></div>'
+
+//             location.append(html)
+//         });
+//     } else {
+//         console.log('error');
+//     }
+// };
+
+// ---- fill user table
+
+
+var fillUsersTable = function (location, data) {
+    location.html('');
+
+    if (data !== '') {
+        $.each(data, function (k, v) {
+            var username = v.username;
+            var html = "";
+            html += '<tr value="' + v.id + '"><td class="text-center" style="vertical-align: middle;">' + v.id + '</td>';
+            html += '<td style="vertical-align: middle;">' + username + '</td>';
+            html += '<td style="vertical-align: middle;">';
+
+            ajaxCalls.getUserExtensions(username).done(function (data) {
+                $.each(data, function (key, value) {
+                    html += '<div>' + value.name + '</div>';
+                })
+                html += '</td><td class="text-center" style="vertical-align: middle;">';
+
+                console.log("test")
+
+
+
+                if(v.enabled == true){
+                    html += '<a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                    html += '<a id="" class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                    console.log("test if")
+                    location.append(html);
+                } else {
+                    console.log("test else")
+                    html += '<a id="" href="#" class="btn btn-danger hide btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                    html += '<a id="" class="btn btn-success btn-sm  enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                    location.append(html);
+                }
+
+            })
+        });
+    } else {
+        console.log('error')
+    }
+};
+
+// closest('tr').value()
+
+
+$(".disable-button").on('click', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    var userToBan = $(this).closest('tr').value();
+
+
+    var id = $extensionToEdit.attr('value');
+    $('#edit-extension-modal').val(id);
+
+    getExtensionById(id).done(function (extension) {
+        helpers.fillEditMenu(extension);
+        $('#edit-extension-modal').modal('show');
+    });
+});
