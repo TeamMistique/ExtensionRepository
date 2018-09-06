@@ -173,7 +173,7 @@ var fillSearchPageList = function (location, data) {
     }
 };
 
-$('#featured-container, #popular-container, #new-container, #search-container, #unpublished-container').on('click', '.col-md-2', function () {
+$('#featured-container, #popular-container, #new-container, #search-container, #unpublished-container, #my-extensions-container').on('click', '.col-md-2', function () {
     console.log("Extension has been clicked - 1.")
     console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
@@ -214,8 +214,14 @@ var fillExtensionPage = function (location, extension) {
             });
 
             html += '</div></div></div>';
-        } else {
-            console.log(extension.tags.length);
+        } 
+
+        if(isAdmin){
+            html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3>Sync Info</h3><div class="sync-container">';
+            html += '<div>Last Successful Sync: <i>'+moment(extension.lastSuccessfulSync).format('LLLL')+'</i></div>'
+            html += '<div>Last Failed Sync: <i>'+moment(extension.lastFailedSync).format('LLLL')+'</i></div>'
+            html += '<div>Last Failed Sync Details: <i>'+extension.failedSyncDetails+'</i></div>'
+            html += '</div></div></div>';
         }
 
         html += '</div></div><div class="modal-footer"><div class="col-md-9"></div><div class="col-md-2">';
@@ -365,7 +371,7 @@ var fillWithEditableExtensions = function (data) {
     if (data !== '') {
         $.each(data, function (k, v) {
             var html = "";
-            html += '<div class="col-md-2 item" value="' + v.id + '">';
+            html += '<div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal" value="' + v.id + '">';
             html += '<div class="panel panel-primary"><div class="panel-heading" style= "display: flex; justify-content: space-between"><div>' + v.name + '</div><div><i class="far fa-edit click-to-edit"></i></div></div>';
             html += '<div class="panel-body"><div class="img-responsive" style="background-image: url(' + v.image + ');"></div></div>';
             html += '<div class="panel-footer"><div class="extension-bottom"><div class="pull-left"><i class="fas fa-user-tie"> ' + v.owner + '</i></div>';

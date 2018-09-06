@@ -31,13 +31,7 @@ $('#login-form').submit(function (e) {
         data: data,
         success: function (data) {
             setJwtToken(data.token);
-            admin = ajaxisAdmin();
-            if (!isAdmin()) {
-                $('.admin-button').hide();
-            } else {
-                $('.admin-button').show();
-            }
-            goHome();
+            refresh()
         }
     });
 });
