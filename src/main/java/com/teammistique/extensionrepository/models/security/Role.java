@@ -19,12 +19,7 @@ public class Role implements GrantedAuthority, Serializable {
     @Column(name = "Role")
     private String role;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = {@JoinColumn(name = "RoleID")},
-            inverseJoinColumns = {@JoinColumn(name = "UserID")}
-    )
+    @ManyToMany(mappedBy = "roles")
     @JsonBackReference
     private List<User> users;
 

@@ -73,6 +73,15 @@ public class Extension implements Serializable {
     @Column(name = "LastCommit")
     private Date lastCommitDate;
 
+    @Column(name = "LastSuccessfulSync")
+    private Date lastSuccessfulSync;
+
+    @Column(name = "LastFailedSync")
+    private Date lastFailedSync;
+
+    @Column(name = "FailedSyncDetails")
+    private String failedSyncDetails;
+
     @Column
     private String image;
 
@@ -213,5 +222,29 @@ public class Extension implements Serializable {
 
     public void setVersion(double version) {
         this.version = version;
+    }
+
+    public Date getLastSuccessfulSync() {
+        return lastSuccessfulSync;
+    }
+
+    public void setLastSuccessfulSync(Date lastSuccessfulSync) {
+        this.lastSuccessfulSync = lastSuccessfulSync;
+    }
+
+    public Date getLastFailedSync() {
+        return lastFailedSync;
+    }
+
+    public void setLastFailedSync(Date lastFailedSync) {
+        this.lastFailedSync = lastFailedSync;
+    }
+
+    public String getFailedSyncDetails() {
+        return failedSyncDetails;
+    }
+
+    public void setFailedSyncDetails(String failedSyncDetails) {
+        this.failedSyncDetails = failedSyncDetails;
     }
 }

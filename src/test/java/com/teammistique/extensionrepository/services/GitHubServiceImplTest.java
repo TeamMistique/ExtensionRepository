@@ -18,16 +18,4 @@ public class GitHubServiceImplTest {
         String result = GitHubServiceImpl.GitHubHelpers.getOwnerAndRepo(repo);
         Assert.assertEquals("biaedwards/Java-Alpha-Module-1", result);
     }
-
-    @Test
-    public void getOwner_shouldReturnACorrectString() {
-        String result = GitHubServiceImpl.GitHubHelpers.getOwner(repo);
-        Assert.assertEquals("biaedwards", result);
-    }
-
-    @Test
-    public void getRepo_shouldReturnNameOfRepo() {
-        String result = GitHubServiceImpl.GitHubHelpers.getRepo(repo);
-        Assert.assertEquals("Java-Alpha-Module-1", result);
-    }
 }

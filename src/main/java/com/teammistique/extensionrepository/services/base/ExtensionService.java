@@ -1,6 +1,5 @@
 package com.teammistique.extensionrepository.services.base;
 
-import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 

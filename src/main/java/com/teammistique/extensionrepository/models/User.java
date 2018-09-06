@@ -30,7 +30,12 @@ public class User implements UserDetails, Serializable {
     @Column(name = "Enabled")
     private int enabled;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
     @JoinTable(
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "UserID")},

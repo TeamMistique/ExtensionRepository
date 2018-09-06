@@ -1,7 +1,6 @@
 package com.teammistique.extensionrepository.web;
 
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
-import com.teammistique.extensionrepository.exceptions.InvalidLinkException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.services.base.ExtensionService;

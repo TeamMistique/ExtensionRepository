@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.services;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.exceptions.SyncException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
@@ -62,10 +63,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
         if(jwtTokenUtil.isAdmin(authToken)){
             extension.setPublishedDate(new Date());
-            String repo = extension.getLink();
-            extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
-            extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
-            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+            extension = updateGitHubWithoutSave(extension);
         }
 
         return extensionRepository.create(extension);
@@ -245,10 +243,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
 
     @Override
     public Extension updateOneGitHubInfo(Extension extension) {
-        String repo = extension.getLink();
-        extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
-        extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
-        extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+        extension = updateGitHubWithoutSave(extension);
         return extensionRepository.update(extension);
     }
 
@@ -289,5 +284,19 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     private String getFileNameFromFileLink(String file) {
         int index = file.indexOf("downloadFile/") + "downloadFile/".length();
         return file.substring(index);
+    }
+
+    private Extension updateGitHubWithoutSave(Extension extension){
+        String repo = extension.getLink();
+        try {
+            extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
+            extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
+            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+            extension.setLastSuccessfulSync(new Date());
+        } catch (SyncException e){
+            extension.setLastFailedSync(new Date());
+            extension.setFailedSyncDetails(e.getMessage());
+        }
+        return extension;
     }
 }
