@@ -63,15 +63,7 @@ public class ExtensionController {
     public Extension addExtension(@RequestBody ExtensionDTO dto, HttpServletRequest request) {
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
-        String username = jwtTokenUtil.getUsernameFromToken(authToken);
-        dto.setUsername(username);
-
-        try {
-            return extensionService.createExtension(dto);
-        } catch (InvalidLinkException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return extensionService.createExtension(dto, authToken);
     }
 
     @PostMapping("/edit")
@@ -93,7 +85,7 @@ public class ExtensionController {
     }
 
     @PostMapping("/delete")
-    public void deleteExtension(@RequestParam int id, HttpServletRequest request){
+    public void deleteExtension(@RequestParam int id, HttpServletRequest request) {
         String header = request.getHeader(HEADER_STRING);
         String authToken = header.replace(TOKEN_PREFIX, "");
 
@@ -101,26 +93,26 @@ public class ExtensionController {
     }
 
     @GetMapping("/filter")
-    public List<Extension> filterExtensionsByName(@RequestParam(required = false) String name){
-        if(name==null) name = "";
+    public List<Extension> filterExtensionsByName(@RequestParam(required = false) String name) {
+        if (name == null) name = "";
         return extensionService.filterPublishedByName(name);
     }
 
     @GetMapping("/sortByUpload")
-    public List<Extension> sortExtensionsByPublishedDate(@RequestParam(required = false) String name){
-        if(name==null) name = "";
+    public List<Extension> sortExtensionsByPublishedDate(@RequestParam(required = false) String name) {
+        if (name == null) name = "";
         return extensionService.sortByPublishedDate(extensionService.filterPublishedByName(name));
     }
 
     @GetMapping("/sortByLastCommit")
-    public List<Extension> sortExtensionsByLastCommitDate(@RequestParam(required = false) String name){
-        if(name==null) name = "";
+    public List<Extension> sortExtensionsByLastCommitDate(@RequestParam(required = false) String name) {
+        if (name == null) name = "";
         return extensionService.sortByLastCommit(extensionService.filterPublishedByName(name));
     }
 
     @GetMapping("/sortByNumberOfDownloads")
-    public List<Extension> sortExtensionsByDownloads(@RequestParam(required = false) String name){
-        if(name==null) name = "";
+    public List<Extension> sortExtensionsByDownloads(@RequestParam(required = false) String name) {
+        if (name == null) name = "";
         return extensionService.sortByDownloads(extensionService.filterPublishedByName(name));
     }
 }

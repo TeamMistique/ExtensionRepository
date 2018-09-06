@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ExtensionService {
 
-    Extension createExtension(ExtensionDTO dto) throws InvalidLinkException;
+    Extension createExtension(ExtensionDTO dto, String authToken);
 
     Extension getExtensionById(int id, String authToken);
 
@@ -40,7 +40,7 @@ public interface ExtensionService {
 
     void updateAllGitHubInfo();
 
-    void updateOneGitHubInfo(Extension extension);
+    Extension updateOneGitHubInfo(Extension extension);
 
     void setUpdateGitHubPeriod(long delay);
 }

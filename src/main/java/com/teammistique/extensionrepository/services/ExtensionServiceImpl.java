@@ -42,7 +42,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public Extension createExtension(ExtensionDTO dto) {
+    public Extension createExtension(ExtensionDTO dto, String authToken) {
 
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
@@ -51,7 +51,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         }
 
         Extension extension = new Extension();
-        extension.setOwner(userService.findOne(dto.getUsername()));
+        extension.setOwner(userService.findOne(jwtTokenUtil.getUsernameFromToken(authToken)));
         extension.setName(dto.getName());
         extension.setDescription(dto.getDescription());
         extension.setLink(dto.getLink());
@@ -59,6 +59,14 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         extension.setImage(dto.getImage());
         extension.setTags(tags);
         extension.setCreatedDate(new Date());
+
+        if(jwtTokenUtil.isAdmin(authToken)){
+            extension.setPublishedDate(new Date());
+            String repo = extension.getLink();
+            extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
+            extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
+            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
+        }
 
         return extensionRepository.create(extension);
     }
@@ -80,8 +88,13 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     public Extension updateExtension(ExtensionDTO dto, String authToken) {
         Extension extension = extensionRepository.findById(dto.getId());
 
-        if (!jwtTokenUtil.isAdmin(authToken) && !jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername()))
-            return null;
+        if (!jwtTokenUtil.isAdmin(authToken)){
+            if(!jwtTokenUtil.getUsernameFromToken(authToken).equals(extension.getOwnerUsername())){
+                return null;
+            } else {
+                extension.setPublishedDate(null);
+            }
+        }
 
         List<Tag> tags = new ArrayList<>();
         for (String tagName : dto.getTagNames()) {
@@ -216,13 +229,12 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         Extension extension = extensionRepository.findById(id);
         if (extension.getPublishedDate() != null) {
             extension.setPublishedDate(null);
+            return extensionRepository.update(extension);
         } else {
             extension.setPublishedDate(new Date());
-            extension.setIssuesCounter(gitHubService.getNumberOfIssues(extension.getLink()));
-            extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(extension.getLink()));
-            extension.setLastCommitDate(gitHubService.getLastCommitDate(extension.getLink()));
+            return updateOneGitHubInfo(extension);
         }
-        return extensionRepository.update(extension);
+
     }
 
     @Override
@@ -232,12 +244,12 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     }
 
     @Override
-    public void updateOneGitHubInfo(Extension extension) {
+    public Extension updateOneGitHubInfo(Extension extension) {
         String repo = extension.getLink();
         extension.setIssuesCounter(gitHubService.getNumberOfIssues(repo));
         extension.setLastCommitDate(gitHubService.getLastCommitDate(repo));
         extension.setPullRequestsCounter(gitHubService.getNumberOfPullRequests(repo));
-        extensionRepository.update(extension);
+        return extensionRepository.update(extension);
     }
 
     @Override
