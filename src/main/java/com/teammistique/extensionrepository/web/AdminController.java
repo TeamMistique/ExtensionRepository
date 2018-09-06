@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+
+import static com.teammistique.extensionrepository.models.security.Constants.HEADER_STRING;
+import static com.teammistique.extensionrepository.models.security.Constants.TOKEN_PREFIX;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -55,9 +59,18 @@ public class AdminController {
         extensionService.setMaxListSize(size);
     }
 
-    @PostMapping("/sync")
+    @PostMapping("/syncAll")
     public void syncGitHubData(){
         extensionService.updateAllGitHubInfo();
+    }
+
+    @PostMapping("/syncOne")
+    public Extension syncOneGitHubData(int id, HttpServletRequest request){
+        String header = request.getHeader(HEADER_STRING);
+        String authToken = header.replace(TOKEN_PREFIX, "");
+
+        Extension extension = extensionService.getExtensionById(id, authToken);
+        return extensionService.updateOneGitHubInfo(extension);
     }
 
     @PostMapping("/changeSyncPeriod")

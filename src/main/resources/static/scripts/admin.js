@@ -55,10 +55,18 @@ var ajaxCalls = {
         });
     },
 
-    triggerSync: function(){
+    triggerSyncAll: function(){
         return $.ajax({
             type: "POST",
-            url: "/api/admin/sync",
+            url: "/api/admin/syncAll",
+            headers: createAuthorizationTokenHeader()
+        });
+    },
+
+    triggerOneSync: function(id){
+        return $.ajax({
+            type: "POST",
+            url: "/api/admin/syncOne?id="+id,
             headers: createAuthorizationTokenHeader()
         });
     }
