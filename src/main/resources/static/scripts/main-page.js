@@ -604,6 +604,7 @@ var helpers = {
 
         //add buttons for publish and feature
         if(isAdmin()){
+            $('.admin-button').removeClass('hide');
             var publishText = 'Publish';
             var featureText = 'Feature';
             if(extension.publishedDate!==null) publishText = 'Unpublish';
