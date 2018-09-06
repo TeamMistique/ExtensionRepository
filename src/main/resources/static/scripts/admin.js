@@ -20,6 +20,9 @@ var ajaxCalls = {
             type: "POST",
             url: "/api/admin/feature?id="+id,
             headers: createAuthorizationTokenHeader(),
+            error: function(){
+                alert("Feature list is already full. Try removing some items first, or increase max list size.");
+            }
         });
     },
 
@@ -69,5 +72,13 @@ var ajaxCalls = {
             url: "/api/admin/syncOne?id="+id,
             headers: createAuthorizationTokenHeader()
         });
+    },
+
+    changeFeaturedListSize: function(size){
+        return $.ajax({
+            type: "POST",
+            url: "/api/admin/featured/size?size="+size,
+            headers: createAuthorizationTokenHeader()
+        })
     }
 }

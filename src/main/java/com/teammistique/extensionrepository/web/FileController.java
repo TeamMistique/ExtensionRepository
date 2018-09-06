@@ -1,5 +1,6 @@
 package com.teammistique.extensionrepository.web;
 
+import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
 import com.teammistique.extensionrepository.exceptions.NotImageException;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.File;
@@ -60,7 +61,12 @@ public class FileController {
 
     @GetMapping("/downloadFile/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request){
-        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        Resource resource = null;
+        try {
+            resource = fileStorageService.loadFileAsResource(fileName);
+        } catch (MyFileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         Extension extension = extensionService.getExtensionByFile(fileName);
         if(extension!=null) extensionService.updateDownloadsCounter(extension);
@@ -80,10 +86,5 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
-    }
-
-    @DeleteMapping("/deleteFile/")
-    public void deleteFile(@RequestBody String fileName){
-        fileStorageService.deleteFile(fileName);
     }
 }

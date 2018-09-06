@@ -53,7 +53,7 @@ public class ExtensionController {
     @GetMapping("/{id}")
     public Extension getExtensionByID(@PathVariable int id, HttpServletRequest request) {
         String header = request.getHeader(HEADER_STRING);
-        String authToken = header.replace(TOKEN_PREFIX, "");
+        String authToken = header != null ? header.replace(TOKEN_PREFIX, "") : null;
 
         return extensionService.getExtensionById(id, authToken);
     }

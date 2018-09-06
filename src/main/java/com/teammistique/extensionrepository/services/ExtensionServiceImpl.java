@@ -78,9 +78,9 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     @Override
     public Extension getExtensionById(int id, String authToken) {
         Extension extension = extensionRepository.findById(id);
-        return (extension.getPublishedDate() != null ||
-                jwtTokenUtil.isAdmin(authToken) ||
-                extension.getOwnerUsername().equals(jwtTokenUtil.getUsernameFromToken(authToken))) ? extension : null;
+        return (extension.getPublishedDate() != null || ( authToken!=null &&
+                (jwtTokenUtil.isAdmin(authToken) ||
+                extension.getOwnerUsername().equals(jwtTokenUtil.getUsernameFromToken(authToken))))) ? extension : null;
     }
 
     @Override

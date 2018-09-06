@@ -18,6 +18,12 @@ public class ExtensionDTO implements Serializable {
     private List<String> tagNames;
     private String username;
     private double version;
+    private Date lastSuccessfulSync;
+    private Date lastFailedSync;
+    private String failedSyncDetails;
+    private int issuesCounter;
+    private int pullRequestsCounter;
+    private Date lastCommitDate;
 
 
     public ExtensionDTO() {
@@ -125,5 +131,53 @@ public class ExtensionDTO implements Serializable {
 
     public void setVersion(double version) {
         this.version = version;
+    }
+
+    public Date getLastSuccessfulSync() {
+        return lastSuccessfulSync;
+    }
+
+    public void setLastSuccessfulSync(Date lastSuccessfulSync) {
+        this.lastSuccessfulSync = lastSuccessfulSync;
+    }
+
+    public Date getLastFailedSync() {
+        return lastFailedSync;
+    }
+
+    public void setLastFailedSync(Date lastFailedSync) {
+        this.lastFailedSync = lastFailedSync;
+    }
+
+    public String getFailedSyncDetails() {
+        return failedSyncDetails;
+    }
+
+    public void setFailedSyncDetails(String failedSyncDetails) {
+        this.failedSyncDetails = failedSyncDetails;
+    }
+
+    public int getIssuesCounter() {
+        return issuesCounter;
+    }
+
+    public void setIssuesCounter(int issuesCounter) {
+        this.issuesCounter = issuesCounter;
+    }
+
+    public int getPullRequestsCounter() {
+        return pullRequestsCounter;
+    }
+
+    public void setPullRequestsCounter(int pullRequestsCounter) {
+        this.pullRequestsCounter = pullRequestsCounter;
+    }
+
+    public Date getLastCommitDate() {
+        return lastCommitDate;
+    }
+
+    public void setLastCommitDate(Date lastCommitDate) {
+        this.lastCommitDate = lastCommitDate;
     }
 }
