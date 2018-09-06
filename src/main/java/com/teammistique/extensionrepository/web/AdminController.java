@@ -55,6 +55,11 @@ public class AdminController {
         extensionService.setMaxListSize(size);
     }
 
+    @PostMapping("/sync")
+    public void syncGitHubData(){
+        extensionService.updateAllGitHubInfo();
+    }
+
     @PostMapping("/changeSyncPeriod")
     public void changeSyncTimer(@RequestParam long delay){
         extensionService.setUpdateGitHubPeriod(delay);

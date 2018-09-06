@@ -53,5 +53,13 @@ var ajaxCalls = {
             url: "/api/admin/changeSyncPeriod?delay="+periodInMinutes*60000,
             headers: createAuthorizationTokenHeader()
         });
+    },
+
+    triggerSync: function(){
+        return $.ajax({
+            type: "POST",
+            url: "/api/admin/sync",
+            headers: createAuthorizationTokenHeader()
+        });
     }
 }
