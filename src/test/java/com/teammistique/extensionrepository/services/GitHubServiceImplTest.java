@@ -6,6 +6,7 @@ import org.junit.Test;
 
 public class GitHubServiceImplTest {
     private GitHubServiceImpl gitHubService;
+//    String repo
 
     @Before
     public void setUp(){
@@ -31,6 +32,7 @@ public class GitHubServiceImplTest {
     }
 
     @Test
-    public void getNumberOfIssues_shouldReturnA() {
+    public void getNumberOfIssues_shouldReturnAPositiveNumber() {
+
     }
 }

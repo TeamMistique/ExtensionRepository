@@ -1,7 +1,6 @@
-var admin = false;
-
 function isAdmin() {
-    return admin;
+    if(justGetJwtToken() && ajaxisAdmin()) return true;
+    else return false;
 }
 
 $('#login-form-link').click(function (e) {

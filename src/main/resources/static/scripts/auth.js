@@ -2,8 +2,7 @@ var TOKEN_KEY = 'jwtToken';
 
 var getJwtToken = function () {
     var token =  localStorage.getItem(TOKEN_KEY);
-    debugger;
-    if(getExpiryTimeFromToken() < Date.now()/1000){
+    if(token && getExpiryTimeFromToken() < Date.now()/1000){
         removeJwtToken();
         refresh();
     }
