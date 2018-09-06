@@ -41,6 +41,11 @@ footer {
     background-color: #337ab7 !important;
 }
 
+#login-page i{
+    color: red;
+    font-weight: bolder;
+}
+
 .site-title {
     float: left;
     height: 50px;
