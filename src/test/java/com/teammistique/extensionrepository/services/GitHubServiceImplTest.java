@@ -29,4 +29,8 @@ public class GitHubServiceImplTest {
         String result = GitHubServiceImpl.GitHubHelpers.getRepo("https://github.com/biaedwards/Java-Alpha-Module-1");
         Assert.assertEquals("Java-Alpha-Module-1", result);
     }
+
+    @Test
+    public void getNumberOfIssues_shouldReturnA() {
+    }
 }
