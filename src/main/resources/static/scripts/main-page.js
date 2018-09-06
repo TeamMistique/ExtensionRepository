@@ -295,8 +295,6 @@ $.fn.extend({
 
 $('#open-new-extension-modal').on('click', function () {
     $('#new-extension-modal').modal('show');
-    console.log($("#image-upload").val());
-    console.log($("#file-upload").val());
 });
 
 function uploadExtension(dto) {
@@ -325,7 +323,7 @@ $('#add-extension-button').on('click', function () {
         'name': $('#extension-name').val(),
         'description': $('#extension-description').val(),
         'link': $('#github-link').val(),
-        'tagNames': $('#extension-tags').val().split(', ')
+        'tagNames': $('#extension-tags').val().match(/\w+/g)
     };
 
     $('#file-upload-form').submit(function (event) {
@@ -455,7 +453,7 @@ $('#edit-extension-button').on('click', function (event) {
         "name": $('#edit-extension-name').val(),
         "description": $('#edit-extension-description').val(),
         "link": $('#edit-github-link').val(),
-        "tagNames": $('#edit-extension-tags').val().split(", ")
+        "tagNames": $('#edit-extension-tags').val().match(/\w+/g)
     };
 
     if ($('#edit-image-name-text').val() !== helpers.getNameFromFileLink($('#edit-image-name-text').attr('oldValue'))) {
