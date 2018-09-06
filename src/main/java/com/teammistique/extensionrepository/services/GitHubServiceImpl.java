@@ -88,7 +88,9 @@ public class GitHubServiceImpl implements GitHubService {
             try {
                 String result = null;
                 int lengthToSkip = "github.com/".length();
-                int beginningOfResult = gitHubUrl.indexOf("github.com/") + lengthToSkip;
+                int gh = gitHubUrl.indexOf("github.com/");
+                if(gh==-1) throw new NullPointerException();
+                int beginningOfResult = gh + lengthToSkip;
                 result = gitHubUrl.substring(beginningOfResult);
                 return result;
             } catch (NullPointerException e) {
