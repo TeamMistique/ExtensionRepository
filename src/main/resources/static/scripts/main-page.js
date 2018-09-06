@@ -216,11 +216,13 @@ var fillExtensionPage = function (location, extension) {
             html += '</div></div></div>';
         } 
 
-        if(isAdmin){
-            html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3>Sync Info</h3><div class="sync-container">';
-            html += '<div>Last Successful Sync: <i>'+moment(extension.lastSuccessfulSync).format('LLLL')+'</i></div>'
-            html += '<div>Last Failed Sync: <i>'+moment(extension.lastFailedSync).format('LLLL')+'</i></div>'
-            html += '<div>Last Failed Sync Details: <i>'+extension.failedSyncDetails+'</i></div>'
+        if(isAdmin()){
+            html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3 style="display: inline;margin-right: 10px;">Sync Info</h3>';
+            html += '<a id = "sync-button" class="btn btn-success btn-sm"> Sync now </a>';
+            html += '<div class="sync-container">';
+            html += '<div>Last Successful Sync: <i id="lss">'+moment(extension.lastSuccessfulSync).format('LLLL')+'</i></div>'
+            html += '<div>Last Failed Sync: <i id="lfs">'+moment(extension.lastFailedSync).format('LLLL')+'</i></div>'
+            html += '<div>Last Failed Sync Details: <i id="lfsd">'+extension.failedSyncDetails+'</i></div>'
             html += '</div></div></div>';
         }
 
@@ -231,6 +233,17 @@ var fillExtensionPage = function (location, extension) {
 
     }
 };
+
+$('#one-extension-page').on('click', '#sync-button', function(){
+    console.log('sync clicked');
+    var id = $('#one-extension-page .modal-header').attr('value');
+    console.log('id='+id);
+    ajaxCalls.triggerOneSync(id).done(function(extension){
+        $('#lss').html(moment(extension.lastSuccessfulSync).format('LLLL'));
+        $('#lfs').html(moment(extension.lastFailedSync).format('LLLL'));
+        $('#lfsd').html(extension.failedSyncDetails);
+    })
+});
 
 function getMyExtensions() {
     var token = getJwtToken();
