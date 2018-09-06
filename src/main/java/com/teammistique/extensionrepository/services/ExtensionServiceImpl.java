@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.services;
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
+import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
 import com.teammistique.extensionrepository.exceptions.SyncException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
@@ -103,13 +104,21 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         if (!extension.getFile().equals(dto.getFile())) {
             extension.setVersion(extension.getVersion() + 0.1);
             String fileName = getFileNameFromFileLink(extension.getFile());
-            fileService.deleteFile(fileName);
+            try {
+                fileService.deleteFile(fileName);
+            } catch (MyFileNotFoundException e) {
+                e.printStackTrace();
+            }
             extension.setFile(dto.getFile());
         }
 
         if (!extension.getImage().equals(dto.getImage())) {
             String imageName = getFileNameFromFileLink(extension.getImage());
-            fileService.deleteFile(imageName);
+            try {
+                fileService.deleteFile(imageName);
+            } catch (MyFileNotFoundException e) {
+                e.printStackTrace();
+            }
             extension.setImage(dto.getImage());
         }
 
@@ -128,8 +137,16 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
         String owner = extension.getOwnerUsername();
         if (admin || username.equals(owner)) {
-            fileService.deleteFile(getFileNameFromFileLink(extension.getFile()));
-            fileService.deleteFile(getFileNameFromFileLink(extension.getImage()));
+            try {
+                fileService.deleteFile(getFileNameFromFileLink(extension.getFile()));
+            } catch (MyFileNotFoundException e) {
+                e.printStackTrace();
+            }
+            try {
+                fileService.deleteFile(getFileNameFromFileLink(extension.getImage()));
+            } catch (MyFileNotFoundException e) {
+                e.printStackTrace();
+            }
             extensionRepository.delete(id);
         }
     }

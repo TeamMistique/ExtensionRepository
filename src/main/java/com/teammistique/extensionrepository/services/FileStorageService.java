@@ -55,7 +55,7 @@ public class FileStorageService implements StorageService {
     }
 
     @Override
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName) throws MyFileNotFoundException {
         try {
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
@@ -65,12 +65,13 @@ public class FileStorageService implements StorageService {
                 throw new MyFileNotFoundException("File not found " + fileName);
             }
         } catch (MalformedURLException ex) {
-            throw new MyFileNotFoundException("File not found " + fileName, ex);
+            ex.printStackTrace();
+            throw new MyFileNotFoundException("File not found " + fileName);
         }
     }
 
     @Override
-    public void deleteFile(String fileName) {
+    public void deleteFile(String fileName) throws MyFileNotFoundException {
         try{
             Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
@@ -79,8 +80,6 @@ public class FileStorageService implements StorageService {
             } else {
                 throw new MyFileNotFoundException("File not found " + fileName);
             }
-        } catch (MalformedURLException ex) {
-            throw new MyFileNotFoundException("File not found " + fileName, ex);
         } catch (IOException e) {
             e.printStackTrace();
         }
