@@ -55,3 +55,10 @@ function getExpiryTimeFromToken (){
     return claims.exp;
 }
 
+function isUserAdmin(user){
+    var admin = false;
+    $.each(user.authorities, function(k,v){
+        if(v.role=="ROLE_ADMIN") admin = true;
+    });
+    return admin;
+}

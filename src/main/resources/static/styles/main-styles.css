@@ -36,6 +36,11 @@ footer {
     padding-top: 14px;
 }
 
+.fake-button:hover{
+    cursor: default !important;
+    background-color: #337ab7 !important;
+}
+
 .site-title {
     float: left;
     height: 50px;

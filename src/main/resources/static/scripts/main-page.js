@@ -80,9 +80,9 @@ $('#my-account-button').on('click', function (e) {
 var fillPopularList = function () {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/featured",
+        url: "/api/extensions/popular",
         success: function (data) {
-            if(isAdmin()){
+            if (isAdmin()) {
                 adminFillWithEditable($('#popular-container'), data);
             } else {
                 fillMainPageList($('#popular-container'), data);
@@ -94,9 +94,9 @@ var fillPopularList = function () {
 var fillFeaturedList = function () {
     $.ajax({
         type: "GET",
-        url: "/api/extensions/popular",
+        url: "/api/extensions/featured",
         success: function (data) {
-            if(isAdmin()){
+            if (isAdmin()) {
                 adminFillWithEditable($('#featured-container'), data);
             } else {
                 fillMainPageList($('#featured-container'), data);
@@ -173,7 +173,7 @@ var fillSearchPageList = function (location, data) {
     }
 };
 
-$('#featured-container, #popular-container, #new-container, #search-container').on('click', '.col-md-2', function () {
+$('#featured-container, #popular-container, #new-container, #search-container, #unpublished-container').on('click', '.col-md-2', function () {
     console.log("Extension has been clicked - 1.")
     console.log($(this) + '..................................' + $(this).attr('value'));
     var id = $(this).attr('value');
@@ -822,11 +822,11 @@ $('#search-magnifier').on('click', function (e) {
     e.preventDefault();
 });
 
-$('#sort-by-downloads').on('click', function(event){
+$('#sort-by-downloads').on('click', function (event) {
     var $this = $(this);
     var name = $('#search-param').val();
-    sortByDownloads(name).done(function(data){
-        if(isAdmin()){
+    sortByDownloads(name).done(function (data) {
+        if (isAdmin()) {
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -836,12 +836,12 @@ $('#sort-by-downloads').on('click', function(event){
     event.preventDefault();
 });
 
-$('#sort-by-upload').on('click', function(event){
+$('#sort-by-upload').on('click', function (event) {
     var $this = $(this);
     var name = $('#search-param').val();
-    sortByUpload(name).done(function(data){
-        if(isAdmin()){
-            adminFillWithEditable($('#search-container'), data);
+    sortByUpload(name).done(function (data) {
+        if (isAdmin()) {
+            adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
         }
@@ -914,6 +914,7 @@ var fillUsersTable = function (location, data) {
 
     if (data !== '') {
         $.each(data, function (k, v) {
+            console.log(v);
             var username = v.username;
             var html = "";
             html += '<tr value="' + v.id + '"><td class="text-center" style="vertical-align: middle;">' + v.id + '</td>';
@@ -925,24 +926,22 @@ var fillUsersTable = function (location, data) {
                     html += '<div>' + value.name + '</div>';
                 })
                 html += '</td><td class="text-center" style="vertical-align: middle;">';
-                if(!isAdmin()){
+                if(!isUserAdmin(v)){
                     if(v.enabled == true){
-                        html += '<a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
-                        html += '<a id="" class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                        html += '<a href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                        html += '<a class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
                         console.log("test if")
                         location.append(html);
                     } else {
-                        console.log("test else")
-                        html += '<a id="" href="#" class="btn btn-danger hide btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
-                        html += '<a id="" class="btn btn-success btn-sm  enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
+                        html += '<a href="#" class="btn btn-danger hide btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
+                        html += '<a class="btn btn-success btn-sm  enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
                         location.append(html);
                     }
                 } else {
 
-                    html += '<div id="" class="btn btn-success btn-sm  enable-button"><span class="glyphicon glyphicon-ok-circle"></span> Admin</div></td></tr>';
+                    html += '<div id="" class="btn btn-primary btn-sm fake-button"><span class="glyphicon glyphicon-ok-circle"></span> Admin</div></td></tr>';
                     location.append(html);
                 }
-
             })
         });
     } else {
@@ -951,11 +950,13 @@ var fillUsersTable = function (location, data) {
 };
 
 $('#user-container').on('click', '.disable-button, .enable-button', function (e) {
+    var thisButton = $(this);
+    var otherButton = $(this).siblings('a');
     var userToBan = $(this).parent().siblings('.username');
     var username = userToBan.html();
     ajaxCalls.changeUserEnabled(username).done(function () {
-        ajaxCalls.getAllUsers().done(function (data) {
-            fillUsersTable($('#user-info'), data);
-        });
+        thisButton.addClass('hide');
+        otherButton.removeClass('hide');
     });
+    e.preventDefault();
 });

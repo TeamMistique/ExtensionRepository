@@ -152,6 +152,10 @@ public class ExtensionServiceImplTest {
         verify(mockExtensionRepository).filterPublishedByName(name);
     }
 
+    @Test
+    public void createExtension_should() {
+    }
+
     public static class Helpers {
         public static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
