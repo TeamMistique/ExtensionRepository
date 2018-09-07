@@ -978,3 +978,9 @@ $('#user-container').on('click', '.disable-button, .enable-button', function (e)
     });
     e.preventDefault();
 });
+
+$('#edit-time').on('click', function (e) {
+    $(this).addClass("hide");
+    $('#sync-interval').removeClass('hide');
+    $('#save-edit-time').removeClass('hide');
+});
