@@ -207,7 +207,7 @@ var fillExtensionPage = function (location, extension) {
         html += '<div>Open Issues <div>' + extension.issuesCounter + '</div></div>';
         html += '<div>Pull Requests <div>' + extension.pullRequestsCounter + '</div></div>';
         html += '<div>Last commit <div class="date">' + moment(extension.lastCommitDate).format('DD-MM-YYYY') + '</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
-        html += '<div class="col-xs-1"></div><div id="extension-description" class="col-md-10"><p>' + extension.description + '</p></div></div>';
+        html += '<div class="col-xs-1"></div><div id="this-extension-description" class="col-md-10"><p>' + extension.description + '</p></div></div>';
 
         if (extension.tags.length > 0) {
             html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3 class="tags">Tags</h3><div class="tag-container">';
@@ -331,6 +331,7 @@ $('#add-extension-button').on('click', function () {
         'tagNames': $('#extension-tags').val().match(/\w+/g)
     };
 
+    debugger;
     $('#file-upload-form').submit(function (event) {
         var formElement = this;
         var formData = new FormData(formElement);

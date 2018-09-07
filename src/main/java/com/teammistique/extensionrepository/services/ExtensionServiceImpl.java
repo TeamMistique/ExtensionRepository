@@ -47,9 +47,11 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
     public Extension createExtension(ExtensionDTO dto, String authToken) {
 
         List<Tag> tags = new ArrayList<>();
-        for (String tagName : dto.getTagNames()) {
-            Tag tag = new Tag(tagName);
-            tags.add(tagService.createTag(tag));
+        if(dto.getTagNames()!=null){
+            for (String tagName : dto.getTagNames()) {
+                Tag tag = new Tag(tagName);
+                tags.add(tagService.createTag(tag));
+            }
         }
 
         Extension extension = new Extension();
