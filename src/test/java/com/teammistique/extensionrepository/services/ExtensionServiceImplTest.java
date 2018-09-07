@@ -4,6 +4,7 @@ import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.GitHubService;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import com.teammistique.extensionrepository.services.base.TagService;
@@ -32,13 +33,18 @@ public class ExtensionServiceImplTest {
         extensionService = new ExtensionServiceImpl(mockGitHubService, mockExtensionRepository, mockFileService, mockTagService, mockUserService, mockJwtTokenUtil);
     }
 
-//    @Test
-//    public void createExtension_shouldCreateExtensionSameAsDto() {
-//        ExtensionDTO dto = new ExtensionDTO();
-//        dto.set
-//    }
-
     public static class Helpers {
+        public static ExtensionDTO createFakeExtensionDto(){
+            ExtensionDTO dto = new ExtensionDTO();
+            dto.setName("name");
+            dto.setDescription("description");
+            dto.setLink("github");
+            dto.setTagNames(Arrays.asList("Tag1", "Tag2", "Tag3"));
+            dto.setImage("image");
+            dto.setFile("file");
+            return dto;
+        }
+
         public static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 Extension extension = new Extension();
