@@ -988,13 +988,23 @@ $('#edit-time').on('click', function (e) {
 
 $('#save-edit-time').on('click', function (e) {
     $(this).addClass('hide');
-    $('#real-interval').removeClass('hide');
-    $('#edit-time').removeClass('hide');
-    $('#sync-interval').addClass('hide');
+    debugger;
+    var period = $('#sync-interval').val();
+    console.log(period);
+    if(period == ""){
+        period = 60;
+    }
+    console.log(period);
+    ajaxCalls.changeSyncPeriod(period).done(function () {
+        $('#real-interval').removeClass('hide');
+        $('#edit-time').removeClass('hide');
+        $('#sync-interval').addClass('hide');
+    });
 });
 
 
-$('sync-now-button').on('click', function (e) {
+$('#sync-now-button').on('click', function (e) {
     ajaxCalls.triggerSyncAll().done(function () {
     });
 });
+
