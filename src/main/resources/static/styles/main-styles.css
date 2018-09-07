@@ -519,3 +519,22 @@ a:hover{
     border: 1px solid #ccc;
     padding: 6px 12px;
 }
+
+#sync > * {
+    display: inline;
+    
+}
+
+#sync-container {
+    font-size: 20pt;
+    padding: 0 6%;
+}
+
+#sync-now{
+    margin-left: 3%;
+}
+
+#sync-interval{
+    width: 3%;
+    padding: 20px 6px;
+}
