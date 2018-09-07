@@ -115,7 +115,7 @@ var fillNewList = function () {
         type: "GET",
         url: "/api/extensions/new",
         success: function (data) {
-            if(isAdmin()){
+            if (isAdmin()) {
                 adminFillWithEditable($('#new-container'), data);
             } else {
                 fillMainPageList($('#new-container'), data);
@@ -149,7 +149,7 @@ var fillAllList = function () {
         type: "GET",
         url: "/api/extensions/published",
         success: function (data) {
-            if(isAdmin()){
+            if (isAdmin()) {
                 adminFillSearch($('#search-container'), data);
             } else {
                 fillSearchPageList($('#search-container'), data);
@@ -219,15 +219,15 @@ var fillExtensionPage = function (location, extension) {
             });
 
             html += '</div></div></div>';
-        } 
+        }
 
-        if(isAdmin()){
+        if (isAdmin()) {
             html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3 style="display: inline;margin-right: 10px;">Sync Info</h3>';
             html += '<a id = "sync-button" class="btn btn-success btn-sm"> Sync now </a>';
             html += '<div class="sync-container">';
-            html += '<div>Last Successful Sync: <i id="lss">'+moment(extension.lastSuccessfulSync).format('LLLL')+'</i></div>'
-            html += '<div>Last Failed Sync: <i id="lfs">'+moment(extension.lastFailedSync).format('LLLL')+'</i></div>'
-            html += '<div>Last Failed Sync Details: <i id="lfsd">'+extension.failedSyncDetails+'</i></div>'
+            html += '<div>Last Successful Sync: <i id="lss">' + moment(extension.lastSuccessfulSync).format('LLLL') + '</i></div>'
+            html += '<div>Last Failed Sync: <i id="lfs">' + moment(extension.lastFailedSync).format('LLLL') + '</i></div>'
+            html += '<div>Last Failed Sync Details: <i id="lfsd">' + extension.failedSyncDetails + '</i></div>'
             html += '</div></div></div>';
         }
 
@@ -239,11 +239,11 @@ var fillExtensionPage = function (location, extension) {
     }
 };
 
-$('#one-extension-page').on('click', '#sync-button', function(){
+$('#one-extension-page').on('click', '#sync-button', function () {
     console.log('sync clicked');
     var id = $('#one-extension-page .modal-header').attr('value');
-    console.log('id='+id);
-    ajaxCalls.triggerOneSync(id).done(function(extension){
+    console.log('id=' + id);
+    ajaxCalls.triggerOneSync(id).done(function (extension) {
         $('#lss').html(moment(extension.lastSuccessfulSync).format('LLLL'));
         $('#lfs').html(moment(extension.lastFailedSync).format('LLLL'));
         $('#lfsd').html(extension.failedSyncDetails);
@@ -410,7 +410,7 @@ var fillWithEditableExtensions = function (data) {
     }
 };
 
-var adminFillWithEditable = function(location, data){
+var adminFillWithEditable = function (location, data) {
     location.html('');
     if (data !== '') {
         $.each(data, function (k, v) {
@@ -617,12 +617,12 @@ var helpers = {
         $('#edit-file-name-text').attr('oldValue', extension.file);
 
         //add buttons for publish and feature
-        if(isAdmin()){
+        if (isAdmin()) {
             $('.admin-button').removeClass('hide');
             var publishText = 'Publish';
             var featureText = 'Feature';
-            if(extension.publishedDate!==null) publishText = 'Unpublish';
-            if(extension.featuredDate!==null) featureText = 'Unfeature';
+            if (extension.publishedDate !== null) publishText = 'Unpublish';
+            if (extension.featuredDate !== null) featureText = 'Unfeature';
             $('#publish-extension-button').html(publishText);
             $('#feature-extension-button').html(featureText);
         }
@@ -637,7 +637,7 @@ var helpers = {
 $('#edit-buttons-container').on('click', '#publish-extension-button', function (event) {
     debugger;
     var id = $('#edit-extension-modal').val();
-    ajaxCalls.publishExtension(id).done(function(){
+    ajaxCalls.publishExtension(id).done(function () {
         refresh();
     });
     event.preventDefault();
@@ -646,7 +646,7 @@ $('#edit-buttons-container').on('click', '#publish-extension-button', function (
 $('#edit-buttons-container').on('click', '#feature-extension-button', function (event) {
     debugger;
     var id = $('#edit-extension-modal').val();
-    ajaxCalls.changeFeatureStatus(id).done(function(){
+    ajaxCalls.changeFeatureStatus(id).done(function () {
         refresh();
     });
     event.preventDefault();
@@ -819,21 +819,21 @@ function filterByName(name) {
     });
 };
 
-function sortByDownloads(name){
+function sortByDownloads(name) {
     return $.ajax({
         type: "GET",
         url: "/api/extensions/sortByNumberOfDownloads?name=" + name,
     });
 };
 
-function sortByLastCommit(name){
+function sortByLastCommit(name) {
     return $.ajax({
         type: "GET",
         url: "/api/extensions/sortByLastCommit?name=" + name,
     });
 };
 
-function sortByUpload(name){
+function sortByUpload(name) {
     return $.ajax({
         type: "GET",
         url: "/api/extensions/sortByUpload?name=" + name,
@@ -844,7 +844,7 @@ $('#search-magnifier').on('click', function (e) {
     var word = $('#search-param').val();
     console.log(word);
     filterByName(word).done(function (data) {
-        if(isAdmin()){
+        if (isAdmin()) {
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -882,11 +882,11 @@ $('#sort-by-upload').on('click', function (event) {
     event.preventDefault();
 });
 
-$('#sort-by-last-commit').on('click', function(event){
+$('#sort-by-last-commit').on('click', function (event) {
     var $this = $(this);
     var name = $('#search-param').val();
-    sortByLastCommit(name).done(function(data){
-        if(isAdmin()){
+    sortByLastCommit(name).done(function (data) {
+        if (isAdmin()) {
             adminFillSearch($('#search-container'), data);
         } else {
             fillSearchPageList($('#search-container'), data);
@@ -958,8 +958,8 @@ var fillUsersTable = function (location, data) {
                     html += '<div>' + value.name + '</div>';
                 })
                 html += '</td><td class="text-center" style="vertical-align: middle;">';
-                if(!isUserAdmin(v)){
-                    if(v.enabled == true){
+                if (!isUserAdmin(v)) {
+                    if (v.enabled == true) {
                         html += '<a href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>';
                         html += '<a class="btn btn-success btn-sm hide enable-button" href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a></td></tr>';
                         console.log("test if")
@@ -1005,7 +1005,7 @@ $('#save-edit-time').on('click', function (e) {
     debugger;
     var period = $('#sync-interval').val();
     console.log(period);
-    if(period == ""){
+    if (period == "") {
         period = 60;
     }
     console.log(period);
@@ -1020,6 +1020,7 @@ $('#save-edit-time').on('click', function (e) {
 
 $('#sync-now-button').on('click', function (e) {
     ajaxCalls.triggerSyncAll().done(function () {
+        alert("Sync done");
     });
-});
 
+});
