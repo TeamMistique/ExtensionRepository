@@ -346,6 +346,10 @@ $('#add-extension-button').on('click', function () {
             success: function (data) {
                 dto.file = data.downloadURI;
                 $('#image-upload-form').trigger('submit');
+            }, 
+            error: function(){
+                alert("There was an error with the file upload");
+                refresh();
             }
         });
 
@@ -369,6 +373,10 @@ $('#add-extension-button').on('click', function () {
                 uploadExtension(dto).done(function () {
                     refresh();
                 });
+            },
+            error: function(){
+                alert("There was an error with the image upload");
+                refresh();
             }
         });
 
