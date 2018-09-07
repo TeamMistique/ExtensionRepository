@@ -512,12 +512,14 @@ a:hover{
 
 /* ---------- sync------------------ */
 
+
 #user-status > div {
     color: #999999;
     display: block;
     height: 34px;
     border: 1px solid #ccc;
-    padding: 6px 12px;
+    padding: 6px 7px;
+    border-radius: 4px;
 }
 
 #sync > * {
@@ -530,11 +532,26 @@ a:hover{
     padding: 0 6%;
 }
 
-#sync-now{
-    margin-left: 3%;
-}
 
 #sync-interval{
-    width: 3%;
+  width: 5%;
     padding: 20px 6px;
 }
+
+#edit-time{
+    min-width: 19%;
+}
+
+#save-edit-time{
+   min-width: 17%;
+}
+
+#sync-custom > * {
+    display: inline;
+}
+
+#admin-page > hr {
+    margin: 1% 5%;
+}
+
+

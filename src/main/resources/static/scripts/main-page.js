@@ -980,15 +980,21 @@ $('#user-container').on('click', '.disable-button, .enable-button', function (e)
 });
 
 $('#edit-time').on('click', function (e) {
-    $(this).addClass("hide");
+    $(this).addClass('hide');
     $('#real-interval').addClass('hide');
     $('#sync-interval').removeClass('hide');
     $('#save-edit-time').removeClass('hide');
 });
 
 $('#save-edit-time').on('click', function (e) {
-    $(this).addClass("hide");
+    $(this).addClass('hide');
     $('#real-interval').removeClass('hide');
     $('#edit-time').removeClass('hide');
     $('#sync-interval').addClass('hide');
+});
+
+
+$('sync-now-button').on('click', function (e) {
+    ajaxCalls.triggerSyncAll().done(function () {
+    });
 });
