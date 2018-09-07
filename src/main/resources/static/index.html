@@ -12,1354 +12,1015 @@
     <link rel="stylesheet" href="styles/login.css">
     <link rel="stylesheet" href="styles/admin.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
-          crossorigin="anonymous">
+        crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <link rel="stylesheet" href="styles/main-styles.css">
 </head>
 
 <body>
-<header>
-    <nav id="navbar" class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a id="home-button" class="site-title" href="#">MarketPlace</a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a id="search-button" href="#">
-                            <span class="glyphicon glyphicon-search"></span> Search</a>
-                    </li>
-                    <li id="my-account">
-                        <div class="btn-group">
-                            <button id="my-account-button" type="button" class="btn btn-default dropdown-toggle"
-                                    data-toggle="dropdown">
-                                <i class="fas fa-user"></i> My Account <span class="caret"></span>
-                            </button>
-                            <ul id="user-dropdown" class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-
-
-<div id="login-page" class="container hide page">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-login">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6">
-                            <a href="#" class="active" id="login-form-link">Login</a>
-                        </div>
-                        <div class="col-xs-6">
-                            <a href="#" id="register-form-link">Register</a>
-                        </div>
-                    </div>
-                    <hr>
+    <header>
+        <nav id="navbar" class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a id="home-button" class="site-title" href="#">MarketPlace</a>
                 </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form id="login-form" action="#" role="form" style="display: block;">
-                                <div class="form-group">
-                                    <input type="text" name="username" id="login-username" tabindex="1" class="form-control"
-                                           placeholder="Username" value="">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" id="login-password" tabindex="2" class="form-control"
-                                           placeholder="Password">
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4"
-                                                   class="form-control btn btn-login" value="Log In">
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a id="search-button" href="#">
+                                <span class="glyphicon glyphicon-search"></span> Search</a>
+                        </li>
+                        <li id="my-account">
+                            <div class="btn-group">
+                                <button id="my-account-button" type="button" class="btn btn-default dropdown-toggle"
+                                    data-toggle="dropdown">
+                                    <i class="fas fa-user"></i> My Account <span class="caret"></span>
+                                </button>
+                                <ul id="user-dropdown" class="dropdown-menu" role="menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div id="login-page" class="container hide page">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" class="active" id="login-form-link">Login</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="#" id="register-form-link">Register</a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form id="login-form" action="#" role="form" style="display: block;">
+                                    <div class="form-group">
+                                        <input type="text" name="username" id="login-username" tabindex="1" class="form-control"
+                                            placeholder="Username" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="login-password" tabindex="2" class="form-control"
+                                            placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-sm-offset-3">
+                                                <input type="submit" name="login-submit" id="login-submit" tabindex="4"
+                                                    class="form-control btn btn-login" value="Log In">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                            <form id="register-form" method="post" role="form" style="display: none;">
-                                <div class="form-group">
-                                    <input type="text" name="username" id="register-username" tabindex="1" class="form-control"
-                                           placeholder="Username" value="">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" id="register-password" tabindex="2"
-                                           class="form-control" placeholder="Password">
-                                </div>
-                                <!-- <div class="form-group">
+                                </form>
+                                <form id="register-form" method="post" role="form" style="display: none;">
+                                    <div class="form-group">
+                                        <input type="text" name="username" id="register-username" tabindex="1" class="form-control"
+                                            placeholder="Username" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="register-password" tabindex="2"
+                                            class="form-control" placeholder="Password">
+                                    </div>
+                                    <!-- <div class="form-group">
                                     <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
                                 </div> -->
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit"
-                                                   tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-sm-offset-3">
+                                                <input type="submit" name="register-submit" id="register-submit"
+                                                    tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div style="text-align:  center;">
-        <i id="wrong-pass"class="hide login-error">It seems like your username and password don't match.</i>
-        <i id="existing-user" class="hide login-error">It seems like there is already a user with that username.</i>
-        <i id="disabled-user" class="hide login-error">It seems like this user has been disabled.</i>
-    </div>
-</div>
-
-
-<div id="main-page" class="page full-page">
-    <div id="featured-category">
-        <div class="category-title">
-            <h1 id="featured-category-title">Featured</h1>
+        <div style="text-align:  center;">
+            <i id="wrong-pass" class="hide login-error">It seems like your username and password don't match.</i>
+            <i id="existing-user" class="hide login-error">It seems like there is already a user with that username.</i>
+            <i id="disabled-user" class="hide login-error">It seems like this user has been disabled.</i>
         </div>
+    </div>
 
-        <div class="container">
-            <div class="col-sm-12">
-                <div class="row align-self-center justify-content-center align-items-center">
-                    <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                        <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                            <button class="btn btn-primary " onclick="this.blur();">
-                                &#60;</button>
-                        </div>
 
-                        <div id="featured-container" class="resCarousel-inner col-md-10">
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+    <div id="main-page" class="page full-page">
+        <div id="featured-category">
+            <div class="category-title">
+                <h1 id="featured-category-title">Featured</h1>
+            </div>
+
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="row align-self-center justify-content-center align-items-center">
+                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                <button class="btn btn-primary " onclick="this.blur();">
+                                    &#60;
+                                </button>
+                            </div>
+
+                            <div id="featured-container" class="resCarousel-inner col-md-10">
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-
-
-                        </div>
-                        <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                            <button class="btn btn-primary" onclick="this.blur();">
-                                &#62;</button>
+                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                <button class="btn btn-primary" onclick="this.blur();">
+                                    &#62;
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <br>
-    <!-- --------------------------------------------------------- -->
-    <div id="popular-category">
-        <div class="category-title">
-            <h1 id="popular-category-title">Popular</h1>
-        </div>
+        <br>
+        <!-- --------------------------------------------------------- -->
+        <div id="popular-category">
+            <div class="category-title">
+                <h1 id="popular-category-title">Popular</h1>
+            </div>
 
-        <div class="container">
-            <div class="col-sm-12">
-                <div class="row align-self-center justify-content-center align-items-center">
-                    <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                        <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                            <button class="btn btn-primary " onclick="this.blur();">
-                                &#60;</button>
-                        </div>
-
-                        <div id="popular-container" class="resCarousel-inner col-md-10">
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="row align-self-center justify-content-center align-items-center">
+                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                <button class="btn btn-primary " onclick="this.blur();">
+                                    &#60;
+                                </button>
                             </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                            <div id="popular-container" class="resCarousel-inner col-md-10">
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
 
-                        </div>
-                        <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                            <button class="btn btn-primary" onclick="this.blur();">
-                                &#62;</button>
+                            </div>
+                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                <button class="btn btn-primary" onclick="this.blur();">
+                                    &#62;
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <br>
+        <br>
 
-    <div id="new-category">
-        <div class="category-title">
-            <h1 id="new-category-title">New</h1>
-        </div>
+        <div id="new-category">
+            <div class="category-title">
+                <h1 id="new-category-title">New</h1>
+            </div>
 
-        <div class="container">
-            <div class="col-sm-12">
-                <div class="row align-self-center justify-content-center align-items-center">
-                    <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                        <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                            <button class="btn btn-primary " onclick="this.blur();">
-                                &#60;</button>
-                        </div>
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="row align-self-center justify-content-center align-items-center">
+                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                <button class="btn btn-primary " onclick="this.blur();">
+                                    &#60;
+                                </button>
+                            </div>
 
-                        <div id="new-container" class="resCarousel-inner col-md-10">
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                            <div id="new-container" class="resCarousel-inner col-md-10">
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
-                                <div class="panel panel-primary">
-                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                    <div class="panel-body">
-                                        <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <div class="extension-bottom">
-                                            <div class="pull-left">
-                                                <i class="fas fa-user-tie"> user</i>
-                                            </div>
-                                            <div class="pull-right">
-                                                <i class="fas fa-download"> 100</i>
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                        </div>
-                        <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                            <button class="btn btn-primary" onclick="this.blur();">
-                                &#62;</button>
+                            </div>
+                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                <button class="btn btn-primary" onclick="this.blur();">
+                                    &#62;
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <br>
+
     </div>
 
-    <br>
+    <div id="extension-modal" class="modal fade">
+        <!-- class modal and fade -->
+        <div class="modal-dialog modal-lg">
+            <div id="one-extension-page" class="modal-content">
 
-</div>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h2 class="modal-title">Debugger</h2>
+                </div>
 
-<div id="extension-modal" class="modal fade">
-    <!-- class modal and fade -->
-    <div class="modal-dialog modal-lg">
-        <div id="one-extension-page" class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h2 class="modal-title">Debugger</h2>
-            </div>
-
-            <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xs-1"></div>
-                        <div class="col-md-4">
-                            <img class="img-responsive" src="https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png"
-                                 alt="">
-                        </div>
-
-                        <div class="extension-info col-md-2 ml-auto text-left">
-                            <h3 class="text-bold">Information</h3>
-                            <div>Owner</div>
-                            <div>
-                                <i class="fas fa-download"> 100</i>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-1"></div>
+                            <div class="col-md-4">
+                                <img class="img-responsive" src="https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png"
+                                    alt="">
                             </div>
-                            <div>Version
-                                <div class="">1.0</div>
+
+                            <div class="extension-info col-md-2 ml-auto text-left">
+                                <h3 class="text-bold">Information</h3>
+                                <div>Owner</div>
+                                <div>
+                                    <i class="fas fa-download"> 100</i>
+                                </div>
+                                <div>Version
+                                    <div class="">1.0</div>
+                                </div>
                             </div>
-                        </div>
 
 
-                        <div class="extension-info col-md-4 ml-auto text-left">
-                            <h3 id="github">
-                                <a href="https://github.com" target="_blank">
-                                    <i class="fab fa-github-alt"> </i> GitHub</a>
-                            </h3>
-                            <div>Open Issues
-                                <div class="">12</div>
-                            </div>
-                            <div>Pull Requests
-                                <div class="">10</div>
-                            </div>
-                            <div>Last commit
-                                <div class="date">12.06.2017</div>
+                            <div class="extension-info col-md-4 ml-auto text-left">
+                                <h3 id="github">
+                                    <a href="https://github.com" target="_blank">
+                                        <i class="fab fa-github-alt"> </i> GitHub</a>
+                                </h3>
+                                <div>Open Issues
+                                    <div class="">12</div>
+                                </div>
+                                <div>Pull Requests
+                                    <div class="">10</div>
+                                </div>
+                                <div>Last commit
+                                    <div class="date">12.06.2017</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- /.row -->
-                    <div style="margin-bottom: 3%;"></div>
-                    <!-- Related Projects Row -->
-                    <div class="row">
-                        <div class="col-md-1"></div>
-                        <div id="extension-description" class="col-md-10">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
-                                gravida
-                                pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et,
-                                interdum
-                                nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-1"></div>
-                        <div class="col-md-7">
-                            <h3 class="tags">Tags</h3>
-                            <div class="tag-container">
-                                <div class="">Tag 1</div>
-                                <div class="">Tag 1</div>
-
+                        <!-- /.row -->
+                        <div style="margin-bottom: 3%;"></div>
+                        <!-- Related Projects Row -->
+                        <div class="row">
+                            <div class="col-md-1"></div>
+                            <div id="extension-description" class="col-md-10">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio,
+                                    gravida
+                                    pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et,
+                                    interdum
+                                    nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-xs-1"></div>
+                            <div class="col-md-7">
+                                <h3 class="tags">Tags</h3>
+                                <div class="tag-container">
+                                    <div class="">Tag 1</div>
+                                    <div class="">Tag 1</div>
 
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal-footer">
-                <div class="col-md-9"></div>
-                <div id="download-button" class="col-md-2">
-                    <button type="button" class="btn btn-success btn-lg">Download</button>
+                <div class="modal-footer">
+                    <div class="col-md-9"></div>
+                    <div id="download-button" class="col-md-2">
+                        <button type="button" class="btn btn-success btn-lg">Download</button>
+                    </div>
                 </div>
+
             </div>
+            <!-- / .modal-content -->
 
         </div>
-        <!-- / .modal-content -->
+        <!-- / .modal-dialog -->
 
     </div>
-    <!-- / .modal-dialog -->
 
-</div>
+    <div id="edit-extension-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Edit Extension</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-extension-form">
+                        <div class="form-group">
+                            <label for="extension-name">Name</label>
+                            <input type="text" class="form-control" id="edit-extension-name" placeholder="Extension">
+                        </div>
+                        <div class="form-group">
+                            <label for="extension-description">Description</label>
+                            <textarea type="text" class="form-control" id="edit-extension-description" placeholder="This extension...."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="github-link">GitHub Link</label>
+                            <input type="text" class="form-control" id="edit-github-link" placeholder="https://github.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label for="tags">Tags</label>
+                            <input type="text" class="form-control" id="edit-extension-tags" placeholder="separate, your, tags, with, commas">
+                        </div>
+                    </form>
 
-<div id="edit-extension-modal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Edit Extension</h4>
-            </div>
-            <div class="modal-body">
-                <form id="edit-extension-form">
-                    <div class="form-group">
-                        <label for="extension-name">Name</label>
-                        <input type="text" class="form-control" id="edit-extension-name" placeholder="Extension">
-                    </div>
-                    <div class="form-group">
-                        <label for="extension-description">Description</label>
-                        <textarea type="text" class="form-control" id="edit-extension-description" placeholder="This extension...."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="github-link">GitHub Link</label>
-                        <input type="text" class="form-control" id="edit-github-link" placeholder="https://github.com/...">
-                    </div>
-                    <div class="form-group">
-                        <label for="tags">Tags</label>
-                        <input type="text" class="form-control" id="edit-extension-tags" placeholder="separate, your, tags, with, commas">
-                    </div>
-                </form>
-
-                <form id="edit-image-upload-form">
-                    <label>Upload Image</label>
-                    <div class="input-group">
+                    <form id="edit-image-upload-form">
+                        <label>Upload Image</label>
+                        <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
                                     Browse… <input id="edit-image-upload" type="file" name="image">
                                 </span>
                             </span>
-                        <input id="edit-image-name-text" type="text" class="form-control" readonly>
-                    </div>
-                </form>
-                <br>
+                            <input id="edit-image-name-text" type="text" class="form-control" readonly>
+                        </div>
+                    </form>
+                    <br>
 
-                <form id="edit-file-upload-form">
-                    <label>Upload File</label>
-                    <div class="input-group">
+                    <form id="edit-file-upload-form">
+                        <label>Upload File</label>
+                        <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file">
                                     Browse… <input id="edit-file-upload" type="file" name="file">
                                 </span>
                             </span>
-                        <input id="edit-file-name-text" type="text" class="form-control" readonly>
-                    </div>
-                </form>
+                            <input id="edit-file-name-text" type="text" class="form-control" readonly>
+                        </div>
+                    </form>
 
-            </div>
-            <div id="edit-buttons-container" class="modal-footer">
-                <button id="publish-extension-button" type="button" class="btn btn-primary admin-button hide">Publish</button>
-                <button id="feature-extension-button" type="button" class="btn btn-primary admin-button hide">Feature</button>
-                <button id="edit-extension-button" type="button" class="btn btn-primary">Edit</button>
-                <button id="delete-extension-button" type="button" class="btn btn-primary">Delete</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                <div id="edit-buttons-container" class="modal-footer">
+                    <button id="publish-extension-button" type="button" class="btn btn-primary admin-button hide">Publish
+                    </button>
+                    <button id="feature-extension-button" type="button" class="btn btn-primary admin-button hide">Feature
+                    </button>
+                    <button id="edit-extension-button" type="button" class="btn btn-primary">Edit</button>
+                    <button id="delete-extension-button" type="button" class="btn btn-primary">Delete</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="search-page" class="full-page page hide">
-    <div id="all-category">
-        <div class="all-title row">
-            <div class="col-xs-6 col-xs-offset-05">
-                <h1 id="all-category-title">All Extensions</h1>
+    <div id="search-page" class="full-page page hide">
+        <div id="all-category">
+            <div class="all-title row">
+                <div class="col-xs-6 col-xs-offset-05">
+                    <h1 id="all-category-title">All Extensions</h1>
+                </div>
             </div>
-        </div>
 
-        <div id="search-field" class="container">
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-0">
-                    <div class="input-group">
-                        <div class="input-group-btn search-panel">
-                            <button id="button-container" type="button" class="btn btn-default dropdown-toggle"
+            <div id="search-field" class="container">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-0">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <button id="button-container" type="button" class="btn btn-default dropdown-toggle"
                                     data-toggle="dropdown">
-                                <span id="search-concept">Order by</span>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a id="sort-by-downloads">Downloads</a>
-                                </li>
-                                <li>
-                                    <a id="sort-by-upload">Upload Date</a>
-                                </li>
-                                <li>
-                                    <a id="sort-by-last-commit">Last Commit Date</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <input type="hidden" name="search_param" value="all">
-                        <input id="search-param" type="text" class="form-control" name="x" placeholder="Search...">
-                        <span class="input-group-btn">
+                                    <span id="search-concept">Order by</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a id="sort-by-downloads">Downloads</a>
+                                    </li>
+                                    <li>
+                                        <a id="sort-by-upload">Upload Date</a>
+                                    </li>
+                                    <li>
+                                        <a id="sort-by-last-commit">Last Commit Date</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="search_param" value="all">
+                            <input id="search-param" type="text" class="form-control" name="x" placeholder="Search...">
+                            <span class="input-group-btn">
                                 <button id="search-magnifier" class="btn btn-default" type="button">
                                     <span class="glyphicon glyphicon-search"></span>
                                 </button>
                             </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="all-container" class="container">
-            <div class="col-sm-12">
-                <div class="row align-self-center justify-content-center align-items-center">
-
-                    <div id="search-container">
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Extension</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg)"></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">myTest</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Test</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://s.hswstatic.com/gif/whiskers-sam.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                <div class="panel-body">
-                                    <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                </div>
-                                <div class="panel-footer">
-                                    <div class="extension-bottom">
-                                        <div class="pull-left">
-                                            <i class="fas fa-user-tie"> user</i>
-                                        </div>
-                                        <div class="pull-right">
-                                            <i class="fas fa-download"> 100</i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-<div id="my-extensions-page" class="page hide">
-    <button id="open-new-extension-modal" type="button" class="btn btn-primary">Add new extension</button>
-
-    <div id="new-extension-modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">New Extension</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="new-extension-form">
-                        <div class="form-group">
-                            <label for="extension-name">Name</label>
-                            <input type="text" class="form-control" id="extension-name" placeholder="Extension">
-                        </div>
-                        <div class="form-group">
-                            <label for="extension-description">Description</label>
-                            <textarea type="text" class="form-control" id="extension-description" placeholder="This extension...."></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="github-link">GitHub Link</label>
-                            <input type="text" class="form-control" id="github-link" placeholder="https://github.com/...">
-                        </div>
-                        <div class="form-group">
-                            <label for="tags">Tags</label>
-                            <input type="text" class="form-control" id="extension-tags" placeholder="separate, your, tags, with, commas">
-                        </div>
-                    </form>
-
-                    <form id="image-upload-form">
-                        <label>Upload Image</label>
-                        <div class="input-group">
-                                <span class="input-group-btn">
-                                    <span class="btn btn-default btn-file">
-                                        Browse… <input id="image-upload" type="file" name="image" required="required">
-                                    </span>
-                                </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                    </form>
-                    <br>
-
-                    <form id="file-upload-form">
-                        <label>Upload File</label>
-                        <div class="input-group">
-                                <span class="input-group-btn">
-                                    <span class="btn btn-default btn-file">
-                                        Browse… <input id="file-upload" type="file" name="file" required="required">
-                                    </span>
-                                </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="add-extension-button" type="button" class="btn btn-primary">Publish</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <br>
-
-    <div id="my-extensions-container">
-        <div id="my-unpublished-category">
-            <div class="category-title">
-                <h1>Pending</h1>
-            </div>
-
-            <div class="container">
+            <div id="all-container" class="container">
                 <div class="col-sm-12">
                     <div class="row align-self-center justify-content-center align-items-center">
-                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                                <button class="btn btn-primary " onclick="this.blur();">
-                                    &#60;</button>
-                            </div>
 
-                            <div id="my-unpublished-container" class="resCarousel-inner col-md-10">
-                                <div class="col-md-2 item">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                        <div class="panel-body">
-                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="extension-bottom">
-                                                <div class="pull-left">
-                                                    <i class="fas fa-user-tie"> user</i>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <i class="fas fa-download"> 100</i>
-                                                </div>
+                        <div id="search-container">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Extension</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://wallpaperbrowse.com/media/images/303836.jpg)"></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                                <button class="btn btn-primary" onclick="this.blur();">
-                                    &#62;</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <div id="my-published-category">
-            <div class="category-title">
-                <h1>Published</h1>
-            </div>
-
-            <div class="container">
-                <div class="col-sm-12">
-                    <div class="row align-self-center justify-content-center align-items-center">
-                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                                <button class="btn btn-primary " onclick="this.blur();">
-                                    &#60;</button>
-                            </div>
-
-                            <div id="my-published-container" class="resCarousel-inner col-md-10">
-                                <div class="col-md-2 item">
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
-                                        <div class="panel-body">
-                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <div class="extension-bottom">
-                                                <div class="pull-left">
-                                                    <i class="fas fa-user-tie"> user</i>
-                                                </div>
-                                                <div class="pull-right">
-                                                    <i class="fas fa-download"> 100</i>
-                                                </div>
+                            <div class="col-md-2">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">myTest</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                                <button class="btn btn-primary" onclick="this.blur();">
-                                    &#62;</button>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">Test</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="admin-page" class="page hide">
-    <h1 id="admin-page-title" class="text-center">Admin Panel</h1>
-
-    <div id="unpublished-extensions-container">
-
-        <h1 id="unpublished-category-title">Unpublished Extension</h1>
-
-
-        <div class="container">
-            <div class="col-sm-12">
-                <div class="row align-self-center justify-content-center align-items-center">
-                    <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
-                        <div class="col-xs-1 leftLst" style="margin-top:90px;">
-                            <button class="btn btn-primary " onclick="this.blur();">
-                                &#60;</button>
-                        </div>
-
-                        <div id="unpublished-container" class="resCarousel-inner col-md-10">
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1378,7 +1039,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1396,8 +1057,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1415,8 +1075,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1434,8 +1093,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1453,8 +1111,7 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1472,10 +1129,43 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                    <div class="panel-body">
+                                        <div class="img-responsive" style="background-image: url(https://s.hswstatic.com/gif/whiskers-sam.jpg); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="extension-bottom">
+                                            <div class="pull-left">
+                                                <i class="fas fa-user-tie"> user</i>
+                                            </div>
+                                            <div class="pull-right">
+                                                <i class="fas fa-download"> 100</i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2" data-toggle="modal" data-target="#extension-modal">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading">BLACK FRIDAY DEAL</div>
                                     <div class="panel-body">
@@ -1493,93 +1183,445 @@
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>
-                        <div class="col-xs-1 rightLst" style="margin-top:90px;">
-                            <button class="btn btn-primary" onclick="this.blur();">
-                                &#62;</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div id="my-extensions-page" class="page hide">
+        <button id="open-new-extension-modal" type="button" class="btn btn-primary">Add new extension</button>
+
+        <div id="new-extension-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">New Extension</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="new-extension-form">
+                            <div class="form-group">
+                                <label for="extension-name">Name</label>
+                                <input type="text" class="form-control" id="extension-name" placeholder="Extension">
+                            </div>
+                            <div class="form-group">
+                                <label for="extension-description">Description</label>
+                                <textarea type="text" class="form-control" id="extension-description" placeholder="This extension...."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="github-link">GitHub Link</label>
+                                <input type="text" class="form-control" id="github-link" placeholder="https://github.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label for="tags">Tags</label>
+                                <input type="text" class="form-control" id="extension-tags" placeholder="separate, your, tags, with, commas">
+                            </div>
+                        </form>
+
+                        <form id="image-upload-form">
+                            <label>Upload Image</label>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Browse… <input id="image-upload" type="file" name="image" required="required">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </form>
+                        <br>
+
+                        <form id="file-upload-form">
+                            <label>Upload File</label>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <span class="btn btn-default btn-file">
+                                        Browse… <input id="file-upload" type="file" name="file" required="required">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button id="add-extension-button" type="button" class="btn btn-primary">Publish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <br>
 
+        <div id="my-extensions-container">
+            <div id="my-unpublished-category">
+                <div class="category-title">
+                    <h1>Pending</h1>
+                </div>
 
+                <div class="container">
+                    <div class="col-sm-12">
+                        <div class="row align-self-center justify-content-center align-items-center">
+                            <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                                <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                    <button class="btn btn-primary " onclick="this.blur();">
+                                        &#60;
+                                    </button>
+                                </div>
 
-
-
-    </div>
-
-    <div id="manage-users">
-        <div id="user-container" class="container">
-
-            <hr>
-
-            <div class="row ">
-                <div class="panel panel-primary filterable">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Users</h3>
+                                <div id="my-unpublished-container" class="resCarousel-inner col-md-10">
+                                    <div class="col-md-2 item">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                            <div class="panel-body">
+                                                <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="extension-bottom">
+                                                    <div class="pull-left">
+                                                        <i class="fas fa-user-tie"> user</i>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <i class="fas fa-download"> 100</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                    <button class="btn btn-primary" onclick="this.blur();">
+                                        &#62;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <table  id="user-table" class="table">
-                        <thead>
-                        <tr class="filters">
-                            <th id="user-id-search" ><input type="text" class="form-control text-center" placeholder="#"></th>
-                            <th id="username-search" ><input type="text" class="form-control" placeholder="Username"></th>
-                            <th><input type="text" class="form-control" placeholder="User Extensions"></th>
-                            <th id="user-status" ><input type="text" class="form-control text-center" placeholder="User Status"></th>
-                        </tr>
-                        </thead>
-                        <tbody id="user-info">
-                        <tr>
-                            <td class="text-center" style="vertical-align: middle;">1</td>
-                            <td style="vertical-align: middle;">Mark</td>
-                            <td style="vertical-align: middle;">Otto</td>
-                            <td class="text-center" style="vertical-align: middle;">
-                                <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>
-                                <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center" style="vertical-align: middle;">2</td>
-                            <td style="vertical-align: middle;">Mark</td>
-                            <td style="vertical-align: middle;">Otto</td>
-                            <td class="text-center" style="vertical-align: middle;">
-                                <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>
-                                <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a>
-                            </td>
-                        </tr>
+                </div>
+            </div>
+            <br>
+            <div id="my-published-category">
+                <div class="category-title">
+                    <h1>Published</h1>
+                </div>
 
-                        <tr>
-                            <td class="text-center" style="vertical-align: middle;">3</td>
-                            <td style="vertical-align: middle;">Mark</td>
-                            <td style="vertical-align: middle;">Otto</td>
-                            <td class="text-center" style="vertical-align: middle;">
-                                <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span> Disable</a>
-                                <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span> Enable</a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="container">
+                    <div class="col-sm-12">
+                        <div class="row align-self-center justify-content-center align-items-center">
+                            <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                                <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                    <button class="btn btn-primary " onclick="this.blur();">
+                                        &#60;
+                                    </button>
+                                </div>
+
+                                <div id="my-published-container" class="resCarousel-inner col-md-10">
+                                    <div class="col-md-2 item">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                            <div class="panel-body">
+                                                <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                            </div>
+                                            <div class="panel-footer">
+                                                <div class="extension-bottom">
+                                                    <div class="pull-left">
+                                                        <i class="fas fa-user-tie"> user</i>
+                                                    </div>
+                                                    <div class="pull-right">
+                                                        <i class="fas fa-download"> 100</i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                    <button class="btn btn-primary" onclick="this.blur();">
+                                        &#62;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
     </div>
-</div>
 
-<footer>
-    <div class="col-xs-12">All rights reserved &copy; Bibby & Radik</div>
-</footer>
+    <div id="admin-page" class="page hide">
+        <h1 id="admin-page-title" class="text-center">Admin Panel</h1>
 
-<script src="scripts/main-page.js"></script>
-<script src="scripts/login.js"></script>
-<script src="scripts/auth.js"></script>
-<script src="scripts/admin.js"></script>
+        <div id="unpublished-extensions-container">
+
+            <h1 id="unpublished-category-title">Unpublished Extension</h1>
+
+
+            <div class="container">
+                <div class="col-sm-12">
+                    <div class="row align-self-center justify-content-center align-items-center">
+                        <div class="resCarousel" data-items="1-2-3-5" data-slide="1" data-speed="400">
+                            <div class="col-xs-1 leftLst" style="margin-top:90px;">
+                                <button class="btn btn-primary " onclick="this.blur();">
+                                    &#60;
+                                </button>
+                            </div>
+
+                            <div id="unpublished-container" class="resCarousel-inner col-md-10">
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://www.bannerbatterien.com/upload/filecache/012740170101-Buffalo_Bull_EFB_740_17_-_Web_Detail_Ansicht_184d1e504628795947c583c00695bf78.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2 item" data-toggle="modal" data-target="#extension-modal">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">BLACK FRIDAY DEAL</div>
+                                        <div class="panel-body">
+                                            <div class="img-responsive" style="background-image: url(https://i.gyazo.com/8d4c26849277db618ebfaf2e50914ed1.png); width: 100%; padding-top: calc(100%*8/15); background-position: center; background-size: 120% "></div>
+                                        </div>
+                                        <div class="panel-footer">
+                                            <div class="extension-bottom">
+                                                <div class="pull-left">
+                                                    <i class="fas fa-user-tie"> user</i>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <i class="fas fa-download"> 100</i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-xs-1 rightLst" style="margin-top:90px;">
+                                <button class="btn btn-primary" onclick="this.blur();">
+                                    &#62;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+
+         <hr>
+        <div id="sync-container" class="row align-self-center">
+                
+                <div id="sync" >
+                    <div id="sync-custom" class="col-md-6">
+                    Data synchronization interval:
+                    <input id="sync-interval" type="text" class="form-control hide" placeholder="60">
+                    <div id="real-interval" class="text-bold">60</div> minutes.
+    
+                    <button id="edit-time" type="button" class="btn btn-primary btn-lg">
+                        <span class="glyphicon glyphicon-time"> </span> Change</button>
+    
+                    <button id="save-edit-time" type="button" class="btn btn-success btn-lg hide">
+                        <span class="glyphicon glyphicon-ok"> </span> Save</button>
+                    </div>
+
+                    <div id="sync-now" class="col-md-6">You can manually sync using the button: 
+                        <button id="sync-now-button" type="button" class="btn btn-success btn-lg ">
+                            <span class="glyphicon glyphicon-refresh"> </span> Sync now</button></div>
+                </div>
+    
+               
+            </div>
+            <hr>
+
+
+
+
+        <div id="manage-users">
+            <div id="user-container" class="container">
+
+                <div class="row ">
+                    <div class="panel panel-primary filterable">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Users</h3>
+                        </div>
+                        <table id="user-table" class="table">
+                            <thead>
+                                <tr class="filters">
+                                    <th id="user-id-search"><input type="text" class="form-control text-center"
+                                            placeholder="#">
+                                    </th>
+                                    <th id="username-search"><input type="text" class="form-control" placeholder="Username">
+                                    </th>
+                                    <th><input type="text" class="form-control" placeholder="User Extensions"></th>
+                                    <th id="user-status">
+                                        <div type="text" class=" text-center">User Status</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-info">
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">1</td>
+                                    <td style="vertical-align: middle;">Mark</td>
+                                    <td style="vertical-align: middle;">Otto</td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span>
+                                            Disable</a>
+                                        <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span>
+                                            Enable</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">2</td>
+                                    <td style="vertical-align: middle;">Mark</td>
+                                    <td style="vertical-align: middle;">Otto</td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span>
+                                            Disable</a>
+                                        <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span>
+                                            Enable</a>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-center" style="vertical-align: middle;">3</td>
+                                    <td style="vertical-align: middle;">Mark</td>
+                                    <td style="vertical-align: middle;">Otto</td>
+                                    <td class="text-center" style="vertical-align: middle;">
+                                        <a id="" href="#" class="btn btn-danger btn-sm disable-button"><span class="glyphicon glyphicon-ban-circle"></span>
+                                            Disable</a>
+                                        <a id="" class='btn btn-success btn-sm hide enable-button' href="#"><span class="glyphicon glyphicon-ok-circle"></span>
+                                            Enable</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="col-xs-12">All rights reserved &copy; Bibby & Radik</div>
+    </footer>
+
+    <script src="scripts/main-page.js"></script>
+    <script src="scripts/login.js"></script>
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/admin.js"></script>
 </body>
 
 </html>
