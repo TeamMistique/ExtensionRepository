@@ -509,3 +509,13 @@ a:hover{
 #user-container{
     width: 90%;
 }
+
+/* ---------- sync------------------ */
+
+#user-status > div {
+    color: #999999;
+    display: block;
+    height: 34px;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+}
