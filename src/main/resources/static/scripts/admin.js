@@ -50,6 +50,14 @@ var ajaxCalls = {
         });
     },
 
+    getSyncPerionInMillis: function(){
+        return $.ajax({
+            type: "GET",
+            url: "/api/admin/sync",
+            headers: createAuthorizationTokenHeader()
+        });
+    },
+
     changeSyncPeriod:function(periodInMinutes){
         return $.ajax({
             type: "POST",
