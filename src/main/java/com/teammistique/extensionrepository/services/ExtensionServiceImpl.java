@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ExtensionServiceImpl implements ExtensionService, AdminExtensionService {
     private int maxListSize = 10;
     private static Thread updateManager;
-    private static long updateInterval = 600000L;
+    private static long updateInterval = 3600000L;
 
     private GitHubService gitHubService;
     private ExtensionRepository extensionRepository;

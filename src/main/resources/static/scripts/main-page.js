@@ -54,6 +54,11 @@ $('#user-dropdown').on('click', '#go-to-admin-panel', function (e) {
     $('.page').addClass('hide');
     $('#admin-page').removeClass('hide');
     $('#user-dropdown').toggle();
+    ajaxCalls.getSyncPerionInMillis().done(function(data){
+        var inMinutes = data/60000;
+        $('#real-interval').html(inMinutes);
+        $('#sync-interval').attr('placeholder', inMinutes);
+    });
     e.preventDefault();
 });
 
@@ -996,6 +1001,7 @@ $('#save-edit-time').on('click', function (e) {
     }
     console.log(period);
     ajaxCalls.changeSyncPeriod(period).done(function () {
+        $('#real-interval').html(period);
         $('#real-interval').removeClass('hide');
         $('#edit-time').removeClass('hide');
         $('#sync-interval').addClass('hide');
