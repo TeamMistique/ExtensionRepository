@@ -554,4 +554,7 @@ a:hover{
     margin: 1% 5%;
 }
 
-
+#sync-done{
+    cursor: default !important;
+    background-color: #5cb85c !important;
+}
