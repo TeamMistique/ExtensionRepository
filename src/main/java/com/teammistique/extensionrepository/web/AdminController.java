@@ -3,6 +3,7 @@ package com.teammistique.extensionrepository.web;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.services.ExtensionServiceImpl;
 import com.teammistique.extensionrepository.services.base.AdminExtensionService;
 import com.teammistique.extensionrepository.services.base.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,11 @@ public class AdminController {
 
         Extension extension = extensionService.getExtensionById(id, authToken);
         return extensionService.updateOneGitHubInfo(extension);
+    }
+
+    @GetMapping("/sync")
+    public long getSyncPeriod(){
+        return ExtensionServiceImpl.getUpdateInterval();
     }
 
     @PostMapping("/changeSyncPeriod")

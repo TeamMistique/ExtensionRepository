@@ -276,6 +276,8 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             }
         }
 
+        updateInterval = delay;
+
         updateManager = new Thread(() -> {
             while (true) {
                 try {
@@ -315,5 +317,9 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             extension.setFailedSyncDetails(e.getMessage());
         }
         return extension;
+    }
+
+    public static long getUpdateInterval() {
+        return updateInterval;
     }
 }

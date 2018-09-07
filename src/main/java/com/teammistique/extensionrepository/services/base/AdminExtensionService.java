@@ -17,4 +17,10 @@ public interface AdminExtensionService extends ExtensionService{
     Extension changePublishedStatus(int id);
 
     void setMaxListSize(int maxListSize);
+
+    void updateAllGitHubInfo();
+
+    Extension updateOneGitHubInfo(Extension extension);
+
+    void setUpdateGitHubPeriod(long delay);
 }

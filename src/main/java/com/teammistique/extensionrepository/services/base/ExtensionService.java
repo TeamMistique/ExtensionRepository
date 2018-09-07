@@ -36,10 +36,4 @@ public interface ExtensionService {
     void updateDownloadsCounter(Extension extension);
 
     Extension getExtensionByFile(String fileName);
-
-    void updateAllGitHubInfo();
-
-    Extension updateOneGitHubInfo(Extension extension);
-
-    void setUpdateGitHubPeriod(long delay);
 }
