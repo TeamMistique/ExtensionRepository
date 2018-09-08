@@ -358,6 +358,22 @@ public class ExtensionServiceImplTest {
         }
     }
 
+    @Test
+    public void sortByName_shouldSortByNameInAlphabeticalOrder() {
+        List<String> names = Arrays.asList("Gosho", "Pesho", "Misho", "Anna", "Banana");
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 5);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setName(names.get(i));
+        }
+        Collections.sort(names);
+
+        extensions = extensionService.sortByName(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(names.get(i), extensions.get(i).getName());
+        }
+    }
 
 
 
