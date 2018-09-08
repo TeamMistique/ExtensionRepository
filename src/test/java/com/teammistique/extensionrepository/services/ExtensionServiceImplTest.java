@@ -35,7 +35,7 @@ public class ExtensionServiceImplTest {
     }
 
     public static class Helpers {
-        public static ExtensionDTO createFakeExtensionDto(){
+        public static ExtensionDTO createFakeExtensionDto() {
             ExtensionDTO dto = new ExtensionDTO();
             dto.setName("name");
             dto.setDescription("description");
@@ -167,11 +167,9 @@ public class ExtensionServiceImplTest {
         when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
                 "Radik"
         );
-        Extension extension = extensionService.createExtension(dto,  authToken);
+        Extension extension = extensionService.createExtension(dto, authToken);
         verify(mockExtensionRepository).create(any());
     }
-
-
 
 
     @Test
@@ -196,15 +194,15 @@ public class ExtensionServiceImplTest {
 
         dto.setId(id);
         when(mockExtensionRepository.findById(id)).thenReturn(extension);
-        extensionService.updateExtension(dto, authToken );
+        extensionService.updateExtension(dto, authToken);
 
         Assert.assertEquals(extension.getName(), "DTO");
-        Assert.assertEquals(extension.getFile(),"downloadFile/file.txt" );
+        Assert.assertEquals(extension.getFile(), "downloadFile/file.txt");
 
     }
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenOwner(){
+    public void deleteExtension_ShouldRemoveTheExtensionWhenOwner() {
         String authToken = null;
         int id = 5;
         User owner = new User();
@@ -228,14 +226,14 @@ public class ExtensionServiceImplTest {
 
 //        when(mockFileService.deleteFile(any())).thenReturn(true);
 
-        extensionService.deleteExtension(id, authToken );
+        extensionService.deleteExtension(id, authToken);
 
         verify(mockExtensionRepository).delete(id);
     }
 
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenAdmin(){
+    public void deleteExtension_ShouldRemoveTheExtensionWhenAdmin() {
         String authToken = null;
         int id = 5;
         User owner = new User();
@@ -257,13 +255,13 @@ public class ExtensionServiceImplTest {
                 extension
         );
 
-        extensionService.deleteExtension(id, authToken );
+        extensionService.deleteExtension(id, authToken);
 
         verify(mockExtensionRepository).delete(id);
     }
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenNotOwner(){
+    public void deleteExtension_ShouldRemoveTheExtensionWhenNotOwner() {
         String authToken = null;
         int id = 5;
         User owner = new User();
@@ -283,7 +281,7 @@ public class ExtensionServiceImplTest {
                 extension
         );
 
-        extensionService.deleteExtension(id, authToken );
+        extensionService.deleteExtension(id, authToken);
 
         verify(mockExtensionRepository, never()).delete(id);
     }
@@ -302,7 +300,7 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listPopularExtensions_shouldCallRepositoryMethod(){
+    public void listPopularExtensions_shouldCallRepositoryMethod() {
         extensionService.listPopularExtensions();
 
         verify(mockExtensionRepository).listPopularExtensions(extensionService.getMaxListSize());
@@ -326,7 +324,7 @@ public class ExtensionServiceImplTest {
 
     @Test
     public void sortByPublishedDate_shouldSortByPublishedDateInReverseOrder() {
-        List<Date> dates = Arrays.asList(new Date(1534692315464L),new Date(1341123762001L),new Date(1399129992001L));
+        List<Date> dates = Arrays.asList(new Date(1534692315464L), new Date(1341123762001L), new Date(1399129992001L));
         List<Extension> extensions = new ArrayList<>();
         Helpers.fillListWithUnpublishedExtensions(extensions, 3);
         for (int i = 0; i < extensions.size(); i++) {
@@ -354,7 +352,7 @@ public class ExtensionServiceImplTest {
         extensions = extensionService.sortByDownloads(extensions);
 
         for (int i = 0; i < extensions.size(); i++) {
-            Assert.assertEquals(downloads[6-i], extensions.get(i).getDownloadsCounter());
+            Assert.assertEquals(downloads[6 - i], extensions.get(i).getDownloadsCounter());
         }
     }
 
@@ -376,10 +374,34 @@ public class ExtensionServiceImplTest {
     }
 
 
+    @Test
+    public void sortByLastCommit_shouldSortByLastCommitDateInReverseOrder() {
+        List<Date> commitDates = Arrays.asList(new Date(544765595L), new Date(1447655953L), new Date(1544765595L),
+                new Date(1437655953L), new Date(1448655953L), new Date(1534754595L), new Date(1484655953L), new Date(1684655953L));
 
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 8);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setLastCommitDate(commitDates.get(i));
+        }
+        commitDates.sort(Comparator.reverseOrder());
 
+        extensions = extensionService.sortByLastCommit(extensions);
 
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(commitDates.get(i), extensions.get(i).getLastCommitDate());
+        }
+    }
 
+    @Test
+    public void filterByName_shouldCallRepositoryMethod() {
+        String name = "test";
+        extensionService.filterPublishedByName(name);
+
+        verify(mockExtensionRepository).filterPublishedByName(name);
+    }
 
 
 }
+
+
