@@ -169,24 +169,195 @@ public class ExtensionServiceImplTest {
         );
         Extension extension = extensionService.createExtension(dto,  authToken);
         verify(mockExtensionRepository).create(any());
-
     }
 
 
 
 
+    @Test
+    public void updateExtension_shouldChangeAttributesOfTheExtension() {
+        Extension extension = new Extension();
+        extension.setName("Test");
+        extension.setFile("downloadFile/file.txt");
+        extension.setImage("image");
+        String authToken = "token";
+        int id = 5;
+
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
+                true
+        );
+
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
+                "Radik"
+        );
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        dto.setName("DTO");
+        dto.setFile("downloadFile/file.txt");
+
+        dto.setId(id);
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        extensionService.updateExtension(dto, authToken );
+
+        Assert.assertEquals(extension.getName(), "DTO");
+        Assert.assertEquals(extension.getFile(),"downloadFile/file.txt" );
+
+    }
+
+    @Test
+    public void deleteExtension_ShouldRemoveTheExtensionWhenOwner(){
+        String authToken = null;
+        int id = 5;
+        User owner = new User();
+        owner.setUsername("Radik");
+        Extension extension = new Extension();
+        extension.setOwner(owner);
+        extension.setImage("downloadFile/image.png");
+        extension.setFile("downloadFile/file.txt");
+
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
+                false
+        );
+
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
+                "Radik"
+        );
+
+        when(mockExtensionRepository.findById(id)).thenReturn(
+                extension
+        );
+
+//        when(mockFileService.deleteFile(any())).thenReturn(true);
+
+        extensionService.deleteExtension(id, authToken );
+
+        verify(mockExtensionRepository).delete(id);
+    }
 
 
+    @Test
+    public void deleteExtension_ShouldRemoveTheExtensionWhenAdmin(){
+        String authToken = null;
+        int id = 5;
+        User owner = new User();
+        owner.setUsername("Radik");
+        Extension extension = new Extension();
+        extension.setOwner(owner);
+        extension.setImage("downloadFile/image.png");
+        extension.setFile("downloadFile/file");
 
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
+                true
+        );
+
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
+                "someone"
+        );
+
+        when(mockExtensionRepository.findById(id)).thenReturn(
+                extension
+        );
+
+        extensionService.deleteExtension(id, authToken );
+
+        verify(mockExtensionRepository).delete(id);
+    }
+
+    @Test
+    public void deleteExtension_ShouldRemoveTheExtensionWhenNotOwner(){
+        String authToken = null;
+        int id = 5;
+        User owner = new User();
+        owner.setUsername("Radik");
+        Extension extension = new Extension();
+        extension.setOwner(owner);
+
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
+                false
+        );
+
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
+                "noone"
+        );
+
+        when(mockExtensionRepository.findById(id)).thenReturn(
+                extension
+        );
+
+        extensionService.deleteExtension(id, authToken );
+
+        verify(mockExtensionRepository, never()).delete(id);
+    }
 
     @Test
     public void listFeaturedExtension_shouldCallRepositoryMethod() {
         extensionService.listFeaturedExtensions(true);
         verify(mockExtensionRepository).listFeaturedExtensions(true);
 
+    }
+
+    @Test
+    public void listUnFeaturedExtension_shouldCallRepositoryMethod() {
         extensionService.listFeaturedExtensions(false);
         verify(mockExtensionRepository).listFeaturedExtensions(false);
     }
+
+    @Test
+    public void listPopularExtensions_shouldCallRepositoryMethod(){
+        extensionService.listPopularExtensions();
+
+        verify(mockExtensionRepository).listPopularExtensions(extensionService.getMaxListSize());
+    }
+
+    @Test
+    public void listNewExtensions_shouldCallRepositoryMethod() {
+        extensionService.listNewExtensions();
+
+        verify(mockExtensionRepository).listNewExtensions(extensionService.getMaxListSize());
+    }
+
+    @Test
+    public void listPublishedExtensions_shouldCallRepositoryMethod() {
+        extensionService.listPublishedExtensions(true);
+        verify(mockExtensionRepository).listPublishedExtensions(true);
+
+        extensionService.listPublishedExtensions(false);
+        verify(mockExtensionRepository).listPublishedExtensions(false);
+    }
+
+    @Test
+    public void sortByPublishedDate_shouldSortByPublishedDateInReverseOrder() {
+        List<Date> dates = Arrays.asList(new Date(1534692315464L),new Date(1341123762001L),new Date(1399129992001L));
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithUnpublishedExtensions(extensions, 3);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setPublishedDate(dates.get(i));
+        }
+        dates.sort(Comparator.reverseOrder());
+
+        extensions = extensionService.sortByPublishedDate(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(dates.get(i), extensions.get(i).getPublishedDate());
+        }
+    }
+
+    @Test
+    public void sortByDownloads_shouldSortByNumberOfDownloadsInReverseOrder() {
+        int[] downloads = {5, 7, 120, 32, 42, 2, 34};
+        List<Extension> extensions = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(extensions, 7);
+        for (int i = 0; i < extensions.size(); i++) {
+            extensions.get(i).setDownloadsCounter(downloads[i]);
+        }
+        Arrays.sort(downloads);
+
+        extensions = extensionService.sortByDownloads(extensions);
+
+        for (int i = 0; i < extensions.size(); i++) {
+            Assert.assertEquals(downloads[6-i], extensions.get(i).getDownloadsCounter());
+        }
+    }
+
 
 
 
