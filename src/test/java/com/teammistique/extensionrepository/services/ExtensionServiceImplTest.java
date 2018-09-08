@@ -155,9 +155,22 @@ public class ExtensionServiceImplTest {
         Assert.assertEquals(null, extensionService.getExtensionById(id, authToken));
     }
 
+    @Test
+    public void createNewExtension_shouldReturnNewExtension() {
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        String authToken = "token";
 
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
+                true
+        );
 
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
+                "Radik"
+        );
+        Extension extension = extensionService.createExtension(dto,  authToken);
+        verify(mockExtensionRepository).create(any());
 
+    }
 
 
 
