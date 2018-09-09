@@ -98,9 +98,11 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         }
 
         List<Tag> tags = new ArrayList<>();
-        for (String tagName : dto.getTagNames()) {
-            Tag tag = new Tag(tagName);
-            tags.add(tagService.createTag(tag));
+        if(dto.getTagNames()!=null){
+            for (String tagName : dto.getTagNames()) {
+                Tag tag = new Tag(tagName);
+                tags.add(tagService.createTag(tag));
+            }
         }
 
         if (!extension.getFile().equals(dto.getFile())) {

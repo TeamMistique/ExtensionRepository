@@ -157,21 +157,35 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
+    public void createExtension_shouldCreateExtensionWithNoTags_ifThereAreNone() {
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        dto.setTagNames(null);
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockExtensionRepository.create(any(Extension.class))).thenAnswer(extension -> extension.getArgument(0));
+
+        Extension extension = extensionService.createExtension(dto, "");
+        Assert.assertEquals(0, extension.getTags().size());
+    }
+
+    @Test
     public void updateExtension_shouldReturnNull_whenNotOwner() {
+        String token = "";
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
         Extension extension = new Extension();
         User owner = new User();
         extension.setOwner(owner);
-        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
-        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(false);
-        when(mockJwtTokenUtil.getUsernameFromToken(anyString())).thenReturn("");
+        when(mockExtensionRepository.findById(dto.getId())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(token)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(token)).thenReturn("");
 
-        Extension result = extensionService.updateExtension(Helpers.createFakeExtensionDto(), "");
+        Extension result = extensionService.updateExtension(dto, token);
 
         Assert.assertNull(result);
     }
 
     @Test
     public void updateExtension_shouldSetPublishedDateToNull_whenOwnerButNotAdmin() {
+        String token = "";
         ExtensionDTO dto = Helpers.createFakeExtensionDto();
         Extension extension = new Extension();
         String username = "username";
@@ -179,29 +193,30 @@ public class ExtensionServiceImplTest {
         extension.setOwner(owner);
         extension.setFile(dto.getFile());
         extension.setImage(dto.getImage());
-        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
-        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(false);
-        when(mockJwtTokenUtil.getUsernameFromToken(anyString())).thenReturn(username);
+        when(mockExtensionRepository.findById(dto.getId())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(token)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(token)).thenReturn(username);
         when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
 
-        Extension result = extensionService.updateExtension(dto, "");
+        Extension result = extensionService.updateExtension(dto, token);
 
         Assert.assertNull(result.getPublishedDate());
     }
 
     @Test
     public void updateExtension_shouldUpdateExtensionInfoAndNotChangePublishedDate_whenAdmin() throws MyFileNotFoundException {
+        String token = "";
         ExtensionDTO dto = Helpers.createFakeExtensionDto();
         Extension extension = new Extension();
         extension.setFile("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
         extension.setImage("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
         extension.setVersion(0);
-        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
-        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockExtensionRepository.findById(dto.getId())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(token)).thenReturn(true);
         when(mockTagService.createTag(any(Tag.class))).thenAnswer(tag -> tag.getArgument(0));
         when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
 
-        Extension result = extensionService.updateExtension(dto, "");
+        Extension result = extensionService.updateExtension(dto, token);
 
         List<String> dtoTags = dto.getTagNames();
         List<Tag> tags = result.getTags();
@@ -222,21 +237,39 @@ public class ExtensionServiceImplTest {
 
     @Test
     public void updateExtension_shouldStillSaveNewFile_evenWhenOldOneWasNotFound() throws MyFileNotFoundException {
+        String token = "";
         ExtensionDTO dto = Helpers.createFakeExtensionDto();
         Extension extension = new Extension();
         extension.setFile("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
         extension.setImage("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
         extension.setVersion(0);
-        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
-        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockExtensionRepository.findById(dto.getId())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(token)).thenReturn(true);
         when(mockTagService.createTag(any(Tag.class))).thenAnswer(tag -> tag.getArgument(0));
         when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
         doThrow(MyFileNotFoundException.class).when(mockFileService).deleteFile(anyString());
 
-        Extension result = extensionService.updateExtension(dto, "");
+        Extension result = extensionService.updateExtension(dto, token);
 
         Assert.assertEquals(dto.getFile(), result.getFile());
         Assert.assertEquals(dto.getImage(), result.getImage());
+    }
+
+    @Test
+    public void updateExtension_shouldSaveExtensionWithNoTags_ifDtoHasNone() {
+        String token = "";
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        dto.setTagNames(null);
+        Extension extension = new Extension();
+        extension.setFile(dto.getFile());
+        extension.setImage(dto.getImage());
+        when(mockExtensionRepository.findById(dto.getId())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(token)).thenReturn(true);
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
+
+        Extension result = extensionService.updateExtension(dto, token);
+
+        Assert.assertEquals(0, result.getTags().size());
     }
 
     @Test
