@@ -13,7 +13,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.security.acl.Owner;
 import java.util.*;
 
 import static org.mockito.Mockito.*;
@@ -71,23 +70,19 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listById_shouldReturnWhenAdmin() {
+    public void getExtensionById_shouldReturnExtension_whenAdmin() {
         String authToken = "token";
         int id = 5;
         Extension extension = new Extension();
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                true
-        );
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(true);
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
         Assert.assertEquals(extension, extensionService.getExtensionById(id, authToken));
     }
 
     @Test
-    public void listById_shouldReturnWhenUserAndNotOwner() {
+    public void getExtensionById_shouldReturnNull_whenUserAndNotOwner() {
         String authToken = "token";
         int id = 5;
         User owner = new User();
@@ -95,22 +90,15 @@ public class ExtensionServiceImplTest {
         Extension extension = new Extension();
         extension.setOwner(owner);
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                false
-        );
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn("username");
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "username"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
-        Assert.assertEquals(null, extensionService.getExtensionById(id, authToken));
+        Assert.assertNull(extensionService.getExtensionById(id, authToken));
     }
 
     @Test
-    public void listById_shouldReturnWhenUserAndOwner() {
+    public void getExtensionById_shouldReturnExtension_whenUserAndOwner() {
         String authToken = "token";
         int id = 5;
         User owner = new User();
@@ -118,59 +106,53 @@ public class ExtensionServiceImplTest {
         Extension extension = new Extension();
         extension.setOwner(owner);
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                false
-        );
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn("Radik");
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "Radik"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
         Assert.assertEquals(extension, extensionService.getExtensionById(id, authToken));
     }
 
     @Test
-    public void listById_shouldReturnWhenNoToken() {
-        String authToken = null;
+    public void getExtensionById_shouldReturnExtension_whenPublishedAndNoToken() {
         int id = 5;
-        User owner = new User();
-        owner.setUsername("Radik");
         Extension extension = new Extension();
-        extension.setOwner(owner);
+        extension.setPublishedDate(new Date());
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                false
-        );
-
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "Radik"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
-        Assert.assertEquals(null, extensionService.getExtensionById(id, authToken));
+        Assert.assertEquals(extension, extensionService.getExtensionById(id, null));
     }
 
     @Test
-    public void createNewExtension_shouldReturnNewExtension() {
+    public void getExtensionById_shouldReturnNull_whenUnpublishedAndNoToken() {
+        int id = 5;
+        Extension extension = new Extension();
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+
+        Assert.assertNull(extensionService.getExtensionById(id, null));
+    }
+
+    @Test
+    public void createExtension_shouldReturnNewUnpublishedExtension_whenNotAdmin() {
         ExtensionDTO dto = Helpers.createFakeExtensionDto();
-        String authToken = "token";
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(false);
+        when(mockExtensionRepository.create(any(Extension.class))).thenAnswer(extension -> extension.getArgument(0));
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                true
-        );
+        Extension extension = extensionService.createExtension(dto, "");
 
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "Radik"
-        );
-        Extension extension = extensionService.createExtension(dto, authToken);
-        verify(mockExtensionRepository).create(any());
+        Assert.assertNull(extension.getPublishedDate());
     }
 
+    @Test
+    public void createExtension_shouldReturnPublishedExtension_whenAdmin() {
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockExtensionRepository.create(any(Extension.class))).thenAnswer(extension -> extension.getArgument(0));
+
+        Extension extension = extensionService.createExtension(dto, "");
+
+        Assert.assertNotNull(extension.getPublishedDate());
+    }
 
     @Test
     public void updateExtension_shouldChangeAttributesOfTheExtension() {
