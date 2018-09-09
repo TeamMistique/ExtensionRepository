@@ -2,7 +2,9 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
+import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
+import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
 import com.teammistique.extensionrepository.models.Tag;
@@ -447,6 +449,76 @@ public class ExtensionServiceImplTest {
         );
         when(mockExtensionRepository.filterPublishedByName(name)).thenReturn(extensions);
         Assert.assertSame(extensions, extensionService.filterPublishedByName(name));
+    }
+
+    @Test
+    public void listNewExtensions_shouldReturnResultFromRepoMethod() {
+        int maxSize = extensionService.getMaxListSize();
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.listNewExtensions(maxSize)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.listNewExtensions());
+    }
+
+    @Test(expected = UnpublishedExtensionException.class)
+    public void changeFeatureStatus_shouldThrowUnpublishedException_ifExtensionIsNotYetPublished() throws FullFeaturedListException, UnpublishedExtensionException {
+        int id = 5;
+        Extension extension = new Extension();
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        extensionService.changeFeatureStatus(id);
+    }
+
+    @Test(expected = FullFeaturedListException.class)
+    public void changeFeatureStatus_shouldThrowFullListException_ifListIsFull() throws FullFeaturedListException, UnpublishedExtensionException {
+        int id = 10;
+        Extension extension = new Extension();
+        extension.setPublishedDate(new Date());
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> featured = new ArrayList<>();
+        for (int i = 0; i < maxListSize; i++) {
+            featured.add(new Extension());
+        }
+
+        when(mockExtensionRepository.listFeaturedExtensions(true)).thenReturn(featured);
+        extensionService.changeFeatureStatus(id);
+    }
+
+    @Test
+    public void changeFeatureStatus_shouldFeatureAndSetFeatureDateToNow_whenPreviouslyNotFeatured() throws FullFeaturedListException, UnpublishedExtensionException {
+        int id = 10;
+        Extension extension = new Extension();
+        extension.setPublishedDate(new Date());
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+
+        int maxListSize = extensionService.getMaxListSize();
+        List<Extension> featured = new ArrayList<>();
+        for (int i = 0; i < maxListSize - 1; i++) {
+            featured.add(new Extension());
+        }
+
+        Date date = new Date();
+        when(mockExtensionRepository.listFeaturedExtensions(true)).thenReturn(featured);
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+
+        Extension result = extensionService.changeFeatureStatus(id);
+        Assert.assertTrue(result.getFeaturedDate().after(date) && result.getFeaturedDate().before(new Date()));
+    }
+
+    @Test
+    public void changeFeatureStatus_shouldSetFeaturedDateToNull_whenPreviouslyFeatured() throws FullFeaturedListException, UnpublishedExtensionException {
+        int id = 10;
+        Extension extension = new Extension();
+        extension.setFeaturedDate(new Date());
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+
+        Extension result = extensionService.changeFeatureStatus(id);
+        Assert.assertNull(result.getFeaturedDate());
     }
 }
 
