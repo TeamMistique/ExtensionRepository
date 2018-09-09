@@ -286,7 +286,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
             while (true) {
                 try {
                     updateAllGitHubInfo();
-                    Thread.sleep(delay);
+                    Thread.sleep(updateInterval);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

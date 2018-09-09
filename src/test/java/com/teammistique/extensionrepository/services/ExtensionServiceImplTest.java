@@ -520,6 +520,69 @@ public class ExtensionServiceImplTest {
         Extension result = extensionService.changeFeatureStatus(id);
         Assert.assertNull(result.getFeaturedDate());
     }
+
+    @Test
+    public void filterAllByName_shouldReturnRepoMethodResult() {
+        String name = "test";
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.filterAllByName(name)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.filterAllByName(name));
+    }
+
+    @Test
+    public void updateDownloadsCounter_shouldIncreaseNumberOfDownloadsBy1() {
+        Extension extension = new Extension();
+        int downloads = 15;
+        extension.setDownloadsCounter(downloads);
+        extensionService.updateDownloadsCounter(extension);
+        Assert.assertEquals(downloads+1, extension.getDownloadsCounter());
+    }
+
+    @Test
+    public void getExtensionByFile_shouldReturnRepoMethodResult() {
+        String fileName = "";
+        Extension extension = new Extension();
+        when(mockExtensionRepository.getExtensionByFile(fileName)).thenReturn(extension);
+        Assert.assertSame(extension, extensionService.getExtensionByFile(fileName));
+    }
+
+    @Test
+    public void changePublishStatus_shouldPublishExtension_whenPreviouslyUnpublished() {
+        int id = 5;
+        Extension extension = new Extension();
+        extension.setLink("");
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        Date date = new Date();
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+        Extension result = extensionService.changePublishedStatus(id);
+        Assert.assertTrue(result.getPublishedDate().after(date) && result.getPublishedDate().before(new Date()));
+    }
+
+    @Test
+    public void changePublishedStatus_shouldUnpublishExtension_whenPreviouslyPublished() {
+        int id = 5;
+        Extension extension = new Extension();
+        extension.setPublishedDate(new Date());
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+        Extension result = extensionService.changePublishedStatus(id);
+        Assert.assertNull(result.getPublishedDate());
+    }
+
+//    @Test
+//    public void updateOneGitHubInfo_shouldReturnExtensionWithNewSuccessfulSync_whenNoSyncExceptionHasBeenThrown() {
+//        Extension extension = new Extension();
+//        extension.setPublishedDate(new Date());
+//        extension.setLink("");
+//        Date beforeCall = new Date();
+//        Extension result = extensionService.updateOneGitHubInfo(extension);
+//
+//        Assert.assertTrue(result.getLastSuccessfulSync().after(beforeCall));
+//    }
 }
 
 

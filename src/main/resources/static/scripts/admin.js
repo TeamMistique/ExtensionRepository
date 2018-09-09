@@ -89,4 +89,4 @@ var ajaxCalls = {
             headers: createAuthorizationTokenHeader()
         })
     }
-}
+};

@@ -83,7 +83,7 @@ public class GitHubServiceImpl implements GitHubService {
         return pulls;
     }
 
-    static class GitHubHelpers {
+    private static class GitHubHelpers {
         static String getOwnerAndRepo(String gitHubUrl) throws SyncException {
             try {
                 String result = null;

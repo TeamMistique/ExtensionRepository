@@ -29,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    //TODO add different roles but admin depending on the user
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader(HEADER_STRING);
         String username = null;
@@ -41,13 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 username = jwtTokenUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {
                 logger.error("An error occurred while getting username from token.", e);
-//            } catch (ExpiredJwtException e) {
-//                logger.warn("The token is expired and not valid anymore", e);
-//            } catch (SignatureException e) {
-//                logger.error("Authentication failed. Username or password not valid.");
             }
-        } else {
-            logger.warn("Couldn't find bearer string, will ignore the header.");
         }
 
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
@@ -55,7 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if(jwtTokenUtil.validateToken(authToken, userDetails)){
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                logger.info("Authenticated user "+username+", setting security context");
+//                logger.info("Authenticated user "+username+", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

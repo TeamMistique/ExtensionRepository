@@ -57,7 +57,6 @@ public class JwtTokenUtil implements Serializable {
         return doGenerateToken(user.getUsername(), user.getAuthorities());
     }
 
-    //TODO generate tokens with other authorities
     private String doGenerateToken(String subject, Collection<? extends GrantedAuthority> roles){
         Claims claims = Jwts.claims().setSubject(subject);
         claims.put("scopes", roles);
