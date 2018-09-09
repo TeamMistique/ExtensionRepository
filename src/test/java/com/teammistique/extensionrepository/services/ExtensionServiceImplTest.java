@@ -4,6 +4,7 @@ import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
 import com.teammistique.extensionrepository.exceptions.FullFeaturedListException;
 import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
+import com.teammistique.extensionrepository.exceptions.SyncException;
 import com.teammistique.extensionrepository.exceptions.UnpublishedExtensionException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
@@ -23,6 +24,8 @@ import static org.mockito.Mockito.*;
 
 public class ExtensionServiceImplTest {
 
+    private Date beforeCall;
+
     private GitHubService mockGitHubService = mock(GitHubService.class);
     private ExtensionRepository mockExtensionRepository = mock(ExtensionRepository.class);
     private StorageService mockFileService = mock(StorageService.class);
@@ -35,6 +38,7 @@ public class ExtensionServiceImplTest {
     @Before
     public void setUp() {
         extensionService = new ExtensionServiceImpl(mockGitHubService, mockExtensionRepository, mockFileService, mockTagService, mockUserService, mockJwtTokenUtil);
+        beforeCall = new Date();
     }
 
     private static class Helpers {
@@ -501,12 +505,11 @@ public class ExtensionServiceImplTest {
             featured.add(new Extension());
         }
 
-        Date date = new Date();
         when(mockExtensionRepository.listFeaturedExtensions(true)).thenReturn(featured);
         when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
 
         Extension result = extensionService.changeFeatureStatus(id);
-        Assert.assertTrue(result.getFeaturedDate().after(date) && result.getFeaturedDate().before(new Date()));
+        Assert.assertTrue(result.getFeaturedDate().after(beforeCall));
     }
 
     @Test
@@ -556,10 +559,9 @@ public class ExtensionServiceImplTest {
         Extension extension = new Extension();
         extension.setLink("");
         when(mockExtensionRepository.findById(id)).thenReturn(extension);
-        Date date = new Date();
         when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
         Extension result = extensionService.changePublishedStatus(id);
-        Assert.assertTrue(result.getPublishedDate().after(date) && result.getPublishedDate().before(new Date()));
+        Assert.assertTrue(result.getPublishedDate().after(beforeCall));
     }
 
     @Test
@@ -573,16 +575,53 @@ public class ExtensionServiceImplTest {
         Assert.assertNull(result.getPublishedDate());
     }
 
-//    @Test
-//    public void updateOneGitHubInfo_shouldReturnExtensionWithNewSuccessfulSync_whenNoSyncExceptionHasBeenThrown() {
-//        Extension extension = new Extension();
-//        extension.setPublishedDate(new Date());
-//        extension.setLink("");
-//        Date beforeCall = new Date();
-//        Extension result = extensionService.updateOneGitHubInfo(extension);
-//
-//        Assert.assertTrue(result.getLastSuccessfulSync().after(beforeCall));
-//    }
+    @Test
+    public void updateOneGitHubInfo_shouldReturnExtensionWithNewSuccessfulSync_whenNoSyncExceptionHasBeenThrown() {
+        Extension extension = new Extension();
+        extension.setPublishedDate(new Date());
+        extension.setLink("");
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+        Extension result = extensionService.updateOneGitHubInfo(extension);
+        Assert.assertTrue(result.getLastSuccessfulSync().after(beforeCall));
+    }
+
+    @Test
+    public void updateOneGitHubInfo_shouldReturnExtensionWithNewFailedSync_whenSyncExceptionHasBeenThrown() throws SyncException {
+        Extension extension = new Extension();
+        extension.setPublishedDate(new Date());
+        extension.setLink("");
+        Date beforeCall = new Date();
+        doThrow(SyncException.class).when(mockGitHubService).getLastCommitDate(anyString());
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(e -> e.getArgument(0));
+
+        Extension result = extensionService.updateOneGitHubInfo(extension);
+
+        Assert.assertNotNull(result.getLastFailedSync());
+        Assert.assertTrue(result.getLastFailedSync().after(beforeCall));
+    }
+
+    @Test
+    public void updateAllGitHubInfo_shouldUpdateAllPublishedExtensions() {
+        List<Extension> published = new ArrayList<>();
+        Helpers.fillListWithPublishedExtensions(published, 12);
+        when(mockExtensionRepository.listPublishedExtensions(true)).thenReturn(published);
+        extensionService.updateAllGitHubInfo();
+        verify(mockExtensionRepository, times(published.size())).update(any(Extension.class));
+    }
+
+    @Test
+    public void setUpdateGitHubPeriod_shouldChangeUpdateInterval() {
+        long delay = 12000L;
+        extensionService.setUpdateGitHubPeriod(delay);
+        Assert.assertEquals(delay, ExtensionServiceImpl.getUpdateInterval());
+    }
+
+    @Test
+    public void setMaxListSize_shouldChangeMaxListSize() {
+        int maxSize = 15;
+        extensionService.setMaxListSize(maxSize);
+        Assert.assertEquals(maxSize, extensionService.getMaxListSize());
+    }
 }
 
 
