@@ -11,8 +11,6 @@ import com.teammistique.extensionrepository.services.base.GitHubService;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import com.teammistique.extensionrepository.services.base.TagService;
 import com.teammistique.extensionrepository.services.base.UserService;
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
-import org.hibernate.id.uuid.Helper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -223,83 +221,77 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenOwner() {
-        String authToken = null;
-        int id = 5;
+    public void updateExtension_shouldStillSaveNewFile_evenWhenOldOneWasNotFound() throws MyFileNotFoundException {
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        Extension extension = new Extension();
+        extension.setFile("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
+        extension.setImage("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
+        extension.setVersion(0);
+        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockTagService.createTag(any(Tag.class))).thenAnswer(tag -> tag.getArgument(0));
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
+        doThrow(MyFileNotFoundException.class).when(mockFileService).deleteFile(anyString());
+
+        Extension result = extensionService.updateExtension(dto, "");
+
+        Assert.assertEquals(dto.getFile(), result.getFile());
+        Assert.assertEquals(dto.getImage(), result.getImage());
+    }
+
+    @Test
+    public void deleteExtension_ShouldRemoveTheExtension_whenOwner() throws MyFileNotFoundException {
+        int id = 1;
+        String authToken = "";
+        String username = "Radik";
         User owner = new User();
-        owner.setUsername("Radik");
+        owner.setUsername(username);
         Extension extension = new Extension();
         extension.setOwner(owner);
         extension.setImage("downloadFile/image.png");
         extension.setFile("downloadFile/file.txt");
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                false
-        );
-
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "Radik"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
-
-//        when(mockFileService.deleteFile(any())).thenReturn(true);
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(username);
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
         extensionService.deleteExtension(id, authToken);
 
+        verify(mockFileService, times(2)).deleteFile(anyString());
         verify(mockExtensionRepository).delete(id);
     }
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenAdmin() {
-        String authToken = null;
-        int id = 5;
-        User owner = new User();
-        owner.setUsername("Radik");
+    public void deleteExtension_shouldStillDeleteExtension_evenWhenFileAndImageWereNotFound() throws MyFileNotFoundException {
+        int id = 1;
+        String authToken = "";
         Extension extension = new Extension();
-        extension.setOwner(owner);
         extension.setImage("downloadFile/image.png");
-        extension.setFile("downloadFile/file");
+        extension.setFile("downloadFile/file.txt");
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                true
-        );
-
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "someone"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(true);
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
+        doThrow(MyFileNotFoundException.class).when(mockFileService).deleteFile(anyString());
 
         extensionService.deleteExtension(id, authToken);
 
+        verify(mockFileService, times(2)).deleteFile(anyString());
         verify(mockExtensionRepository).delete(id);
     }
 
     @Test
-    public void deleteExtension_ShouldRemoveTheExtensionWhenNotOwner() {
-        String authToken = null;
+    public void deleteExtension_ShouldNotDeleteTheExtension_whenNotOwnerAndNotAdmin() {
+        String authToken = "";
         int id = 5;
+        String username = "Radik";
         User owner = new User();
-        owner.setUsername("Radik");
+        owner.setUsername(username);
         Extension extension = new Extension();
         extension.setOwner(owner);
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                false
-        );
-
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "noone"
-        );
-
-        when(mockExtensionRepository.findById(id)).thenReturn(
-                extension
-        );
+        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn("noone");
+        when(mockExtensionRepository.findById(id)).thenReturn(extension);
 
         extensionService.deleteExtension(id, authToken);
 
@@ -307,39 +299,39 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void listFeaturedExtension_shouldCallRepositoryMethod() {
-        extensionService.listFeaturedExtensions(true);
-        verify(mockExtensionRepository).listFeaturedExtensions(true);
-
+    public void listFeaturedExtension_shouldReturnRepositoryMethodResult() {
+        boolean featured = true;
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.listFeaturedExtensions(featured)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.listFeaturedExtensions(featured));
     }
 
     @Test
-    public void listUnFeaturedExtension_shouldCallRepositoryMethod() {
-        extensionService.listFeaturedExtensions(false);
-        verify(mockExtensionRepository).listFeaturedExtensions(false);
+    public void listPopularExtensions_shouldReturnRepoMethodResult() {
+        int maxSize = extensionService.getMaxListSize();
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.listPopularExtensions(maxSize)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.listPopularExtensions());
     }
 
     @Test
-    public void listPopularExtensions_shouldCallRepositoryMethod() {
-        extensionService.listPopularExtensions();
-
-        verify(mockExtensionRepository).listPopularExtensions(extensionService.getMaxListSize());
-    }
-
-    @Test
-    public void listNewExtensions_shouldCallRepositoryMethod() {
-        extensionService.listNewExtensions();
-
-        verify(mockExtensionRepository).listNewExtensions(extensionService.getMaxListSize());
-    }
-
-    @Test
-    public void listPublishedExtensions_shouldCallRepositoryMethod() {
-        extensionService.listPublishedExtensions(true);
-        verify(mockExtensionRepository).listPublishedExtensions(true);
-
-        extensionService.listPublishedExtensions(false);
-        verify(mockExtensionRepository).listPublishedExtensions(false);
+    public void listPublishedExtensions_shouldReturnRepoMethodResult() {
+        boolean published = false;
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.listPublishedExtensions(published)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.listPublishedExtensions(published));
     }
 
     @Test
@@ -393,7 +385,6 @@ public class ExtensionServiceImplTest {
         }
     }
 
-
     @Test
     public void sortByLastCommit_shouldSortByLastCommitDateInReverseOrder() {
         List<Date> commitDates = Arrays.asList(new Date(544765595L), new Date(1447655953L), new Date(1544765595L),
@@ -414,14 +405,16 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void filterByName_shouldCallRepositoryMethod() {
+    public void filterByName_shouldReturnRepoMethodResult() {
         String name = "test";
-        extensionService.filterPublishedByName(name);
-
-        verify(mockExtensionRepository).filterPublishedByName(name);
+        List<Extension> extensions = Arrays.asList(
+                new Extension(),
+                new Extension(),
+                new Extension()
+        );
+        when(mockExtensionRepository.filterPublishedByName(name)).thenReturn(extensions);
+        Assert.assertSame(extensions, extensionService.filterPublishedByName(name));
     }
-
-
 }
 
 
