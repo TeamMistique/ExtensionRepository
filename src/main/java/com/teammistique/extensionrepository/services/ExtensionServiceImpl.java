@@ -63,6 +63,7 @@ public class ExtensionServiceImpl implements ExtensionService, AdminExtensionSer
         extension.setImage(dto.getImage());
         extension.setTags(tags);
         extension.setCreatedDate(new Date());
+        extension.setVersion(1);
 
         if(jwtTokenUtil.isAdmin(authToken)){
             extension.setPublishedDate(new Date());

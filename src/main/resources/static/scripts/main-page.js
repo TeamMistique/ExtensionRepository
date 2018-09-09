@@ -204,9 +204,14 @@ var fillExtensionPage = function (location, extension) {
         html += '<div>Version <div>' + extension.version + '</div></div></div>';
         html += '<div class="extension-info col-md-5 ml-auto text-left"><h3 id="github">';
         html += '<a href="' + extension.link + '" target="_blank"><i class="fab fa-github-alt"> </i> GitHub</a></h3>';
-        html += '<div>Open Issues <div>' + extension.issuesCounter + '</div></div>';
-        html += '<div>Pull Requests <div>' + extension.pullRequestsCounter + '</div></div>';
-        html += '<div>Last commit <div class="date">' + moment(extension.lastCommitDate).format('DD-MM-YYYY') + '</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
+        html += '<div>Open Issues: <div>' + extension.issuesCounter + '</div></div>';
+        html += '<div>Pull Requests: <div>' + extension.pullRequestsCounter + '</div></div>';
+        if(extension.lastCommitDate === null){
+            html += '<div>Last commit: <div class="date">n/a</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
+        } else{
+            html += '<div>Last commit: <div class="date">' + moment(extension.lastCommitDate).format('MM/DD/YYYY') + '</div></div></div></div><div style="margin-bottom: 3%;"></div><div class="row">';
+        }
+
         html += '<div class="col-xs-1"></div><div id="this-extension-description" class="col-md-10"><p>' + extension.description + '</p></div></div>';
 
         if (extension.tags.length > 0) {
@@ -225,9 +230,22 @@ var fillExtensionPage = function (location, extension) {
             html += '<div class="row"><div class="col-xs-1"></div><div class="col-md-7"><h3 style="display: inline;margin-right: 10px;">Sync Info</h3>';
             html += '<a id = "sync-button" class="btn btn-success btn-sm"> Sync now </a>';
             html += '<div class="sync-container">';
-            html += '<div>Last Successful Sync: <i id="lss">' + moment(extension.lastSuccessfulSync).format('LLLL') + '</i></div>'
-            html += '<div>Last Failed Sync: <i id="lfs">' + moment(extension.lastFailedSync).format('LLLL') + '</i></div>'
-            html += '<div>Last Failed Sync Details: <i id="lfsd">' + extension.failedSyncDetails + '</i></div>'
+            if(extension.lastSuccessfulSync === null){
+                html += '<div>Last Successful Sync: <i id="lss">n/a</i></div>';
+            } else {
+                html += '<div>Last Successful Sync: <i id="lss">' + moment(extension.lastSuccessfulSync).format('LLLL') + '</i></div>';
+            }
+            if(extension.lastFailedSync === null){
+                html += '<div>Last Failed Sync: <i id="lfs">n/a</i></div>';
+            } else{
+                html += '<div>Last Failed Sync: <i id="lfs">' + moment(extension.lastFailedSync).format('LLLL') + '</i></div>';
+            }
+            if(extension.failedSyncDetails === null){
+                html += '<div>Last Failed Sync Details: <i id="lfsd">n/a</i></div>';
+            } else {
+                html += '<div>Last Failed Sync Details: <i id="lfsd">' + extension.failedSyncDetails + '</i></div>';
+            }
+
             html += '</div></div></div>';
         }
 
