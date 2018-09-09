@@ -19,10 +19,7 @@ var ajaxCalls = {
         return $.ajax({
             type: "POST",
             url: "/api/admin/feature?id="+id,
-            headers: createAuthorizationTokenHeader(),
-            error: function(){
-                alert("Feature list is already full. Try removing some items first, or increase max list size.");
-            }
+            headers: createAuthorizationTokenHeader()
         });
     },
 

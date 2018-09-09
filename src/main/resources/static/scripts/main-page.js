@@ -646,8 +646,17 @@ $('#edit-buttons-container').on('click', '#publish-extension-button', function (
 $('#edit-buttons-container').on('click', '#feature-extension-button', function (event) {
     debugger;
     var id = $('#edit-extension-modal').val();
-    ajaxCalls.changeFeatureStatus(id).done(function () {
-        refresh();
+    ajaxCalls.changeFeatureStatus(id).done(function (data) {
+        if(data == null) {
+            var published = $('#publish-extension-button').html();
+            if(published === "Publish"){
+                alert("You can not feature an unpublished extension.");
+            } else {
+                alert("Featured list seems to be full. Unfeature another extension to be able to feature this one.")
+            }
+        } else {
+            refresh();
+        }
     });
     event.preventDefault();
 });
