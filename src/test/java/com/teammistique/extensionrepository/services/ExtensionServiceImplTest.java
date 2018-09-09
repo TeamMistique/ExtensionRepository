@@ -2,13 +2,17 @@ package com.teammistique.extensionrepository.services;
 
 import com.teammistique.extensionrepository.config.security.JwtTokenUtil;
 import com.teammistique.extensionrepository.data.base.ExtensionRepository;
+import com.teammistique.extensionrepository.exceptions.MyFileNotFoundException;
 import com.teammistique.extensionrepository.models.DTO.ExtensionDTO;
 import com.teammistique.extensionrepository.models.Extension;
+import com.teammistique.extensionrepository.models.Tag;
 import com.teammistique.extensionrepository.models.User;
 import com.teammistique.extensionrepository.services.base.GitHubService;
 import com.teammistique.extensionrepository.services.base.StorageService;
 import com.teammistique.extensionrepository.services.base.TagService;
 import com.teammistique.extensionrepository.services.base.UserService;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+import org.hibernate.id.uuid.Helper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,19 +37,19 @@ public class ExtensionServiceImplTest {
         extensionService = new ExtensionServiceImpl(mockGitHubService, mockExtensionRepository, mockFileService, mockTagService, mockUserService, mockJwtTokenUtil);
     }
 
-    public static class Helpers {
-        public static ExtensionDTO createFakeExtensionDto() {
+    private static class Helpers {
+        private static ExtensionDTO createFakeExtensionDto() {
             ExtensionDTO dto = new ExtensionDTO();
             dto.setName("name");
             dto.setDescription("description");
             dto.setLink("github");
             dto.setTagNames(Arrays.asList("Tag1", "Tag2", "Tag3"));
-            dto.setImage("image");
-            dto.setFile("file");
+            dto.setImage("http://localhost:8080/api/files/downloadFile/meredith%20grey%2011x12.png");
+            dto.setFile("http://localhost:8080/api/files/downloadFile/meredith%20grey%2011x12.png");
             return dto;
         }
 
-        public static void fillListWithPublishedExtensions(List<Extension> list, int count) {
+        private static void fillListWithPublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 Extension extension = new Extension();
                 extension.setPublishedDate(new Date());
@@ -53,7 +57,7 @@ public class ExtensionServiceImplTest {
             }
         }
 
-        public static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
+        private static void fillListWithUnpublishedExtensions(List<Extension> list, int count) {
             for (int i = 0; i < count; i++) {
                 list.add(new Extension());
             }
@@ -155,32 +159,67 @@ public class ExtensionServiceImplTest {
     }
 
     @Test
-    public void updateExtension_shouldChangeAttributesOfTheExtension() {
+    public void updateExtension_shouldReturnNull_whenNotOwner() {
         Extension extension = new Extension();
-        extension.setName("Test");
-        extension.setFile("downloadFile/file.txt");
-        extension.setImage("image");
-        String authToken = "token";
-        int id = 5;
+        User owner = new User();
+        extension.setOwner(owner);
+        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(anyString())).thenReturn("");
 
-        when(mockJwtTokenUtil.isAdmin(authToken)).thenReturn(
-                true
-        );
+        Extension result = extensionService.updateExtension(Helpers.createFakeExtensionDto(), "");
 
-        when(mockJwtTokenUtil.getUsernameFromToken(authToken)).thenReturn(
-                "Radik"
-        );
+        Assert.assertNull(result);
+    }
+
+    @Test
+    public void updateExtension_shouldSetPublishedDateToNull_whenOwnerButNotAdmin() {
         ExtensionDTO dto = Helpers.createFakeExtensionDto();
-        dto.setName("DTO");
-        dto.setFile("downloadFile/file.txt");
+        Extension extension = new Extension();
+        String username = "username";
+        User owner = new User(username, "");
+        extension.setOwner(owner);
+        extension.setFile(dto.getFile());
+        extension.setImage(dto.getImage());
+        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(false);
+        when(mockJwtTokenUtil.getUsernameFromToken(anyString())).thenReturn(username);
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
 
-        dto.setId(id);
-        when(mockExtensionRepository.findById(id)).thenReturn(extension);
-        extensionService.updateExtension(dto, authToken);
+        Extension result = extensionService.updateExtension(dto, "");
 
-        Assert.assertEquals(extension.getName(), "DTO");
-        Assert.assertEquals(extension.getFile(), "downloadFile/file.txt");
+        Assert.assertNull(result.getPublishedDate());
+    }
 
+    @Test
+    public void updateExtension_shouldUpdateExtensionInfoAndNotChangePublishedDate_whenAdmin() throws MyFileNotFoundException {
+        ExtensionDTO dto = Helpers.createFakeExtensionDto();
+        Extension extension = new Extension();
+        extension.setFile("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
+        extension.setImage("http://localhost:8080/api/files/downloadFile/10429266_778373725578078_3388048229115365384_n.jpg");
+        extension.setVersion(0);
+        when(mockExtensionRepository.findById(anyInt())).thenReturn(extension);
+        when(mockJwtTokenUtil.isAdmin(anyString())).thenReturn(true);
+        when(mockTagService.createTag(any(Tag.class))).thenAnswer(tag -> tag.getArgument(0));
+        when(mockExtensionRepository.update(any(Extension.class))).thenAnswer(i -> i.getArgument(0));
+
+        Extension result = extensionService.updateExtension(dto, "");
+
+        List<String> dtoTags = dto.getTagNames();
+        List<Tag> tags = result.getTags();
+
+        Assert.assertEquals(dtoTags.size(), tags.size());
+        for (int i = 0; i < dtoTags.size(); i++) {
+            Assert.assertEquals(dtoTags.get(i), tags.get(i).getTagName());
+        }
+
+        Assert.assertEquals(extension.getPublishedDate(), result.getPublishedDate());
+        Assert.assertEquals(dto.getFile(), result.getFile());
+        Assert.assertEquals(dto.getImage(), result.getImage());
+        Assert.assertEquals(dto.getName(), result.getName());
+        Assert.assertEquals(dto.getDescription(), result.getDescription());
+        Assert.assertEquals(dto.getLink(), result.getLink());
+        verify(mockFileService, times(2)).deleteFile(anyString());
     }
 
     @Test
@@ -212,7 +251,6 @@ public class ExtensionServiceImplTest {
 
         verify(mockExtensionRepository).delete(id);
     }
-
 
     @Test
     public void deleteExtension_ShouldRemoveTheExtensionWhenAdmin() {
