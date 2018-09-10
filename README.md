@@ -69,3 +69,8 @@ $./gradlew bootRun
 ```
 
 Go to localhost:8080 in your web browser to open the application! 
+
+##Rest API
+
+Find some of the REST methods documented here https://documenter.getpostman.com/view/4891736/RWaGVVhA
+More coming soon.
