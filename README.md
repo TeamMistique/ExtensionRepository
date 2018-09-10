@@ -11,6 +11,8 @@ Registered users can create their own extensions which should be approved from a
 
 Except for approving extensions, admins can edit and delete all extensions, disable users, feature extensions, trigger sync of github data for extensions or change the default period over which sync fires automatically.
 
+To get a full look and feel of the application you can look through or slides with screenshots [here](https://docs.google.com/presentation/d/1F6P4zQ0rSplL71FgU_mmUc2zGpazLDMZoFU_pbkmDwE/edit?usp=sharing).
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Deplyment instructions coming soon!!!
@@ -62,7 +64,7 @@ If you wish to populate the database with sample data, just execute the other SQ
 $ mysql -u defuser -p < insertIntoDB.sql
 ```
 
-To build and run the application run the following command if you have only Java 1.8 on your computer. In case you have a more recent version, you should navigate to the java 1.8 jdk by following the tutorial here https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html and then run the command.
+To build and run the application run the following command if you have only Java 1.8 on your computer. In case you have a more recent version, you should navigate to the java 1.8 jdk by following the tutorial [here](https://confluence.atlassian.com/doc/setting-the-java_home-variable-in-windows-8895.html) and then run the command.
 
 ```
 $./gradlew bootRun
@@ -72,5 +74,5 @@ Go to localhost:8080 in your web browser to open the application!
 
 ##Rest API
 
-Find some of the REST methods documented here https://documenter.getpostman.com/view/4891736/RWaGVVhA
+Find some of the REST methods documented [here](https://documenter.getpostman.com/view/4891736/RWaGVVhA).
 More coming soon.
