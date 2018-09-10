@@ -44,14 +44,14 @@ Type the MySQL root password, and then press Enter.
 To create a database user, type the following command. 
 
 ```
-$ GRANT ALL PRIVILEGES ON *.* TO 'defuser'@'localhost' IDENTIFIED BY 'defuser';
+$ GRANT ALL PRIVILEGES ON *.* TO 'defuser'@'localhost' IDENTIFIED BY '123456';
 ```
 Type \q to exit the mysql program. To log in to MySQL as the user you just created, type the following command. 
 
 ```
 $ mysql -u defuser -p
 ```
-Type the user's password (defuser), and then press Enter. To process the SQL script and create the database, type the following command. 
+Type the user's password (123456), and then press Enter. To process the SQL script and create the database, type the following command. 
 
 ```
 $ mysql -u defuser -p < extensionrepositoryDB.sql
